@@ -1,0 +1,107 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.container {
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.left-box {
+  flex : 1;
+}
+
+.center-box {
+  flex : 3;
+  text-align: center;
+}
+
+.right-box {
+  flex : 1;
+  text-align: right;
+}
+
+.errorMessage {
+  color : red;
+}
+
+.errorInput {
+  color : red;
+}
+
+table {
+  border-spacing: 0;
+  border: 2px solid black;
+  border-collapse: collapse;
+}
+
+tr:last-child td {
+  border-bottom: 0;
+}
+
+th, td {
+  margin: 0;
+  padding: 0.7rem;
+  border: 1px solid black;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}
+
+th:last-child, td:last-child {
+  border-right: 0;
+}
+
+.table-container {
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.tableHeader {
+  background-color: cornflowerblue;
+  border: 1px solid black;
+}
+
+.columnsData {
+  border: 1px solid black;
+}
