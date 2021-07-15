@@ -5,6 +5,7 @@ import LoginPage from '../login_form/LoginPage';
 import FieldKategorie from '../kategorie/FieldKategoriePage';
 import AttributeKategorie from '../kategorie/AttributeKategoriePage';
 import Search_Form from '../table/Search_Form';
+import Movies from '../test/Movies';
 import '../App.css';
 
 function First_com() {
@@ -20,10 +21,10 @@ function First_com() {
                     <ButtonToolbar>
                         <div className="left-box">
                             <Link to="/FieldKategorie">
-                                <Button variant="primary">분야 카테고리</Button>
+                            <   Button className="" variant="primary">분야별</Button>
                             </Link>
                             <Link to="/AttributeKategorie">
-                                <Button variant="primary">특징 카테고리</Button>
+                                <Button className="att" variant="primary">특징별</Button>
                             </Link>
                         </div>
 
@@ -43,10 +44,23 @@ function First_com() {
 
                 <main>
                     {/* 현재 주소 창 경로가 path 일 경우, 지정한 컴포넌트를 보여 줌*/}
-                    <Route path="/FieldKategorie" component={FieldKategorie}></Route>
-                    <Route path="/AttributeKategorie" component={AttributeKategorie}></Route>
-                    <Route path="/LoginPage" component={LoginPage}></Route>
+                    <Route path="/FieldKategorie">
+                        <FieldKategorie></FieldKategorie>
+                    </Route>
+                    <Route path="/AttributeKategorie">
+                        <AttributeKategorie></AttributeKategorie>
+                    </Route>
+                    <Route path="/LoginPage">
+                        <LoginPage></LoginPage>
+                    </Route>
                 </main>
+
+                <body>
+                    <div>
+                        <br></br>
+                        <Movies></Movies>
+                    </div>
+                </body>
             </Router>
             <hr></hr>
         </div>

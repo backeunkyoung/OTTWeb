@@ -4,7 +4,7 @@ import { getGenres } from "./GenreService";
 import { paginate } from "./paginate";
 import ListGroup from "./ListGroup";
 import MoviesTable from "./MoviesTable";
-import Pagination from "./P=agination";
+import Pagination from "./Pagination";
 import _ from "lodash";
 
 export default class Movies extends Component {

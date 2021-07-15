@@ -9,6 +9,7 @@
     "bootstrap": "^5.0.2",
     "express": "^4.17.1",
     "faker": "^5.5.3",
+    "jquery": "^3.6.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
     "react-bootstrap-table": "^4.3.1",

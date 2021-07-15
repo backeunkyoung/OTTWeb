@@ -6,7 +6,7 @@ function FieldKategoriePage() {
 
     return (
         <div>
-            <ButtonGroup>
+            <ButtonGroup className="FieldK">
                 <Button variant="secondary">TV프로그램</Button>
                 <Button variant="secondary">영화</Button>
                 <Button variant="secondary">애니메이션</Button>
