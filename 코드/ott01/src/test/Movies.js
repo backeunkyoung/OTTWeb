@@ -29,11 +29,14 @@ function Movies() {
     setContents({ selectedGenre: genre, currentPage: 1 }); // 장르가 바뀔 때마다 1페이지로 초기화해야 2페이지 이상 내용이 없는 장르가 제대로 표시됨
   };
 
+  // **  초기화..? 왜하는지 잘 모르겠어요
   const { data, currentPage, pageSize} = contents;
 
+  // paginate로 데이터 전달 및 return 값 저장
   const pagedContents = paginate(data, currentPage, pageSize);
 
-  const { length : count } = contents.data; // 컨텐츠(영화) 개수
+  // 컨텐츠(영화) 개수
+  const { length : count } = contents.data;
 
   if (count === 0) {
     return (<p>컨텐츠 정보가 없습니다.</p>);
@@ -55,14 +58,22 @@ function Movies() {
                 <tbody>
                     {pagedContents.map(content =>
                         <tr key={content.id}>
-                            <td>{content.pid}</td>
+                            <td>{content.id}</td>
                             <td>{content.title}</td>
-                            <td>{content.genre}</td>
+                            <td>{content.genre.name}</td>
                             <td>{content.release}</td>
                         </tr>
                     )}
                 </tbody>
             </table>
+
+            {/* Pagination 에 데이터 전달, 컴포넌트 불러오기 */}
+            <Pagination
+                pageSize = {pageSize}
+                itemsCount = {count}
+                currentPage = {currentPage}
+                onPageChange = {handlePageChange}
+            ></Pagination>
           </div>
     );
   }

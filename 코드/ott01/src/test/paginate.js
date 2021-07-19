@@ -1,5 +1,7 @@
+// _를 이용해 배열을 잘라 각 페이지 별로 아이템이 속한 배열을 받아옴
 import _ from 'lodash';
 
+// Movies.js 에서 데이터(data, currentPage, pageSize)를 전달받음
 export function paginate(items, pageNumber, pageSize) {
   const startIndex = (pageNumber - 1) * pageSize; // 자를 배열의 시작점
 

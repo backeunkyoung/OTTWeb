@@ -3,12 +3,20 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 
 const Pagination = (props) => {
+  // Movies.js에서 받아온 데이터를 props에 넣음
   const { itemsCount, pageSize, currentPage, onPageChange } = props;
+  
+  // 몇 페이지가 필요한지 계산 => Math.ceil() : 소수점 이하를 올림
   const pageCount = Math.ceil(itemsCount / pageSize);
 
-  if (pageCount === 1) return null; // 1페이지 뿐이라면 페이지 수를 보여줄 필요가 없음
+  // 1페이지 뿐이라면 페이지 수를 보여줄 필요가 없음
+  if (pageCount === 1) {
+    return null;
+  }
 
-  const pages = _.range(1, pageCount + 1); // lodash의 range() 함수: 1부터 pageCount+1 까지 1씩 증가하는 배열 생성
+  // 페이지 숫자 생성
+  // lodash의 range() 함수: 1부터 pageCount+1 까지 1씩 증가하는 배열 생성
+  const pages = _.range(1, pageCount + 1);
 
   return (
     <nav>

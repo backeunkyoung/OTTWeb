@@ -1,10 +1,9 @@
 import React from 'react';
-import { Button, ButtonToolbar, Tab } from 'react-bootstrap';
 import { Link, Route, BrowserRouter as Router } from 'react-router-dom'; //React-Router import
 import LoginPage from '../login_form/LoginPage';
 import FieldKategorie from '../kategorie/FieldKategoriePage';
 import AttributeKategorie from '../kategorie/AttributeKategoriePage';
-import Search_Form from '../table/Search_Form';
+import Button_tool from './Button_tool';
 import Movies from '../test/Movies';
 import '../App.css';
 
@@ -17,29 +16,7 @@ function First_com() {
                     <Link to="/">
                         <h1 align="center">OTT사이트</h1>
                     </Link>
-
-                    <ButtonToolbar>
-                        <div className="left-box">
-                            <Link to="/FieldKategorie">
-                            <   Button className="" variant="primary">분야별</Button>
-                            </Link>
-                            <Link to="/AttributeKategorie">
-                                <Button className="att" variant="primary">특징별</Button>
-                            </Link>
-                        </div>
-
-                        <div className="center-box">
-                            &nbsp;
-                            <b>검색</b><input type="text"></input>
-                            &nbsp;
-                        </div>
-                
-                        <div className="right-box">
-                            <Link to="/LoginPage">
-                                <Button variant="info">로그인</Button>
-                            </Link>
-                        </div>
-                    </ButtonToolbar>
+                    <Button_tool></Button_tool>
                 </header>
 
                 <main>
