@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+
+    <script>
+        function page_back() {    // 이전 페이지로 이동
+            window.history.back();
+        }
+    </script>
+
+<body>  
+    <input type ="hidden" id ="print_id" value ="<%= print_id %>"> <!-- 서버에서 보내준 id 값을 받음 -->
+    <h1><span style = "color:blue">ID : <%= print_id %></span> 님의 시간표</h1>
+    <br><br>
+    <button onClick="page_back()">회원 페이지로 다시 이동</button>
+    <br><br>
+    <table border="1" width="700" height="500" style="text-align:center">  <!-- table 생성 (시간표 출력) -->
+    <tr style="background-color: cornflowerblue; font-weight: bolder;">
+        <td>시간</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td>
+    </tr>
+
+    <!-- 해당 태그는 서버에서 실행 할 코드의 작성 가능 => ejs 사용 -->
+    <!-- i : time_9 ~ time_17 변수의 숫자 값    /    j : day_of_week (1 : 월, 2 : 화, 3 : 수, 4 : 목, 5 : 금 ) -->
+    <% 
+    for (var i=9; i <= 17; i++) {
+    %>
+    <tr>
+        <td ><%= i %> : 00 ~ <%= i+1 %> : 00</td>
+        <% for (var j = 0; j < 5; j++) { %>
+            <td>
+                <%= time_table[j]["time_" + i] %>
+            </td>
+        <% } %>
+    </tr>
+    <% } %>
+
+    </table>
+
+</body>  
+</html>

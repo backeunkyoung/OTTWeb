@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+<script>
+    function user_add() {
+        var postData = {
+            id : $("#id").val(),
+            pw : $("#pw").val(),
+            name : $("#name").val()
+        };
+        var url = "user_add.html";
+        var succFn = function(receiveData) {
+            if (receiveData.msg === "success") {
+                alert("회원 등록이 완료되었습니다");
+                window.location="login.html";   // 로그인 페이지로 이동
+            }
+            else {
+                alert("회원 id 중복, 다시 입력해주세요.");
+                window.location.reload();   // 현재 페이지 새로고침
+            }
+        };
+
+        get_ajax(url, postData, succFn);
+    }
+    function get_ajax(url, data, succFn) {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: data,
+            url: url,
+            success: succFn
+        })
+    }
+</script>
+<body>  
+
+ID : <input id="id" name = "id" type="text">
+NAME : <input id="name" name = "name" type="text">
+PW : <input id="pw" name = "pw" type="password">
+<button onClick="user_add()">제출</button>
+<br><br>
+<a href="login.html">로그인 페이지로 다시 이동</a>
+
+</body>  
+</html>

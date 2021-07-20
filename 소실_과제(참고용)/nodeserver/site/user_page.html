@@ -1,0 +1,106 @@
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+
+<script>
+
+    function logout() {
+        alert("로그아웃 되었습니다.");
+        window.location="login.html";   // 로그인 페이지로 이동
+    }
+
+    function table_look() {    // 시간표 출력을 위한 데이터 받기 => 페이지 이동
+        var postData = {
+            id : $("#login_id").val()  // id값 받아옴
+        };
+        var url = "table_look.html";
+        var succFn = function(receiveData) {   // 서버에서 data 값을 받아오면 실행됨
+            if (receiveData.msg === "success") {    // 받은 데이터가 success면 실행
+                alert("페이지를 이동합니다.");
+                $("#print_id").val($("#login_id").val()); // id = print_id 인 값에, 받아온 login_id 값을 넣음
+                $("#print_time_table").submit();  // id = print_time_table 인 form을 전송
+            }
+            else {
+                alert("시간표 출력 화면 이동 중 오류 발생");
+            }
+        };
+
+        get_ajax(url, postData, succFn);
+    }
+
+    function subject_update(j, i) { // j : day_of_week , i : time_i(값)
+        var edit_value = $("#" + j + "_" + i).val() // 수정 할 값을 받아옴
+        var postData = {
+            edit_value : edit_value,
+            id : "<%= login_id %>",  // id값 받아옴
+            day_of_week : j + 1,    // 받아온 j는 0 ~ 4 따라서, +1을 해준다 (DB값 설정이 1 ~ 5까지이기 때문)
+            start_time : i
+        };
+        var url = "subject_update.html";
+        var succFn = function(receiveData) {
+            if (receiveData.msg === "success") {
+                alert("시간표 수정 완료");
+                window.location.reload();   // 현재 페이지 새로고침
+            }
+            else {
+                alert("시간표 수정 중 오류 발생");
+            }
+        };
+
+        get_ajax(url, postData, succFn);
+    }
+    function get_ajax(url, data, succFn) {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: data,
+            url: url,
+            success: succFn
+        })
+    }
+    
+</script>
+
+<body>  
+    <input type ="hidden" id ="login_id" value ="<%= login_id %>"> <!-- 서버에서 보내준 id 값을 받음 -->
+<h1><span style = "color:blue">ID : <%= login_id %></span> 님, 반갑습니다!</h1>
+
+<button onClick="table_look()">시간표 출력</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button onClick="logout()">로그아웃</button>
+<br><br><hr>
+<h2><span style = "color:blue">시간표 수정 하기</h2>
+<form id="print_time_table" action="./print_time_table.html" method="post">
+    <input type="hidden" id="print_id" name ="print_id">    <!-- 시간표 페이지에서 id 식별을 위해 설정, 다음 페이지(print_time_table)로 전달할 예정 -->
+</form>
+
+<table border="1" width="400" height="200" style="text-align:center">  <!-- table 생성 (시간표 출력) -->
+<tr style="background-color: cornflowerblue; font-weight: bolder;">
+    <td>시간</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td>
+</tr>
+
+<!-- 해당 태그는 서버에서 실행 할 코드의 작성 가능 => ejs 사용 -->
+<!-- i : time_9 ~ time_17 변수의 숫자 값    /    j : day_of_week (1 : 월, 2 : 화, 3 : 수, 4 : 목, 5 : 금 ) -->
+<% 
+    for (var i=9; i <= 17; i++) {
+%>
+<tr>
+    <td ><%= i %>시 ~ <%= i+1 %>시</td>
+    <% for (var j = 0; j < 5; j++) { %>
+        <td>
+            <input type="text" id="<%= j %>_<%= i %>" value="<%= time_table[j]["time_" + i] %>">
+            <button onClick="subject_update(<%= j %>, <%= i %>)">수정</button>&nbsp;&nbsp;
+        </td>
+    <% } %>
+</tr>
+<% } %>
+
+</table>
+
+</body>  
+</html>
