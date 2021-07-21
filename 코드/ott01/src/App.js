@@ -3,14 +3,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import First_com from './components/First_com';
+import Main_Page from './components/Main_Page';
 import Content_Table from './movie_table/Content_Table';
 
 function App() {
   return (
     <div>
       <div>
-        <First_com></First_com>
+        <Main_Page></Main_Page>
       </div>
     </div>
   );
