@@ -29,8 +29,8 @@ function Movies() {
     setContents({ selectedGenre: genre, currentPage: 1 }); // 장르가 바뀔 때마다 1페이지로 초기화해야 2페이지 이상 내용이 없는 장르가 제대로 표시됨
   };
 
-  // **  초기화..? 왜하는지 잘 모르겠어요
-  const { data, currentPage, pageSize} = contents;
+  // ** 위의 useState와 같은 역할(동기화와 비슷)
+  const { data, currentPage, pageSize } = contents;
 
   // paginate로 데이터 전달 및 return 값 저장
   const pagedContents = paginate(data, currentPage, pageSize);

@@ -17,9 +17,9 @@ const Login_Modal = ( props ) => {
                     <main>
                         {props.children}
                     </main>
-                    <footer>
+                    {/* <footer>
                         <button className="close" onClick={close}> close </button>
-                    </footer>
+                    </footer> */}
                 </section>
             ) : null }
         </div>
