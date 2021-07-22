@@ -4,7 +4,6 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Main_Page from './components/Main_Page';
-import Content_Table from './movie_table/Content_Table';
 
 function App() {
   return (

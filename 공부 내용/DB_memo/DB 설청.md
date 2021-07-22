@@ -1,0 +1,2 @@
+- MySQL 이용 => workbench로 설계
+- DB 서버는 AWS 이용 => private IP를 부여받아서 함

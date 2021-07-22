@@ -70,7 +70,7 @@ const EventPractice = () => {
                     <div className="id_form">
                         <input
                             type="text"
-                            className="id"
+                            name="id"
                             placeholder="아이디"
                             value={id}
                             onChange={onChange}
@@ -80,7 +80,7 @@ const EventPractice = () => {
                     <div className="pw_form">
                         <input
                             type="password"
-                            className="pw"
+                            name="pw"
                             placeholder="비밀번호"
                             value={pw}
                             onChange={onChange}

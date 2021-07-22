@@ -3,7 +3,7 @@ import { Link, Route, BrowserRouter as Router } from 'react-router-dom'; //React
 import Login_Button from './Login_Button';
 import Test from './Login_Form';
 import Button_tool from './Kategori_Menu';
-import Movies from '../test/Movies';
+import Movies from '../movies/Movies';
 import '../App.css';
 
 function Main_Page() {
