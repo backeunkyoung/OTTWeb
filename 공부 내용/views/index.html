@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>회원가입 시스템</title>
+  </head>
+
+  <body>
+    <form action="/receive" method="post">
+    <div class="frame">
+     <div class="header">
+       <h1> 회원가입 시스템 </h1>
+     </div>
+
+     
+     <div class="container">
+       <div class="content">
+        <label>아이디 입력  : </label>
+          <input id="user_Id" name="user_Id" type="text" class="int" maxlength="20" title ="아이디 입력" onchange="id_change(this)" onfocusout="id_change(this)">
+       </div>
+
+       <div class="content">
+        <label>닉네임 입력 : </label>
+         <input id="user_nick" name="user_nick" type="text" class="int" maxlength="20" title ="닉네임 입력"
+         onchange="nick_change(this)" onfocusout="nick_change(this)">
+      </div>
+
+       <div class="password_site">
+        <label>비밀번호 입력 : </label>
+         <input id="user_pw1" name="user_pw1" type="password" class="user_password" maxlength="20" title ="비밀번호 입력"  onchange="pw1_change(this)" onfocusout="pw1_change(this)">
+         <br>
+         <label>비밀번호 재입력 : </label>
+         <input id="user_pw2" name="user_pw2" type="password" class="user_password" maxlength="20" title ="비밀번호 재입력"  onchange="pw2_change(this)" onfocusout="pw2_change(this)">
+      </div>
+
+      <div class="content">
+         <label>나이 입력 : </label>
+         <input id="user_age" name="user_age" class="int" type="text" title ="나이 입력" onchange="age_change(this)" onfocusout="age_change(this)">
+      </div>
+
+
+      <input type = "submit" value = "회원가입">
+    </div>
