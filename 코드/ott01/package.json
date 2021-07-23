@@ -19,8 +19,12 @@
     "reactstrap": "^8.9.0",
     "web-vitals": "^1.0.1"
   },
+
+
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm-run-all --parallel start:**",
+    "start:client": "react-scrips start",
+    "start:server": "node ./server/app.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

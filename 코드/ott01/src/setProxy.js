@@ -5,5 +5,5 @@ module.exports = function(app) {
         proxy('/api', {
             target : 'http://localhost:3333/'
         })
-    )
-}
+    );
+};
