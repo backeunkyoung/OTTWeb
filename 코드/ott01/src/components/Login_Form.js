@@ -24,44 +24,7 @@ const EventPractice = () => {
             id: '',
             pw: '',
         });
-
-        // var postData = {
-        //     id : $(".id").val(),    // className = id 인 값을 가져옴
-        //     pw : $(".pw").val()
-        // }
-        // var url = "login_check.html"    // 이동할 url
-
-        // var succFn = function(receiveData) {   // 서버에서 data 값을 받아오면 실행됨
-        //     if (receiveData.msg === "success") {    // 받은 데이터가 success면 실행
-        //         alert("로그인에 성공하셨습니다.");
-        //     }
-        //     else {
-        //         if (receiveData.msg === "id_fail") {
-        //             alert("login 실패, 등록되지 않은 id 입니다.");
-        //             window.location="login.html";   // 새로고침
-        //         }
-        //         else if (receiveData.msg === "pw_fail") {
-        //             alert("login 실패, 잘못된 비밀번호 입니다.");
-        //             window.location="login.html";
-        //         }
-                
-        //     }
-        //     console.log('server msg = ' + receiveData);
-        // };
-
-        // // 비동기 처리 : 하나의 작업의 종료까지 기다리지 않고, 다음 작업을 진행하는 비순차적인 처리방식
-        // get_ajax(url, postData, succFn);
     };
-    
-    // function get_ajax(url, data, succFn) {
-    //     $.ajax({    // 비동기 JavaScript의 라이브러리
-    //         type: "POST",       // HTTP 요청 방식
-    //         dataType: "json",   // 서버에서 보내줄 데이터의 타입
-    //         data: data,         // HTTP 요청과 함께 서버로 보낼 데이터
-    //         url: url,           // 클라이언트가 요청한 url 페이지
-    //         success: succFn
-    //     })
-    // }
 
     return (
         <div>
