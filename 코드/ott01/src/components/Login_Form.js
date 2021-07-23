@@ -19,12 +19,40 @@ const EventPractice = () => {
     };
 
     const loginCheck = () => {
-        alert(id + " : " + pw);
+        console.log(id + " : " + pw);
+
+        var postData = {
+            postId : id,
+            postPw : pw
+        };
+        var url = "login_check.html";
+        var succFn = function(receiveData) {
+            if (receiveData.msg === "success") {
+                alert("로그인 성공");
+            }
+            else if (receiveData.msg === "fail") {
+                alert("로그인 실패 ㅜ.ㅜ");
+            }
+        }
+        
+        // server.js로 데이터 보냄
+        get_ajax(url, postData, succFn);
+
         setForm({
             id: '',
             pw: '',
         });
     };
+
+    function get_ajax(url, postData, succFn) {
+        $.ajax({    // 비동기 JavaScript의 라이브러리
+            type: "POST",       // HTTP 요청 방식
+            dataType: "json",   // 서버에서 보내줄 데이터의 타입
+            data: postData,         // HTTP 요청과 함께 서버로 보낼 데이터
+            url: url,           // 클라이언트가 요청한 url 페이지
+            success: succFn
+        })
+    }
 
     return (
         <div>
