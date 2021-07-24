@@ -78,65 +78,66 @@ function Movies() {
     );
   }
 
-  // 선택된 장르와 그 장르를 기준으로 정렬된 데이터를 반환하는 함수
-  const getPagedData = () => {
-    const [states, setStates] = useState({
-      pageSize : 3,
-      currentPage : 1,
-      sortColumn : { path : "title", ofder : "asc"},
-      selectedGenre,
-      movies: allMovies,
-    })
 
-    // 선택된 장르와 일치하는 영화 데이터를 얻어옴
-    // 1. selectedGenre와 그 _id 값이 모두 존재하는 장르는 All Genres를 제외한 장르이므로 ? 조건으로 진입
-    // 2. All Genres는 _id값이 없으므로(값: "") : 조건으로 진입
-    const filtered =
-      selectedGenre && selectedGenre._id
-        ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
-        : allMovies;
+  // // 선택된 장르와 그 장르를 기준으로 정렬된 데이터를 반환하는 함수
+  // const getPagedData = () => {
+  //   const [states, setStates] = useState({
+  //     pageSize : 3,
+  //     currentPage : 1,
+  //     sortColumn : { path : "title", ofder : "asc"},
+  //     selectedGenre,
+  //     movies: allMovies,
+  //   })
 
-    // orderBy() 함수: 정렬된 배열 반환
-    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+  //   // 선택된 장르와 일치하는 영화 데이터를 얻어옴
+  //   // 1. selectedGenre와 그 _id 값이 모두 존재하는 장르는 All Genres를 제외한 장르이므로 ? 조건으로 진입
+  //   // 2. All Genres는 _id값이 없으므로(값: "") : 조건으로 진입
+  //   const filtered =
+  //     selectedGenre && selectedGenre._id
+  //       ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
+  //       : allMovies;
 
-    // allMovies 대신 filtered 전달
-    const movies = paginate(sorted, currentPage, pageSize);
+  //   // orderBy() 함수: 정렬된 배열 반환
+  //   const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
-    return { totalCount: filtered.length, data: movies };
-  };
+  //   // allMovies 대신 filtered 전달
+  //   const movies = paginate(sorted, currentPage, pageSize);
 
-  const { totalCount, data } = getPagedData();
+  //   return { totalCount: filtered.length, data: movies };
+  // };
 
-  return (
-    /* className이 row(행) 및 col(열)인 div 배치: Bootstrap Grid System */
-    <div className="row">
-      <div className="col-3">
-        {/* ListGroup 에 data 전달 */}
-        <ListGroup
-          items={this.state.genres}
-          selectedItem={this.state.selectedGenre}
-          onItemSelect={this.handleGenreSelect}
-        ></ListGroup>
-      </div>
+  // const { totalCount, data } = getPagedData();
 
-      <div className="col">
-        <p><b>{totalCount}개</b>의 영화 정보가 있습니다.</p>
-        {/* MoviesTable 에 data 전달 */}
-        <MoviesTable
-          movies={data}
-          sortColumn={sortColumn}
-          onSort={handleSort}
-        ></MoviesTable>
-        {/* Pagination 에 data 전달 */}
-        <Pagination
-          itemsCount={totalCount}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        ></Pagination>
-      </div>
-    </div>
-  );
+  // return (
+  //   /* className이 row(행) 및 col(열)인 div 배치: Bootstrap Grid System */
+  //   <div className="row">
+  //     <div className="col-3">
+  //       {/* ListGroup 에 data 전달 */}
+  //       <ListGroup
+  //         items={this.state.genres}
+  //         selectedItem={this.state.selectedGenre}
+  //         onItemSelect={this.handleGenreSelect}
+  //       ></ListGroup>
+  //     </div>
+
+  //     <div className="col">
+  //       <p><b>{totalCount}개</b>의 영화 정보가 있습니다.</p>
+  //       {/* MoviesTable 에 data 전달 */}
+  //       <MoviesTable
+  //         movies={data}
+  //         sortColumn={sortColumn}
+  //         onSort={handleSort}
+  //       ></MoviesTable>
+  //       {/* Pagination 에 data 전달 */}
+  //       <Pagination
+  //         itemsCount={totalCount}
+  //         pageSize={pageSize}
+  //         currentPage={currentPage}
+  //         onPageChange={handlePageChange}
+  //       ></Pagination>
+  //     </div>
+  //   </div>
+  // );
 }
 
 export default Movies;

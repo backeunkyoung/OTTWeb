@@ -5,10 +5,6 @@ const api = require('./routes/index');
 const port = 3333;
 const db = require('./db_access/db');
 
-app.get('/api/hello', (req, res) => {
-    res.send("안녕하세요");
-})
-
 app.get('/api/products', (req, res) => {
     db.query("SELECT * FROM movies_db.contents;", (err, data) => {
         if (!err) {

@@ -7,45 +7,16 @@ import axios from 'axios';
 import LandingPage from './components/LandingPage';
 import Main_Page from './components/Main_Page';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hello : [],
-    }
-  }
+function App() {
 
-  componentDidMount() {
-    this._getHello();
-  }
-
-  _getHello = async() => {
-    const res = await axios.get('/hello');
-    this.setState({ hello : res.data.hello })
-    console.log(this.state.hello);
-  }
-
-  render() {
-    return(
-      <>
-        <h3>get DB data(브라우저 개발모드 콘솔확인)</h3>
-      </>
-    )
-  }
+  return (
+    <div>
+      <div>
+        {/* <LandingPage></LandingPage> */}
+        <Main_Page></Main_Page>
+      </div>
+    </div>
+  );
 }
 
 export default App;
-
-// function App() {
-
-//   return (
-//     <div>
-//       <div>
-//         {/* <LandingPage></LandingPage> */}
-//         <Main_Page></Main_Page>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default App;
