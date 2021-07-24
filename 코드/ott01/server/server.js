@@ -3,16 +3,23 @@ const bodyParser = require('body-parser');
 const app = express();
 const api = require('./routes/index');
 const port = 3333;
-const cors = require('cors');
+const db = require('./db_access/db');
 
-app.use('/api', api);
+app.get('/api/hello', (req, res) => {
+    res.send("안녕하세요");
+})
 
-const corsOptions = {
-    origin : 'http://localhost:3333/',
-    credentials : true,
-}
+app.get('/api/products', (req, res) => {
+    db.query("SELECT * FROM movies_db.contents;", (err, data) => {
+        if (!err) {
+            res.send({products : data});
+        }
+        else {
+            res.send(err);
+        }
+    })
+})
 
-app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
