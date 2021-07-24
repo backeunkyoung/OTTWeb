@@ -3,9 +3,16 @@ const bodyParser = require('body-parser');
 const app = express();
 const api = require('./routes/index');
 const port = 3333;
-// const port = process.env.PORT || 3001;
+const cors = require('cors');
 
 app.use('/api', api);
+
+const corsOptions = {
+    origin : 'http://localhost:3333/',
+    credentials : true,
+}
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
