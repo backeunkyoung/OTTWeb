@@ -12,8 +12,8 @@ function App() {
   return (
     <div>
       <div>
-        {/* <LandingPage></LandingPage> */}
-        <Main_Page></Main_Page>
+        <LandingPage></LandingPage>
+        {/* <Main_Page></Main_Page> */}
       </div>
     </div>
   );

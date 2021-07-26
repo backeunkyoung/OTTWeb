@@ -1,11 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const api = require('./routes/index');
 const port = 3333;
 const db = require('./db_access/db');
 
-app.get('/api/products', (req, res) => {
+app.get('/movies', (req, res) => {
     db.query("SELECT * FROM movies_db.contents;", (err, data) => {
         if (!err) {
             res.send({products : data});
@@ -16,6 +15,9 @@ app.get('/api/products', (req, res) => {
     })
 })
 
+app.get('/hello', (req, res) => {
+    res.send({msg:"안녕하세요"});
+})
 
 app.use(bodyParser.json());
 
