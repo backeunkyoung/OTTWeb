@@ -15,9 +15,9 @@ sql = "SELECT * FROM contents"
 cursor.execute(sql)
 mc = cursor.fetchall()
 
-movie_info=[]
+#movie_info=[]
 
-for i in range(1):
+for i in range(len(mc)):
     movieCd = str(mc[i][0])
     
     url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=004ad60387947413715497415217ba54&movieCd='+movieCd
@@ -26,6 +26,7 @@ for i in range(1):
     text = req.text
 
     d = json.loads(text)
+    
     jj=''
     kk=''
     ll=''
@@ -35,22 +36,28 @@ for i in range(1):
     print(b['movieNm'])
     for j in b['nations']:
         jj += j['nationNm']+','
+    #print(b['nations'][0]['nationNm'])
     print(jj.rstrip(','))
+    jjj = jj.rstrip(',')
     for k in b['genres']:
         kk += k['genreNm']+','
     print(kk.rstrip(','))
+    kkk = (kk.rstrip(','))
     for l in b['directors']:
         ll += l['peopleNm']+','
     print(ll.rstrip(','))
-    print(b['audits'][0]['watchGradeNm'])
+    lll = ll.rstrip(',')
+    if(b['audits'][0]['watchGradeNm']):
+        print(b['audits'][0]['watchGradeNm'])
+        mmm = b['audits'][0]['watchGradeNm']
     
-    movie_info.append([movieCd, jj.rstrip(','), kk.rstrip(','), b['audits'][0]['watchGradeNm']])
-    print(movie_info)
+    #movie_info.append([movieCd, jj.rstrip(','), kk.rstrip(','), b['audits'][0]['watchGradeNm']])
+    #print(movie_info)
 
     #for b in d['movieInfoResult']['movieInfo']:
         #print(targetDt, b['movieCd'], b['movieNm'], b['openDt'])
         #l.append([int(b['movieCd']), b['movieNm'], b['openDt']])
-    sql = 'UPDATE contents SET production_country = '+jj.rstrip(',')+', field_genre = '+kk.rstrip(',')+', age_imformation = '+b['audits'][0]['watchGradeNm']+' WHERE content_id = '+movieCd
+    sql = 'UPDATE contents SET production_country = "'+jjj+'", field_genre = "'+kkk+'", age_information = "'+mmm+'", director = "'+lll+'" WHERE content_id = "'+movieCd+'"'
     
 #new_list = []
 #for v in l:
@@ -62,6 +69,6 @@ for i in range(1):
     cursor.execute(sql)
     
     
-    conn.commit() 
+conn.commit() 
 
 conn.close() 
