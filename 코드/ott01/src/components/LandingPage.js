@@ -3,18 +3,16 @@ import axios from 'axios'
 
 function LandingPage () {
 
-    useEffect( () => {
-        axios.get( '/api/hello' )
-            .then( response => console.log ( response.data ) )
+    useEffect(() => {
+        axios.get('/movies')
+            .then( response => {
+                return (
+                    <div>
+                        {response.data}
+                    </div>
+                );
+            });
     }, [] )
-
-    return (
-        <div>
-            LandingPage
-
-        </div>
-
-    )
 }
 
 export default LandingPage
