@@ -10,4 +10,12 @@ module.exports = function(app) {
         })
     );
 
+    app.use(
+        '/login_check.html',
+        createProxyMiddleware({
+            target: 'http://localhost:3333',
+            changeOrigin: true,
+        })
+    );
+
 };

@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import axios from 'axios';
 
 function MovieService() {
   const movies = useMemo(() => [

@@ -19,6 +19,7 @@ const EventPractice = () => {
     };
 
     const loginCheck = () => {
+        alert("로그인 체크 중");
         console.log(id + " : " + pw);
 
         var postData = {

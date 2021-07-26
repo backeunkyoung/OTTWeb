@@ -23,8 +23,8 @@ app.listen(port, ()=>{
 
 app.post('/login_check.html', function(req, res) {
     console.log("서버 실행 됨");
-    var id = req.body.id;   // login.html 에서 id, pw 값을 받아옴
-    var pw = req.body.pw;
+    var id = req.id;   // Login_Form.js 에서 id, pw 값을 받아옴
+    var pw = req.pw;
     console.log(req.body);
     console.log("input id : ", id , " , input pw : ", pw);
 
@@ -34,4 +34,6 @@ app.post('/login_check.html', function(req, res) {
         // 클라이언트(Login_Form.js) 쪽으로 전달
         res.send({result:true, msg:"success"});
     };
+
+    succFn();
 });
