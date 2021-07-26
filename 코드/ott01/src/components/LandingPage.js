@@ -1,35 +1,20 @@
-import React, {useEffect} from 'react';
-import axios from 'axios';
-import jquery from 'jquery';
-import $ from 'jquery';
+import React, {useEffect} from 'react'
+import axios from 'axios'
 
 function LandingPage () {
 
-    useEffect(() => {
-        axios.get( '/hello' )
-            .then(response => {
-                console.log (response.data);
-            }
-        );
-
-        axios.get( '/movies' )
-            .then(response => {
-                console.log (response.data);
-
-                return (
-                    <div>
-                        {response.data}
-                    </div>
-                )
-            }
-        );
-    }, []);
+    useEffect( () => {
+        axios.get( '/api/hello' )
+            .then( response => console.log ( response.data ) )
+    }, [] )
 
     return (
         <div>
-            LandingPage 랜딩페이지
+            LandingPage
+
         </div>
+
     )
 }
 
-export default LandingPage;
+export default LandingPage
