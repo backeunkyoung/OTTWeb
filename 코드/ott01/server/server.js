@@ -29,8 +29,8 @@ app.post('/login_check.html', function(req, res) {
     console.log("input id : ", id , " , input pw : ", pw);
 
     var succFn = function(err, row) {
-        console.log(row);
-
+        console.log("succFn data : " + row);
+    
         // 클라이언트(Login_Form.js) 쪽으로 전달
         res.send({result:true, msg:"success"});
     };
