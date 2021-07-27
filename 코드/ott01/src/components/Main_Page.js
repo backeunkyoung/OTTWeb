@@ -4,6 +4,7 @@ import Login_Button from './Login_Button';
 import Test from './Login_Form';
 import Button_tool from './Kategori_Menu';
 import Movies from '../movies/Movies';
+import Movie_Table from './Movie_Table';
 import '../App.css';
 
 function Main_Page() {
@@ -26,6 +27,8 @@ function Main_Page() {
                     <div>
                         <br></br>
                         <Movies></Movies>
+                        <br></br>
+                        {/* <Movie_Table></Movie_Table> */}
                     </div>
                 </body>
             </Router>
