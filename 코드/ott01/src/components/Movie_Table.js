@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import jquery from "jquery";
 import $ from 'jquery';
 import axios from 'axios';
@@ -20,4 +20,4 @@ function Movie_Table() {
     }, []); // [] : 빈 배열 => 화면에 가장 처음 렌더링 될 때 1번만 실행
 }
 
-export default Movie_Table;
+export default Movie_Table
