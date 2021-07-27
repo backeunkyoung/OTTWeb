@@ -4,7 +4,6 @@ import $ from 'jquery';
 
 function LandingPage () {
 
-
     // 컴포넌트가 렝더링 될 때마다 특정 작업을 실행할 수 있도록 해줌
     // => 컴포넌트가 mount, unmount, update 되었을 때 특정 작업 실행
     useEffect(() => {

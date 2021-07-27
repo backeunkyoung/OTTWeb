@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import jquery from 'jquery';
-import $ from 'jquery';
 
 const EventPractice = () => {
     const [form, setForm] = useState({
@@ -37,7 +35,7 @@ const EventPractice = () => {
         }
         
         // server.js로 데이터 보냄
-        get_ajax(url, postData, succFn);
+        axios.get(url, postData, succFn);
 
         setForm({
             id: '',
