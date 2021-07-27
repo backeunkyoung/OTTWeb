@@ -11,7 +11,7 @@ conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db
 cursor = conn.cursor()
 
 
-sql = "INSERT INTO test (content_id, title, screening_date) VALUES (%s, %s, %s)"
+sql = "INSERT INTO contents (content_id, title, screening_date) VALUES (%s, %s, %s)"
 #sql = "INSERT INTO movies (movieCd, movieNm, openDt) VALUES (%s, %s, %s)"
 
 
@@ -30,7 +30,7 @@ for i in range(52):
     for b in d['boxOfficeResult']['weeklyBoxOfficeList']:
         #print(targetDt, b['movieCd'], b['movieNm'], b['openDt'])
         if(b['openDt']!=' '):
-            l.append([b['movieCd'], b['movieNm'], b['openDt']])
+            l.append([int(b['movieCd']), b['movieNm'], b['openDt']])
 
         
     
