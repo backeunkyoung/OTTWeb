@@ -11,6 +11,14 @@ module.exports = function(app) {
     );
 
     app.use(
+        '/movieTable',
+        createProxyMiddleware({
+            target: 'http://localhost:3333',
+            changeOrigin: true,
+        })
+    );
+
+    app.use(
         '/login',
         createProxyMiddleware({
             target: 'http://localhost:3333',
