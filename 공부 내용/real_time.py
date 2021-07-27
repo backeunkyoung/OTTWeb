@@ -1,35 +1,33 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-import time,datetime
+import time
 import pymysql
-import requests
+from selenium.webdriver.chrome.options import Options
+
+chromedriver = 'C:/Users/tpdms/PycharmProjects/pythonProject9/chromedriver.exe'
+
+chrome_options = Options()
+chrome_options.add_argument('--headless')
+driver = webdriver.Chrome(options=chrome_options)
 
 
+driver.get('https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=%EB%B0%95%EC%8A%A4%EC%98%A4%ED%94%BC%EC%8A%A4%EC%88%9C%EC%9C%84')
 conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', charset='utf8', db='movies_db') #DB 연결
 cursor = conn.cursor()
 
-
-URL = "https://www.naver.com/"
-driver_path = r'C:/Users/tpdms/PycharmProjects/pythonProject9/chromedriver.exe'
-driver = webdriver.Chrome(driver_path)
-driver.get(URL)
-driver.find_element_by_id('query').send_keys('박스오피스순위')
-driver.find_element_by_id('search_btn').click()
 time.sleep(1)
 
 title = driver.find_element_by_class_name('_panel')
 num = driver.find_elements_by_class_name('this_text')
 title = title.find_elements_by_class_name('name')
 
-sql = "INSERT INTO boxoffice (num,title) VALUES ('%s' ,' %s')"
+
+sql = "UPDATE boxoffice SET title = %s WHERE num = %s"
 for name, n in zip(title, num):
-    num = n
+    num = n.text
     title = name.text
-    cursor.execute(sql,num,title)
+    cursor.execute(sql,(title,num))
     print(num + "위 : " + title)
 
-
-
-cursor.commit()
+conn.commit()
 conn.close()
+driver.quit()
