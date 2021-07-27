@@ -19,14 +19,13 @@ const EventPractice = () => {
     };
 
     const loginCheck = () => {
-        alert("로그인 체크 중");
-        console.log(id + " : " + pw);
+        alert("로그인 체크 중, id : " + id + " , pw : " + pw);
 
         var postData = {
             postId : id,
             postPw : pw
         };
-        var url = "login_check.html";
+        var url = "/login";
         var succFn = function(receiveData) {
             if (receiveData.msg === "success") {
                 alert("로그인 성공");

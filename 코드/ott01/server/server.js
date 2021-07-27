@@ -15,13 +15,24 @@ app.get('/movies', (req, res) => {
     })
 })
 
+app.get('/boxoffice', (req, res) => {
+    db.query("SELECT * FROM movies_db.boxoffice;", (err, data) => {
+        if (!err) {
+            res.send({products : data});
+        }
+        else {
+            res.send(err);
+        }
+    })
+})
+
 app.use(bodyParser.json());
 
 app.listen(port, ()=>{
     console.log(`express is running on ${port}`);
 });
 
-app.post('/login_check.html', function(req, res) {
+app.post('/login', function(req, res) {
     console.log("서버 실행 됨");
     var id = req.id;   // Login_Form.js 에서 id, pw 값을 받아옴
     var pw = req.pw;
