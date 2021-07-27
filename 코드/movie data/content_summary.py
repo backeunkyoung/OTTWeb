@@ -29,7 +29,7 @@ for i in range(len(mc)):
             soup = BeautifulSoup(res.content, 'html.parser')
             naver = soup.find("p", class_="con_tx") #줄거리 불러옴
             if(naver): #줄거리가 있는 영화만
-                naverr = re.sub('[^\da-zA-Z가-힣/. ]', '', naver.text).strip()
+                naverr = re.sub('[^\da-zA-Z가-힣/.() ]', '', naver.text).strip()
                 print(mc[i][1])
             sql = 'UPDATE contents SET summary = "'+naverr+'" WHERE content_id = "'+movieCd+'"'
             cursor.execute(sql)

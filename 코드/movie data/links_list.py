@@ -10,7 +10,7 @@ conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db
 #conn = pymysql.connect(host='localhost', user='root', password='root', db='moviedata', charset='utf8') 
 cursor = conn.cursor()
 
-sql = "INSERT INTO list (content_id, title) VALUES (%s, %s)"
+sql = "INSERT INTO links (content_id, title) VALUES (%s, %s)"
 #sql = "INSERT INTO movies (movieCd, movieNm, openDt) VALUES (%s, %s, %s)"
 
 
@@ -28,8 +28,8 @@ for i in range(52):
 
     for b in d['boxOfficeResult']['weeklyBoxOfficeList']:
         #print(targetDt, b['movieCd'], b['movieNm'])
-        l.append([int(b['movieCd']), b['movieNm']])
-
+        if(b['openDt']!=' '):
+            l.append([int(b['movieCd']), b['movieNm']])
         
     
     current_datetime = current_datetime + datetime.timedelta(weeks=1)
@@ -41,8 +41,11 @@ for v in l:
         new_list.append(v)
 #print(new_list)
     
-for b in new_list: 
-    cursor.execute(sql,b)
+for b in new_list:
+    try:
+        cursor.execute(sql,b)
+    except:
+        pass
     
     
 conn.commit() 
