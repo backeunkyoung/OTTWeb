@@ -27,19 +27,49 @@ for i in range(len(mc)):
     
     url = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+quote(query)
     
+    req = requests.get(url)
+    text = req.text
+    soup = BeautifulSoup(text, 'html.parser')
+    
     try:
-        req = requests.get(url)
-        text = req.text
-        soup = BeautifulSoup(text, 'html.parser')
-
         link = soup.find('a',"area_text_title")['href']
         print(title)
         print(link)
         #movie_url.append(link)
-        sql = 'UPDATE list SET link = "'+link+'" WHERE content_id = "'+movieCd+'"'
+        sql = 'UPDATE links SET link = "'+link+'" WHERE content_id = "'+movieCd+'"'
         cursor.execute(sql)
     except:
-        pass
+        try:
+            S_link = soup.find('a',"box_link")['href']
+            url = 'https://search.naver.com/search.naver'+S_link
+            #print(url)
+            req = requests.get(url)
+            text = req.text
+            soup = BeautifulSoup(text, 'html.parser')
+
+            link = soup.find('a',"area_text_title")['href']
+            print(title)
+            print(link)
+            #movie_url.append(link)
+            sql = 'UPDATE links SET link = "'+link+'" WHERE content_id = "'+movieCd+'"'
+            cursor.execute(sql)
+        except:
+            try:
+                S_link = soup.find('div',"answer_more").find('a')['href']
+                url = 'https://search.naver.com/search.naver'+S_link
+                #print(url)
+                req = requests.get(url)
+                text = req.text
+                soup = BeautifulSoup(text, 'html.parser')
+
+                link = soup.find('a',"area_text_title")['href']
+                print(title)
+                print(link)
+                #movie_url.append(link)
+                sql = 'UPDATE links SET link = "'+link+'" WHERE content_id = "'+movieCd+'"'
+                cursor.execute(sql)
+            except:
+                pass
     
     
 conn.commit() 
