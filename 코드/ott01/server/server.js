@@ -34,8 +34,8 @@ app.listen(port, ()=>{
 
 app.post('/login', function(req, res) {
     console.log("서버 실행 됨");
-    var id = req.id;   // Login_Form.js 에서 id, pw 값을 받아옴
-    var pw = req.pw;
+    var id = req.body.id;   // login.html 에서 id, pw 값을 받아옴
+    var pw = req.body.pw;
     console.log(req.body);
     console.log("input id : ", id , " , input pw : ", pw);
 

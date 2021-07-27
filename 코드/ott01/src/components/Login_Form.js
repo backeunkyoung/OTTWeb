@@ -20,6 +20,7 @@ const EventPractice = () => {
 
     const loginCheck = () => {
         alert("로그인 체크 중, id : " + id + " , pw : " + pw);
+        console.log("체크중");
 
         var postData = {
             postId : id,
@@ -78,10 +79,10 @@ const EventPractice = () => {
                         ></input>
                     </div>
                 </div>
-
                 <p></p>
                 <button className="login_button" onClick={loginCheck}>로그인</button>              
             </form>
+            
             <p></p>
             <div className="find_info">
                 <a href="/" target="_blank" className="idinquiry">아이디 찾기</a>
@@ -92,7 +93,6 @@ const EventPractice = () => {
 
                 <a href="/" target="_blank" className="join">회원가입</a>
             </div>
-
         </div>
     );
 };
