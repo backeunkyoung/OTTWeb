@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import jquery from 'jquery';
+import $ from 'jquery';
+import axios from 'axios';
 
 const EventPractice = () => {
     const [form, setForm] = useState({
@@ -20,11 +23,13 @@ const EventPractice = () => {
         alert("로그인 체크 중, id : " + id + " , pw : " + pw);
         console.log("체크중");
 
-        var postData = {
+        var postData = {    // server.js로 보낼 data
             postId : id,
             postPw : pw
         };
+
         var url = "/login";
+        
         var succFn = function(receiveData) {
             if (receiveData.msg === "success") {
                 alert("로그인 성공");
@@ -35,7 +40,7 @@ const EventPractice = () => {
         }
         
         // server.js로 데이터 보냄
-        axios.get(url, postData, succFn);
+        get_axios(url, postData, succFn);
 
         setForm({
             id: '',
@@ -43,13 +48,12 @@ const EventPractice = () => {
         });
     };
 
-    function get_ajax(url, postData, succFn) {
-        $.ajax({    // 비동기 JavaScript의 라이브러리
-            type: "POST",       // HTTP 요청 방식
-            dataType: "json",   // 서버에서 보내줄 데이터의 타입
-            data: postData,         // HTTP 요청과 함께 서버로 보낼 데이터
-            url: url,           // 클라이언트가 요청한 url 페이지
-            success: succFn
+    function get_axios(url, postData, succFn) {
+        axios({
+            method : 'post',
+            url : url,
+            data : postData,
+            success : succFn
         })
     }
 
