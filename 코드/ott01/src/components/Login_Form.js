@@ -29,15 +29,19 @@ const EventPractice = () => {
         })  // 성공시 then 진행
         .then(function (response) {
             if (JSON.stringify(response.data.msg) === JSON.stringify("success")) {
+                console.log(JSON.stringify(response.data.msg));
                 alert("로그인 성공");
-                document.location.href = '/';
+                // document.location.href = '/';
             }
             else if ((JSON.stringify(response.data.msg) === JSON.stringify("id_fail"))) {
                 alert("등록되지 않은 ID 입니다.");
+                console.log(JSON.stringify(response.data.msg));
             }
             else if ((JSON.stringify(response.data.msg) === JSON.stringify("pw_fail"))) {
                 alert("잘못된 비밀번호 입니다.");
+                console.log(JSON.stringify(response.data.msg));
             }
+            console.log("if문 아님" + JSON.stringify(response.data.msg));
         })  // 실패시 catch 진행
         .catch(function (error) {
             alert(error);
