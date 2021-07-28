@@ -64,7 +64,7 @@ app.listen(port, ()=>{
     console.log(`express is running on ${port}`);
 });
 
-app.post('/login', function(req, res) {
+app.post('/login', (req, res) => {
     console.log("서버 실행 됨");
     console.log("req.body : " + JSON.stringify(req.body));
     
@@ -72,12 +72,14 @@ app.post('/login', function(req, res) {
     var pw = req.body.postPw;
     console.log("get_id : " + id + " , get_pw : " + pw);
 
-    var succFn = function(err, row) {
-        console.log("succFn data : " + row);
+    res.send({msg:"success"});
+
+    // var succFn = function(err, row) {
+    //     console.log("succFn data : " + row);
     
-        // 클라이언트(Login_Form.js) 쪽으로 전달
-        res.send({result:true, msg:"success"});
-    };
-    
-    succFn();
+    //     // 클라이언트(Login_Form.js) 쪽으로 전달
+    //     res.send({result:true, msg:"success"});
+    // };
+
+    // succFn();
 });

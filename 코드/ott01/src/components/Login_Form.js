@@ -18,43 +18,35 @@ const EventPractice = () => {
     };
 
     const loginCheck = () => {
-        alert("로그인 체크 중, id : " + id + " , pw : " + pw);
-        console.log("체크중");
-
-        var postData = {    // server.js로 보낼 data
-            postId : id,
-            postPw : pw
-        };
+        alert("체크중");
+        console.log("로그인 체크 중, id : " + id + " , pw : " + pw);
 
         var url = "/login";
-        
-        var succFn = function(receiveData) {
-            if (receiveData.msg === "success") {
+
+        axios.post( url, {
+            postId : id,
+            postPw : pw
+        })  // 성공시 then 진행
+        .then(function (response) {
+            if (JSON.stringify(response.data.msg) === JSON.stringify("success")) {
                 alert("로그인 성공");
             }
-            else if (receiveData.msg === "fail") {
-                alert("로그인 실패 ㅜ.ㅜ");
+            else if ((JSON.stringify(response.data.msg) === JSON.stringify("fail"))) {
+                alert("로그인 실패");
             }
-            console.log("server msg : " + receiveData);
-        }
-        
-        // server.js로 데이터 보냄
-        get_axios(url, postData, succFn);
+        })  // 실패시 catch 진행
+        .catch(function (error) {
+            alert(error);
+        })  // 성공하던 실패하던 항상 실행
+        .then(function () {
+            console.log("post 함수 실행됨");
+        });
 
         setForm({
             id: '',
             pw: '',
         });
     };
-
-    function get_axios(url, postData, succFn) {
-        axios({
-            method : 'post',
-            url : url,
-            data : postData,
-            success : succFn
-        })
-    }
 
     return (
         <div>
