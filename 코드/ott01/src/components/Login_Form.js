@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import jquery from 'jquery';
-import $ from 'jquery';
 import axios from 'axios';
 
 const EventPractice = () => {
@@ -37,6 +35,7 @@ const EventPractice = () => {
             else if (receiveData.msg === "fail") {
                 alert("로그인 실패 ㅜ.ㅜ");
             }
+            console.log("server msg : " + receiveData);
         }
         
         // server.js로 데이터 보냄

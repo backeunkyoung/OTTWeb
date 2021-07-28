@@ -66,11 +66,10 @@ app.listen(port, ()=>{
 
 app.post('/login', function(req, res) {
     console.log("서버 실행 됨");
+    console.log("req.body : " + JSON.stringify(req.body));
     
-    var id = req.body.id;   // login.html 에서 id, pw 값을 받아옴
-    var pw = req.body.pw;
-    var url = req.url.replace("/", "");
-
+    var id = req.body.postId;   // login.html 에서 id, pw 값을 받아옴
+    var pw = req.body.postPw;
     console.log("get_id : " + id + " , get_pw : " + pw);
 
     var succFn = function(err, row) {
@@ -79,6 +78,6 @@ app.post('/login', function(req, res) {
         // 클라이언트(Login_Form.js) 쪽으로 전달
         res.send({result:true, msg:"success"});
     };
-
+    
     succFn();
 });
