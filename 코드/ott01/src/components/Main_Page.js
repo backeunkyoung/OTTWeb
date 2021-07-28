@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link, Route, BrowserRouter as Router } from 'react-router-dom'; //React-Router import
+import { Link, BrowserRouter as Router } from 'react-router-dom'; //React-Router import
 import Login_Button from './Login_Button';
-import Test from './Login_Form';
 import Button_tool from './Kategori_Menu';
 import Movies from '../movies/Movies';
-import Movie_Table from './Movie_Table';
 import '../App.css';
 
 function Main_Page() {
@@ -17,7 +15,6 @@ function Main_Page() {
                         <h1 align="center">OTT사이트</h1>
                     </Link>
                     <div>
-                        {/* <Test></Test> */}
                         <Login_Button></Login_Button>
                     </div>
                     <Button_tool></Button_tool>
@@ -28,7 +25,6 @@ function Main_Page() {
                         <br></br>
                         <Movies></Movies>
                         <br></br>
-                        {/* <Movie_Table></Movie_Table> */}
                     </div>
                 </body>
             </Router>

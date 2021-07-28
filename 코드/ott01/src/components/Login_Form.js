@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import jquery from 'jquery';
-import $ from 'jquery';
 import axios from 'axios';
 
 const EventPractice = () => {
@@ -20,42 +18,43 @@ const EventPractice = () => {
     };
 
     const loginCheck = () => {
-        alert("로그인 체크 중, id : " + id + " , pw : " + pw);
-        console.log("체크중");
-
-        var postData = {    // server.js로 보낼 data
-            postId : id,
-            postPw : pw
-        };
+        alert("체크중");
+        console.log("로그인 체크 중, id : " + id + " , pw : " + pw);
 
         var url = "/login";
-        
-        var succFn = function(receiveData) {
-            if (receiveData.msg === "success") {
+
+        axios.post( url, {
+            postId : id,
+            postPw : pw
+        })  // 성공시 then 진행
+        .then(function (response) {
+            if (JSON.stringify(response.data.msg) === JSON.stringify("success")) {
+                console.log(JSON.stringify(response.data.msg));
                 alert("로그인 성공");
+                // document.location.href = '/';
             }
-            else if (receiveData.msg === "fail") {
-                alert("로그인 실패 ㅜ.ㅜ");
+            else if ((JSON.stringify(response.data.msg) === JSON.stringify("id_fail"))) {
+                alert("등록되지 않은 ID 입니다.");
+                console.log(JSON.stringify(response.data.msg));
             }
-        }
-        
-        // server.js로 데이터 보냄
-        get_axios(url, postData, succFn);
+            else if ((JSON.stringify(response.data.msg) === JSON.stringify("pw_fail"))) {
+                alert("잘못된 비밀번호 입니다.");
+                console.log(JSON.stringify(response.data.msg));
+            }
+            console.log("if문 아님" + JSON.stringify(response.data.msg));
+        })  // 실패시 catch 진행
+        .catch(function (error) {
+            alert(error);
+        })  // 성공하던 실패하던 항상 실행
+        .then(function () {
+            console.log("post 함수 실행됨");
+        });
 
         setForm({
             id: '',
             pw: '',
         });
     };
-
-    function get_axios(url, postData, succFn) {
-        axios({
-            method : 'post',
-            url : url,
-            data : postData,
-            success : succFn
-        })
-    }
 
     return (
         <div>
