@@ -30,9 +30,13 @@ const EventPractice = () => {
         .then(function (response) {
             if (JSON.stringify(response.data.msg) === JSON.stringify("success")) {
                 alert("로그인 성공");
+                document.location.href = '/';
             }
-            else if ((JSON.stringify(response.data.msg) === JSON.stringify("fail"))) {
-                alert("로그인 실패");
+            else if ((JSON.stringify(response.data.msg) === JSON.stringify("id_fail"))) {
+                alert("등록되지 않은 ID 입니다.");
+            }
+            else if ((JSON.stringify(response.data.msg) === JSON.stringify("pw_fail"))) {
+                alert("잘못된 비밀번호 입니다.");
             }
         })  // 실패시 catch 진행
         .catch(function (error) {

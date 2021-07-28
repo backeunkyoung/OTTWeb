@@ -65,21 +65,32 @@ app.listen(port, ()=>{
 });
 
 app.post('/login', (req, res) => {
-    console.log("서버 실행 됨");
-    console.log("req.body : " + JSON.stringify(req.body));
+    // console.log("서버 실행 됨");
+    // console.log("req.body : " + JSON.stringify(req.body));
     
     var id = req.body.postId;   // login.html 에서 id, pw 값을 받아옴
     var pw = req.body.postPw;
     console.log("get_id : " + id + " , get_pw : " + pw);
 
-    res.send({msg:"success"});
+    var query =  "select id from movies_db.users where id= '" + id + "';";
 
-    // var succFn = function(err, row) {
-    //     console.log("succFn data : " + row);
-    
-    //     // 클라이언트(Login_Form.js) 쪽으로 전달
-    //     res.send({result:true, msg:"success"});
-    // };
-
-    // succFn();
+    db.query(query, function (err, row) {
+        if (err) {
+            console.log('err :' + err);
+        } else {
+            console.log("query문 결과 : " + JSON.stringify(row));
+            if (row.length === 0 ) {    // 검색 결과가 0이면 등록 x
+                console.log("등록되지 않은 id 입니다.");
+                res.send({result:true, msg:"id_fail"}); // 클라이언트(login.html) 쪽으로 전달
+            } else {
+                if (row[0].pw !== pw ) {
+                    console.log("잘못된 비밀번호 입니다.");
+                    res.send({result:true, msg:"pw_fail"});
+                } else {
+                    console.log("로그인에 성공하셨습니다.");
+                    res.send({result:true, msg:"success"});
+                }
+            }
+        }
+    });
 });
