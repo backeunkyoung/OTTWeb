@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import jquery from "jquery";
-import $ from 'jquery';
 import axios from 'axios';
 
 // server 호출
