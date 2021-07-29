@@ -15,26 +15,34 @@ mc = cursor.fetchall()
 
 for i in range(len(mc)):
     peopleCd = str(mc[i][0])
-    
-    url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleInfo.json?key=004ad60387947413715497415217ba54&peopleCd='+peopleCd
+    #if mc[i][2]==None:
 
-    req = requests.get(url)
-    text = req.text
+        url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleInfo.json?key=004ad60387947413715497415217ba54&peopleCd='+peopleCd
 
-    d = json.loads(text)
-    filmos = ''
-    
-    print(mc[i][1])
-    for j in d['peopleInfoResult']['peopleInfo']['filmos']:        
-        print('무비코드 : '+j['movieCd']+', 영화이름 : '+j['movieNm'])
-        filmos += j['movieCd']+', '
-    filmos = filmos.rstrip(', ')
-        
-    sql = 'UPDATE test SET filmo = "'+filmos+'" WHERE person_id = "'+peopleCd+'"'
+        req = requests.get(url)
+        text = req.text
 
+        d = json.loads(text)
+        filmos = ''
 
-    cursor.execute(sql)
+        print(mc[i][1])
+        count = 0
+        for j in d['peopleInfoResult']['peopleInfo']['filmos']:        
+            #print('무비코드 : '+j['movieCd']+', 영화이름 : '+j['movieNm'])
+            filmos += j['movieCd']+', '
+            count += 1
+            if count==30:
+                count = 0
+                break
+        filmos = filmos.rstrip(', ')
 
+        sql = 'UPDATE test SET filmo = "'+filmos+'" WHERE person_id = "'+peopleCd+'"'
+
+        try:
+            cursor.execute(sql)
+            #print('성공')
+        except:
+            pass
         
 conn.commit()
 conn.close()
