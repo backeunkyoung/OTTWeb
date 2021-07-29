@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import axios from 'axios';
 import Registration_Button from './Registration_Button';
-import Registration from './Registration_Button';
 
 const Login_Form = () => {
     const [form, setForm] = useState({

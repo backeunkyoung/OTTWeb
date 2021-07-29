@@ -111,9 +111,10 @@ app.post('/login', (req, res) => {
         var nic_name = req.body.postNicName;
         var pw = req.body.postPw;
         var age = req.body.postAge;
+        
         console.log("get_id : " + id + " , get_nic_name : " + nic_name + "get_pw : " + pw + " , get_age : " + age);
     
-        res.send({mag : "success"});
+        res.send({msg : "success"});
         
-        });
+    });
 });
