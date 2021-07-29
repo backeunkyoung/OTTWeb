@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import axios from 'axios';
+import Registration_Button from './Registration_Button';
+import Registration from './Registration_Button';
 
 const Login_Form = () => {
     const [form, setForm] = useState({
@@ -28,11 +31,11 @@ const Login_Form = () => {
             postPw : pw
         })  // 성공시 then 진행
         .then(function (response) {
+            // 여기서 받아온 response는 JSON 타입
             console.log(JSON.stringify(response));
             if (response.data.msg === "success") {
-                console.log(JSON.stringify(response.data.msg));
-                alert("로그인 성공");
-                // document.location.href = '/';
+                var nic_name = response.data.nic_name;
+                alert("로그인 성공!\n반갑습니다 " + nic_name + "닙!!");
             }
             else if (response.data.msg === "id_fail") {
                 alert("등록되지 않은 ID 입니다.");
@@ -42,20 +45,31 @@ const Login_Form = () => {
                 alert("잘못된 비밀번호 입니다.");
                 console.log(JSON.stringify(response.data.msg));
             }
-            console.log("if문 아님" + JSON.stringify(response.data.msg));
         })  // 실패시 catch 진행
         .catch(function (error) {
-            alert(error);
-        })  // 성공하던 실패하던 항상 실행
-        .then(function () {
-            console.log("post 함수 실행됨");
-        });
+            alert("error발생 => " + error);
+        })
 
         setForm({
             id: '',
             pw: '',
         });
     };
+
+    const add_user = () => {
+        alert("add_user 실행");
+        var url = "/registration";
+
+        axios.get( url, {} )  // 성공시 then 진행
+        .then(function (response) {
+            if (response.data.msg === "success") {
+                alert("이동");
+            }
+        })  // 실패시 catch 진행
+        .catch(function (error) {
+            alert("error발생 => " + error);
+        })
+    }
 
     return (
         <div>
@@ -82,21 +96,15 @@ const Login_Form = () => {
                     </div>
                 </div>
                 <p></p>
-                {/* <button className="login_button" onClick={loginCheck}>로그인</button>   */}
-                <a onClick={loginCheck}>로그인</a>
-                {/* <span onClick={loginCheck}>로그인</span>              */}
+                <button type="button" className="login_button" onClick={loginCheck}>로그인</button>  
+                {/* 양식 제출용이 아니라면 button type = "button" 으로 두면 된다. */}
             </form>
             
             <p></p>
-            <div className="find_info">
-                <a href="/" target="_blank" className="idinquiry">아이디 찾기</a>
-                <span className="bar" aria-hidden="true"> | </span>
-
-                <a href="/" target="_blank" className="pwinquiry">비밀번호 찾기</a>
-                <span className="bar" aria-hidden="true"> | </span>
-
-                <a href="/" target="_blank" className="join">회원가입</a>
+            <div className="registration_info">
+                <Registration_Button></Registration_Button>
             </div>
+
         </div>
     );
 };
