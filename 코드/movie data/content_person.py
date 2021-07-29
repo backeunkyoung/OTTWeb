@@ -23,12 +23,15 @@ for i in range(len(mc)):
     l = ''
     movieCd = str(mc[i][0]) #무비코드 받아옴
     
+    count = 0
     for j in range(len(pc)): #검색할 무비코드랑 영화인 필모의 무비코드 비교
         if movieCd in pc[j][2]: #영화인 필모에 무비코드 있으면 문자열에 추가
             l += pc[j][0]+', '
+            count += 1
             print(pc[j][1])
-            #db문자열 크기 넘어가지 않도록 수정 필요함
-            
+        if count==30: #30명 이상이면 30명까지만 받음
+            count = 0
+            break
     l = l.rstrip(', ')
     print(l)
     
@@ -37,8 +40,10 @@ for i in range(len(mc)):
     
 for k in CnP:
     try:
-        cursor.execute(sql,k)     
+        print(k)
+        cursor.execute(sql,k)
     except:
+        print('안들어감')
         pass
     
     
