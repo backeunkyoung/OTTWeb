@@ -34,7 +34,7 @@ for i in range(len(mc)):
         
         e = json.loads(text)
         
-        sql = 'INSERT INTO test (person_id, person_name) VALUES (%s, %s)'
+        sql = 'INSERT INTO person (person_pid, Name) VALUES (%s, %s)'
         
         
         for k in e['peopleListResult']['peopleList']:

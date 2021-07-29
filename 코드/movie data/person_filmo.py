@@ -7,7 +7,7 @@ conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db
 #conn = pymysql.connect(host='localhost', user='root', password='root', db='moviedata', charset='utf8') 
 cursor = conn.cursor()
 
-sql = "SELECT * FROM test"
+sql = "SELECT * FROM person"
 
 cursor.execute(sql)
 mc = cursor.fetchall()
@@ -17,7 +17,7 @@ for i in range(len(mc)):
     peopleCd = str(mc[i][0])
     #if mc[i][2]==None:
 
-    url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleInfo.json?key=004ad60387947413715497415217ba54&peopleCd='+peopleCd
+    url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleInfo.json?key=37fe68f5ac2d56ab64b76ad2db4ff003&peopleCd='+peopleCd
 
     req = requests.get(url)
     text = req.text
@@ -25,7 +25,7 @@ for i in range(len(mc)):
     d = json.loads(text)
     filmos = ''
 
-    #print(mc[i][1])
+    print(mc[i][1])
     count = 0
     check = ''
     for j in d['peopleInfoResult']['peopleInfo']['filmos']:        
@@ -39,7 +39,7 @@ for i in range(len(mc)):
             break
     filmos = filmos.rstrip(', ')
 
-    sql = 'UPDATE test SET filmo = "'+filmos+'" WHERE person_id = "'+peopleCd+'"'
+    sql = 'UPDATE person SET filmo = "'+filmos+'" WHERE person_pid = "'+peopleCd+'"'
 
     try:
         cursor.execute(sql)
