@@ -83,11 +83,11 @@ app.post('/login', (req, res) => {
                 console.log("등록되지 않은 id 입니다.");
                 res.send({msg:"id_fail"}); // 클라이언트(login.html) 쪽으로 전달
             } else {
-                query = "select pw from movies_db.users where pw= '" + pw + "';";
+                query = "select pw from movies_db.users where id= '" + id + "';";
                 db.query(query, function (err, row) {
-                    console.log("pw query문 결과 : " + JSON.stringify(row[0].pw));
-                    if (JSON.stringify(row.pw) !== JSON.stringify(pw) ) {
-                        console.log("비교한 pw : " + JSON.stringify(pw));
+                    console.log("pw query문 결과 : " + JSON.stringify(row));
+                    if (row[0].pw !== pw) {
+                        console.log("비교한 pw : " + pw);
                         console.log("잘못된 비밀번호 입니다.");
                         res.send({msg:"pw_fail"});
                     } else {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const EventPractice = () => {
+const Login_Form = () => {
     const [form, setForm] = useState({
         id: '',
         pw: '',
@@ -28,16 +28,17 @@ const EventPractice = () => {
             postPw : pw
         })  // 성공시 then 진행
         .then(function (response) {
-            if (JSON.stringify(response.data.msg) === JSON.stringify("success")) {
+            console.log(JSON.stringify(response));
+            if (response.data.msg === "success") {
                 console.log(JSON.stringify(response.data.msg));
                 alert("로그인 성공");
                 // document.location.href = '/';
             }
-            else if ((JSON.stringify(response.data.msg) === JSON.stringify("id_fail"))) {
+            else if (response.data.msg === "id_fail") {
                 alert("등록되지 않은 ID 입니다.");
                 console.log(JSON.stringify(response.data.msg));
             }
-            else if ((JSON.stringify(response.data.msg) === JSON.stringify("pw_fail"))) {
+            else if (response.data.msg === "pw_fail") {
                 alert("잘못된 비밀번호 입니다.");
                 console.log(JSON.stringify(response.data.msg));
             }
@@ -81,7 +82,9 @@ const EventPractice = () => {
                     </div>
                 </div>
                 <p></p>
-                <button className="login_button" onClick={loginCheck}>로그인</button>              
+                {/* <button className="login_button" onClick={loginCheck}>로그인</button>   */}
+                <a onClick={loginCheck}>로그인</a>
+                {/* <span onClick={loginCheck}>로그인</span>              */}
             </form>
             
             <p></p>
@@ -97,4 +100,4 @@ const EventPractice = () => {
         </div>
     );
 };
-export default EventPractice;
+export default Login_Form;
