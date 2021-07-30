@@ -1,3 +1,4 @@
+#content_info
 import requests
 import json
 import datetime
@@ -20,7 +21,7 @@ mc = cursor.fetchall()
 for i in range(len(mc)):
     movieCd = str(mc[i][0])
     
-    url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=004ad60387947413715497415217ba54&movieCd='+movieCd
+    url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key='+mykey+'&movieCd='+movieCd
 
     req = requests.get(url)
     text = req.text

@@ -1,3 +1,4 @@
+#person_filmo
 import requests
 import json
 import datetime
@@ -17,7 +18,7 @@ for i in range(len(mc)):
     peopleCd = str(mc[i][0])
     #if mc[i][2]==None:
 
-    url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleInfo.json?key=37fe68f5ac2d56ab64b76ad2db4ff003&peopleCd='+peopleCd
+    url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleInfo.json?key='+mykey+'&peopleCd='+peopleCd
 
     req = requests.get(url)
     text = req.text

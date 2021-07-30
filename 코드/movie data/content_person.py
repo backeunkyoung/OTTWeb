@@ -1,3 +1,4 @@
+#content_person
 import pymysql
 
 conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db='movies_db', charset='utf8') 

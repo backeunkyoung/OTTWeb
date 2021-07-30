@@ -1,3 +1,4 @@
+#links_list
 import requests
 import json
 import datetime
@@ -17,7 +18,7 @@ sql = "INSERT INTO links (content_id, title) VALUES (%s, %s)"
 for i in range(52):
     targetDt = current_datetime.strftime('%Y%m%d')
 
-    url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key=004ad60387947413715497415217ba54&targetDt='+targetDt
+    url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key='+mykey+'&targetDt='+targetDt
 
     req = requests.get(url)
     text = req.text
