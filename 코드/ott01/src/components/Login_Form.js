@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
+import React, { useState} from 'react';
 import axios from 'axios';
 import Registration_Button from './Registration_Button';
 

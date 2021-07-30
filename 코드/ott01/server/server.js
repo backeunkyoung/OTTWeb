@@ -102,19 +102,19 @@ app.post('/login', (req, res) => {
             }
         }
     });
+});
 
-    app.post('/registration', (req, res) => {
-        console.log("서버 실행 됨");
-        console.log("req.body : " + JSON.stringify(req.body));
-        
-        var id = req.body.postId;
-        var nic_name = req.body.postNicName;
-        var pw = req.body.postPw;
-        var age = req.body.postAge;
-        
-        console.log("get_id : " + id + " , get_nic_name : " + nic_name + "get_pw : " + pw + " , get_age : " + age);
+app.post('/registration', (req, res) => {
+    console.log("서버 실행 됨");
+    console.log("req.body : " + JSON.stringify(req.body));
     
-        res.send({msg : "success"});
-        
-    });
+    var id = req.body.postId;
+    var nic_name = req.body.postNicName;
+    var pw = req.body.postPw;
+    var age = req.body.postAge;
+    
+    console.log("get_id : " + id + " , get_nic_name : " + nic_name + "get_pw : " + pw + " , get_age : " + age);
+
+    res.send({msg : "success"});
+    
 });
