@@ -102,19 +102,59 @@ app.post('/login', (req, res) => {
             }
         }
     });
+});
 
-    app.post('/registration', (req, res) => {
-        console.log("서버 실행 됨");
-        console.log("req.body : " + JSON.stringify(req.body));
-        
-        var id = req.body.postId;
-        var nic_name = req.body.postNicName;
-        var pw = req.body.postPw;
-        var age = req.body.postAge;
-        
-        console.log("get_id : " + id + " , get_nic_name : " + nic_name + "get_pw : " + pw + " , get_age : " + age);
+app.post('/overlapCheck', (req, res) => {
+    console.log("overlap 체크 서버 실행 됨");
+    console.log("req.body : " + JSON.stringify(req.body));
     
-        res.send({msg : "success"});
-        
-    });
+    var id = req.body.postId;
+    
+    console.log("get_id : " + id);
+
+    var query = "select id from movies_db.users where id= '" + id + "';";
+
+    db.query(query, function (err, row) {
+        if (err) {
+            console.log('err : ' + err);
+        }
+        else {
+            if (row.length !== 0) { // id 중복
+                res.send({msg : "id_fail"});
+            }
+            else {
+                res.send({msg : "success"});
+            }
+        }
+    })
+    
+});
+
+app.post('/registration', (req, res) => {
+    console.log("서버 실행 됨");
+    console.log("req.body : " + JSON.stringify(req.body));
+    
+    var id = req.body.postId;
+    var nic_name = req.body.postNicName;
+    var pw = req.body.postPw;
+    var age = req.body.postAge;
+    
+    console.log("get_id : " + id + " , get_nic_name : " + nic_name + "get_pw : " + pw + " , get_age : " + age);
+
+    var query = "select id from movies_db.users where id= '" + id + "';";
+
+    db.query(query, function (err, row) {
+        if (err) {
+            console.log('err : ' + err);
+        }
+        else {
+            if (row.length !== 0) { // id 중복
+                res.send({msg : "id_fail"});
+            }
+            else {
+                res.send({msg : "success"});
+            }
+        }
+    })
+    
 });
