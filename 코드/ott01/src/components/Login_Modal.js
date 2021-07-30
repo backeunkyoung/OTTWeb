@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import '.././App.css';
 
 const Login_Modal = ( props ) => {
@@ -17,9 +17,6 @@ const Login_Modal = ( props ) => {
                     <main>
                         {props.children}
                     </main>
-                    {/* <footer>
-                        <button className="close" onClick={close}> close </button>
-                    </footer> */}
                 </section>
             ) : null }
         </div>

@@ -27,6 +27,14 @@ module.exports = function(app) {
     );
 
     app.use(
+        '/overlapCheck',
+        createProxyMiddleware({
+            target: 'http://localhost:3333',
+            changeOrigin: true,
+        })
+    );
+
+    app.use(
         '/registration',
         createProxyMiddleware({
             target: 'http://localhost:3333',

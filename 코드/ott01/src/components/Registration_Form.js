@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 const Registration_Form = () => {
@@ -19,6 +20,44 @@ const Registration_Form = () => {
     setForm(nextForm);
   };
 
+  function msg_print(msg) { // ID 중복 체크 메시지 출력
+    var element = '';
+    if (msg == "success") {
+        element = "사용 가능한 ID";
+    }
+    else if (msg == "id_fail") {
+        element = "중복된 ID";
+    }
+    ReactDOM.render(element, document.getElementById('here_add'));
+  }
+
+  function overlap_NoCheck() {
+   
+  }
+
+  const overlapCheck = () => {
+    alert("id 중복 체크 중");
+    var url = "/overlapCheck";
+
+    axios.post( url, {
+    postId : id
+    })
+    .then(function (response) {
+        // 여기서 받아온 response는 JSON 타입
+        console.log(JSON.stringify(response));
+
+        if (response.data.msg === "success") {
+            msg_print(response.data.msg);
+        }
+        else if (response.data.msg === "id_fail") {
+            msg_print(response.data.msg);
+        }
+    })  // 실패시 catch 진행
+    .catch(function (error) {
+        alert("error발생 => " + error);
+    })
+  }
+
   const registration = () => {
     alert("회원가입 클릭 함\nid : " + id + " , nic_name : " + nic_name + ", pw : " + pw + ", age : " + age);
     
@@ -33,10 +72,8 @@ const Registration_Form = () => {
     .then(function (response) {
         // 여기서 받아온 response는 JSON 타입
         console.log(JSON.stringify(response));
-        if (response.data.msg === "success") {
-            alert("회원가입 성공!");
-        }
-        else if (response.data.msg === "id_fail") {
+
+        if (response.data.msg === "id_fail") {
             alert("중복된 ID 입니다.");
             console.log(JSON.stringify(response.data.msg));
         }
@@ -53,7 +90,6 @@ const Registration_Form = () => {
     });
   }
 
-
   return (
     <div>
       <form className="login_form">
@@ -66,6 +102,16 @@ const Registration_Form = () => {
                       value={id}
                       onChange={onChange}
                   ></input>
+                  &nbsp;
+                  <button
+                    type="button"
+                    onClick={overlapCheck}
+                  >
+                      중복체크
+                  </button>
+              </div>
+              <div id="here_add">
+                  
               </div>
               <p></p>
               <div className="nic_name_form">
@@ -99,11 +145,11 @@ const Registration_Form = () => {
               </div>
           </div>
           <p></p>
-          <button type="button" className="registration_button" onClick={registration}>가입하기</button>  
+          <button type="button" id="registration_button" onClick={registration}>가입하기</button>  
           {/* 양식 제출용이 아니라면 button type = "button" 으로 두면 된다. */}
       </form>
     </div>
   );
-};
+}
 
 export default Registration_Form
