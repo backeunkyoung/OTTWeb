@@ -94,7 +94,11 @@ const Login_Form = () => {
                     </div>
                 </div>
                 <p></p>
-                <button type="button" className="login_button" onClick={loginCheck}>로그인</button>  
+                <button type="button"
+                        disabled={!id || !pw}
+                        className="login_button"
+                        onClick={loginCheck}>로그인
+                </button>  
                 {/* 양식 제출용이 아니라면 button type = "button" 으로 두면 된다. */}
             </form>
             

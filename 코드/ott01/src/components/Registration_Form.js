@@ -10,21 +10,14 @@ const Registration_Form = () => {
     age: '',
   });
 
-  const [disable, setDisable] = React.useState(true);
-
   const { id, nic_name, pw , age } = form;
 
   const onChange = (e) => {
-    // document.getElementById("overlapCheck_Button").disabled = false;
-    setDisable(false);
     const nextForm = {
         ...form, //기존의 form내용을 복사
         [e.target.name]: e.target.value, // 원하는 값을 덮어 씌운다
     };
     setForm(nextForm);
-    // if (nextForm === '') {
-    //     document.getElementById("overlapCheck_Button").disabled = true;
-    // }
   };
 
   function msg_print(msg) { // ID 중복 체크 메시지 출력
@@ -124,7 +117,7 @@ const Registration_Form = () => {
                   &nbsp;
                   <button
                     type="button"
-                    disabled={disable}
+                    disabled={!id}
                     id = 'overlapCheck_Button'
                     onClick={overlapCheck}
                   >
