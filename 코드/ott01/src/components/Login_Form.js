@@ -37,11 +37,9 @@ const Login_Form = () => {
             }
             else if (response.data.msg === "id_fail") {
                 alert("등록되지 않은 ID 입니다.");
-                console.log(JSON.stringify(response.data.msg));
             }
             else if (response.data.msg === "pw_fail") {
                 alert("잘못된 비밀번호 입니다.");
-                console.log(JSON.stringify(response.data.msg));
             }
         })  // 실패시 catch 진행
         .catch(function (error) {

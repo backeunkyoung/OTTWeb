@@ -3,51 +3,33 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 const Registration_Form = () => {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState({    // 상태 관리를 할 데이터(바인딩 해야 할 데이터)
     id: '',
     nic_name: '',
     pw: '',
     age: '',
+    overlap: false
   });
 
-  const { id, nic_name, pw , age } = form;
+  const { id, nic_name, pw , age, overlap } = form;
 
+
+  // 데이터 바인딩을 위한 이벤트(단방향 바인딩 => 리액트는 양방향 바인딩 제공 X)
   const onChange = (e) => {
     const nextForm = {
         ...form, //기존의 form내용을 복사
-        [e.target.name]: e.target.value, // 원하는 값을 덮어 씌운다
+        [e.target.name]: e.target.value, // input에 입력한 값으로 재설정해줌
     };
-    setForm(nextForm);
+    setForm(nextForm);  // 상태 값 갱신
   };
 
-  function msg_print(msg) { // ID 중복 체크 메시지 출력
-    var element = '';
-    if (msg == "success") {
-        element = "사용 가능한 ID";
-    }
-    else if (msg == "id_fail") {
-        element = "중복된 ID";
-    }
-    ReactDOM.render(element, document.getElementById('id_msg'));
-  }
 
-  function overlap_NoCheck() {
-    if (id === '' || nic_name === '' || pw === '' || age === '') {
-        var element = "입력하지 않은 정보가 있습니다."
-        ReactDOM.render(element, document.getElementById('nocheck_msg'));
-        return "No";
-    }
-    else {
-        return "Ok";
-    }
-  }
-
+  // '중복체크' 버튼 클릭 이벤트 => 서버를 통해 DB에서 ID를 조회한 후, 사용 가능한지 판별
   const overlapCheck = () => {
-    alert("id 중복 체크 중");
     var url = "/overlapCheck";
 
     axios.post( url, {
-    postId : id
+        postId : id
     })
     .then(function (response) {
         // 여기서 받아온 response는 JSON 타입
@@ -65,14 +47,43 @@ const Registration_Form = () => {
     })
   }
 
+
+  // ID 중복 체크 결과 메시지를 화면에 붙여넣기(DOM 이용)
+  function msg_print(msg) {
+    var element = '';
+    if (msg == "success") {
+        element = "사용 가능한 ID";
+        overlap = true;
+    }
+    else if (msg == "id_fail") {
+        element = "중복된 ID";
+    }
+    ReactDOM.render(element, document.getElementById('id_msg'));
+  }
+
+
+  // 회원가입 페이지의 필요조건을 충족했는지 여부를 리턴
+  function NecessaryCondition_Check() {
+    if (overlap === false) {
+        return "overlap_no";
+    }
+    else if (id === '' || nic_name === '' || pw === '' || age === '') {
+        return "input_no";
+    }
+    else {
+        return "completion";
+    }
+  }
+
+
   const registration = () => {
-    alert("회원가입 클릭 함\nid : " + id + " , nic_name : " + nic_name + ", pw : " + pw + ", age : " + age);
+    // alert("회원가입 클릭 함\nid : " + id + " , nic_name : " + nic_name + ", pw : " + pw + ", age : " + age);
     
-    var go = overlap_NoCheck();
-    if (go === "Ok") {
+    var NC = NecessaryCondition_Check(); // 필요조건 충족 확인
+    if (NC === "completion") {
         var url = "/registration";
 
-        axios.post( url, {
+        axios.post( url, {  // 서버로 post방식으로 데이터 전달
             postId : id,
             postNicName : nic_name,
             postPw : pw,
@@ -99,6 +110,14 @@ const Registration_Form = () => {
             pw: '',
             age: '',
         });   
+    }   // 필요조건 미충족 시 화면에 메세지 출력
+    else if (NC === "overlap_no") {
+        var element = "ID 중복체크를 해주세요";
+        ReactDOM.render(element, document.getElementById('nocheck_msg'));
+    }
+    else if (NC === "input_no") {
+        var element = "입력하지 않은 정보가 있습니다.";
+        ReactDOM.render(element, document.getElementById('nocheck_msg'));
     }
   }
 
@@ -120,6 +139,7 @@ const Registration_Form = () => {
                     disabled={!id}
                     id = 'overlapCheck_Button'
                     onClick={overlapCheck}
+                    onChange={onChange}
                   >
                       중복체크
                   </button>
