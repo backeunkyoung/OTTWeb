@@ -37,11 +37,9 @@ const Login_Form = () => {
             }
             else if (response.data.msg === "id_fail") {
                 alert("등록되지 않은 ID 입니다.");
-                console.log(JSON.stringify(response.data.msg));
             }
             else if (response.data.msg === "pw_fail") {
                 alert("잘못된 비밀번호 입니다.");
-                console.log(JSON.stringify(response.data.msg));
             }
         })  // 실패시 catch 진행
         .catch(function (error) {
@@ -94,7 +92,11 @@ const Login_Form = () => {
                     </div>
                 </div>
                 <p></p>
-                <button type="button" className="login_button" onClick={loginCheck}>로그인</button>  
+                <button type="button"
+                        disabled={!id || !pw}
+                        className="login_button"
+                        onClick={loginCheck}>로그인
+                </button>  
                 {/* 양식 제출용이 아니라면 button type = "button" 으로 두면 된다. */}
             </form>
             
