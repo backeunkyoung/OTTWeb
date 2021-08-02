@@ -55,7 +55,7 @@ app.get("/movieTable",function(request,response) {
         }  
 
         data+="</table></html>"  
-        response.send(data);  
+        response.send({data : data});  
     }  
     else  
         console.log('Error while performing Query.');  
