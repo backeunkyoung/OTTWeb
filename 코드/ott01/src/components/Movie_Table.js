@@ -3,19 +3,33 @@ import axios from 'axios';
 
 // server 호출
 function Movie_Table() {
-    // 컴포넌트가 렌더링 될 때마다 특정 작업을 실행할 수 있도록 해줌
-    // 컴포넌트가 mount, unmount, update 되었을 때 특정 작업 실행
-    useEffect(() => {
-        axios.get('/movieTable')
-            .then( response => {
-                return (
-                    <div>
-                        {response.data}
-                    </div>
-                );
-            }
-        );
-    }, []); // [] : 빈 배열 => 화면에 가장 처음 렌더링 될 때 1번만 실행
+
+    const movie_data = () => {
+        alert("클릭 이벤트");
+        var url = "/movieTable";
+
+        axios.post( url, {
+        })  // 성공시 then 진행
+        .then(function (response) {
+            // 여기서 받아온 response는 JSON 타입
+            console.log(JSON.stringify(response));
+            alert("response.data : " + response.data);
+            return response.data;
+        })  // 실패시 catch 진행
+        .catch(function (error) {
+            alert("error발생 => " + error);
+        })
+    
+    }
+
+
+    return (
+        <div>
+            <button type='button' onClick={movie_data}>버튼</button>
+            
+            영화 목록..
+        </div>
+    )
 }
 
 export default Movie_Table

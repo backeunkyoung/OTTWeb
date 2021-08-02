@@ -8,17 +8,17 @@ const Registration_Form = () => {
     nic_name: '',
     pw: '',
     age: '',
-    overlap: false
+    overlap: false,
   });
 
   const { id, nic_name, pw , age, overlap } = form;
-
 
   // 데이터 바인딩을 위한 이벤트(단방향 바인딩 => 리액트는 양방향 바인딩 제공 X)
   const onChange = (e) => {
     const nextForm = {
         ...form, //기존의 form내용을 복사
         [e.target.name]: e.target.value, // input에 입력한 값으로 재설정해줌
+        overlap: false,
     };
     setForm(nextForm);  // 상태 값 갱신
   };
@@ -26,6 +26,8 @@ const Registration_Form = () => {
 
   // '중복체크' 버튼 클릭 이벤트 => 서버를 통해 DB에서 ID를 조회한 후, 사용 가능한지 판별
   const overlapCheck = () => {
+    alert("중복체크 클릭");
+
     var url = "/overlapCheck";
 
     axios.post( url, {
@@ -37,6 +39,7 @@ const Registration_Form = () => {
 
         if (response.data.msg === "success") {
             msg_print(response.data.msg);
+            overlap = true;
         }
         else if (response.data.msg === "id_fail") {
             msg_print(response.data.msg);
@@ -53,7 +56,6 @@ const Registration_Form = () => {
     var element = '';
     if (msg == "success") {
         element = "사용 가능한 ID";
-        overlap = true;
     }
     else if (msg == "id_fail") {
         element = "중복된 ID";
@@ -77,7 +79,7 @@ const Registration_Form = () => {
 
 
   const registration = () => {
-    // alert("회원가입 클릭 함\nid : " + id + " , nic_name : " + nic_name + ", pw : " + pw + ", age : " + age);
+    alert("회원가입 클릭 함\nid : " + id + " , nic_name : " + nic_name + ", pw : " + pw + ", age : " + age);
     
     var NC = NecessaryCondition_Check(); // 필요조건 충족 확인
     if (NC === "completion") {
@@ -112,10 +114,12 @@ const Registration_Form = () => {
         });   
     }   // 필요조건 미충족 시 화면에 메세지 출력
     else if (NC === "overlap_no") {
+        alert("중복체크 안함");
         var element = "ID 중복체크를 해주세요";
         ReactDOM.render(element, document.getElementById('nocheck_msg'));
     }
     else if (NC === "input_no") {
+        alert("정보 입력 모두 안함");
         var element = "입력하지 않은 정보가 있습니다.";
         ReactDOM.render(element, document.getElementById('nocheck_msg'));
     }
