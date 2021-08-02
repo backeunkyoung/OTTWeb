@@ -29,7 +29,9 @@ app.get('/boxoffice', (req, res) => {
     })
 })
 
-app.get("/movieTable",function(request,response) {  
+app.get("/movieTable",function(request,response) {
+    console.log("서버쪽 movieTable");
+    
     db.query('SELECT * from contents', function(err, rows, fields) {  
     db.end(); 
     
@@ -53,7 +55,7 @@ app.get("/movieTable",function(request,response) {
         }  
 
         data+="</table></html>"  
-        response.send(data);  
+        response.send({data : data});  
     }  
     else  
         console.log('Error while performing Query.');  
@@ -141,6 +143,7 @@ app.post('/registration', (req, res) => {
     
     console.log("get_id : " + id + " , get_nic_name : " + nic_name + "get_pw : " + pw + " , get_age : " + age);
 
+    // var query = "insert into movies_db.users(`id`,`pw`,`nic_name`,`age`)VALUES('" + id + "','" + nic_name + "','" + pw + "','" + age + "')";
     var query = "select id from movies_db.users where id= '" + id + "';";
 
     db.query(query, function (err, row) {
@@ -150,6 +153,7 @@ app.post('/registration', (req, res) => {
         else {
             if (row.length !== 0) { // id 중복
                 res.send({msg : "id_fail"});
+                console.log('err : ' + err);
             }
             else {
                 res.send({msg : "success"});
