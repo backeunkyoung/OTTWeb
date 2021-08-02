@@ -8,17 +8,21 @@ const Registration_Form = () => {
     nic_name: '',
     pw: '',
     age: '',
-    overlap: false,
   });
 
-  const { id, nic_name, pw , age, overlap } = form;
+  const { id, nic_name, pw , age } = form;
+
+  var overlap = false;
 
   // 데이터 바인딩을 위한 이벤트(단방향 바인딩 => 리액트는 양방향 바인딩 제공 X)
   const onChange = (e) => {
+    console.log("overlap : " + overlap);
+    if (e.target.name === "id") {
+        overlap = false;
+    }
     const nextForm = {
         ...form, //기존의 form내용을 복사
         [e.target.name]: e.target.value, // input에 입력한 값으로 재설정해줌
-        overlap: false,
     };
     setForm(nextForm);  // 상태 값 갱신
   };
@@ -80,7 +84,8 @@ const Registration_Form = () => {
 
   const registration = () => {
     alert("회원가입 클릭 함\nid : " + id + " , nic_name : " + nic_name + ", pw : " + pw + ", age : " + age);
-    
+    console.log("가입하기 클릭 시점의 overlap : " + overlap);
+
     var NC = NecessaryCondition_Check(); // 필요조건 충족 확인
     if (NC === "completion") {
         var url = "/registration";
