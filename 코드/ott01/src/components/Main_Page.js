@@ -3,7 +3,7 @@ import { Link, BrowserRouter as Router } from 'react-router-dom'; //React-Router
 import Login_Button from './Login_Button';
 import Button_tool from './Kategori_Menu';
 import Movies from '../movies/Movies';
-import Movie_Table from './Movie_Table';
+import Print_Table from './Print_Table';
 import '../App.css';
 
 function Main_Page() {
@@ -25,7 +25,7 @@ function Main_Page() {
                     <div>
                         <br></br>
                         {/* <Movies></Movies> */}
-                        <Movie_Table></Movie_Table>
+                        <Print_Table></Print_Table>
                         <br></br>
                     </div>
                 </body>
