@@ -12,7 +12,7 @@ const Registration_Form = () => {
 
   const { id, nic_name, pw , age } = form;
 
-  var overlap = false;
+  let overlap = false;
 
   // 데이터 바인딩을 위한 이벤트(단방향 바인딩 => 리액트는 양방향 바인딩 제공 X)
   const onChange = (e) => {
