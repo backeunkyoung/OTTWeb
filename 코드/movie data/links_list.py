@@ -1,25 +1,25 @@
-#links_list
+#####links_list_new 나중에 content_list랑 같이 넣도록 만들어야겠다
 import requests
 import json
 import datetime
+import time
 import pymysql
 
-current_datetime = datetime.datetime(2020, 1, 1)
+current_datetime = datetime.datetime(2021, 1, 1)
 l = []
 
-conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db='movies_db', charset='utf8') 
-#conn = pymysql.connect(host='localhost', user='root', password='root', db='moviedata', charset='utf8') 
+conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db='movies_db', charset='utf8')
 cursor = conn.cursor()
 
 sql = "INSERT INTO links (content_id, title) VALUES (%s, %s)"
-#sql = "INSERT INTO movies (movieCd, movieNm, openDt) VALUES (%s, %s, %s)"
 
 
-for i in range(52):
+for i in range(26):
     targetDt = current_datetime.strftime('%Y%m%d')
 
     url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key='+mykey+'&targetDt='+targetDt
 
+    time.sleep(3) #3초
     req = requests.get(url)
     text = req.text
 
