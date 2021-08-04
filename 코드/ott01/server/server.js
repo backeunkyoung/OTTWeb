@@ -127,8 +127,7 @@ app.post('/overlapCheck', (req, res) => {
                 res.send({msg : "success"});
             }
         }
-    })
-    
+    })   
 });
 
 app.post('/registration', (req, res) => {
@@ -136,28 +135,21 @@ app.post('/registration', (req, res) => {
     console.log("req.body : " + JSON.stringify(req.body));
     
     var id = req.body.postId;
-    var nic_name = req.body.postNicName;
     var pw = req.body.postPw;
+    var nic_name = req.body.postNicName;
     var age = req.body.postAge;
     
-    console.log("get_id : " + id + " , get_nic_name : " + nic_name + "get_pw : " + pw + " , get_age : " + age);
+    console.log("get_id : " + id + ", get_pw : " + pw + ", get_nic_name : " + nic_name + ", get_age : " + age);
 
-    // var query = "insert into movies_db.users(`id`,`pw`,`nic_name`,`age`)VALUES('" + id + "','" + nic_name + "','" + pw + "','" + age + "')";
-    var query = "select id from movies_db.users where id= '" + id + "';";
+    var query = "insert into movies_db.users(`id`,`pw`,`nic_name`,`age`)VALUES('" + id + "','" + pw + "','" + nic_name + "','" + age + "')";
 
     db.query(query, function (err, row) {
         if (err) {
             console.log('err : ' + err);
         }
         else {
-            if (row.length !== 0) { // id 중복
-                res.send({msg : "id_fail"});
-                console.log('err : ' + err);
-            }
-            else {
-                res.send({msg : "success"});
-            }
+            res.send({msg : "success"});
+            console.log("성공");
         }
     })
-    
 });

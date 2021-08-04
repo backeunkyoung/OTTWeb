@@ -17,13 +17,16 @@ function Registration_Button() {
 
    return (
        <React.Fragment>
+           {/* 오른쪽 끝에 '회원가입' 버튼 */}
             <div style={{float: 'right'}}>
                 <Button onClick={ openModal }>회원가입</Button>
             </div >
+
             <Registration_Modal open={ modalOpen } close={ closeModal } header="Registration Form">
-            <div>
-                <Registration_Form></Registration_Form>
-            </div>
+                {/* 모달 창 안의 내용 */}
+                <div>
+                    <Registration_Form close={ closeModal }></Registration_Form>
+                </div>
            </Registration_Modal>
        </React.Fragment>
    )

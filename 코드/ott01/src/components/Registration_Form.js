@@ -2,17 +2,20 @@ import React, { useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-const Registration_Form = () => {
+let overlap = false;
+
+const Registration_Form = (props) => {
   const [form, setForm] = useState({    // 상태 관리를 할 데이터(바인딩 해야 할 데이터)
     id: '',
-    nic_name: '',
     pw: '',
+    nic_name: '',
     age: '',
   });
 
-  const { id, nic_name, pw , age } = form;
+  const { id, pw , nic_name, age } = form;
 
-  let overlap = false;
+  // close={ closeModal }
+  const { close } = props;
 
   // 데이터 바인딩을 위한 이벤트(단방향 바인딩 => 리액트는 양방향 바인딩 제공 X)
   const onChange = (e) => {
@@ -39,11 +42,12 @@ const Registration_Form = () => {
     })
     .then(function (response) {
         // 여기서 받아온 response는 JSON 타입
-        console.log(JSON.stringify(response));
+        // console.log(JSON.stringify(response));
 
         if (response.data.msg === "success") {
             msg_print(response.data.msg);
             overlap = true;
+            console.log("중복체크 success => overlap : " + overlap);
         }
         else if (response.data.msg === "id_fail") {
             msg_print(response.data.msg);
@@ -83,7 +87,6 @@ const Registration_Form = () => {
 
 
   const registration = () => {
-    alert("회원가입 클릭 함\nid : " + id + " , nic_name : " + nic_name + ", pw : " + pw + ", age : " + age);
     console.log("가입하기 클릭 시점의 overlap : " + overlap);
 
     var NC = NecessaryCondition_Check(); // 필요조건 충족 확인
@@ -92,16 +95,17 @@ const Registration_Form = () => {
 
         axios.post( url, {  // 서버로 post방식으로 데이터 전달
             postId : id,
-            postNicName : nic_name,
             postPw : pw,
+            postNicName : nic_name,
             postAge : age
         })  // 성공시 then 진행
         .then(function (response) {
             // 여기서 받아온 response는 JSON 타입
-            console.log(JSON.stringify(response));
+            // console.log(JSON.stringify(response));
 
             if (response.data.msg === "success") {
                 alert("가입 완료");
+                document.getElementById('closeModal').click();
             }
             else if (response.data.msg === "id_fail") {
                 alert("가입 실패");
@@ -113,10 +117,11 @@ const Registration_Form = () => {
 
         setForm({
             id: '',
-            nic_name: '',
             pw: '',
+            nic_name: '',
             age: '',
-        });   
+        });
+
     }   // 필요조건 미충족 시 화면에 메세지 출력
     else if (NC === "overlap_no") {
         alert("중복체크 안함");
@@ -153,19 +158,8 @@ const Registration_Form = () => {
                       중복체크
                   </button>
               </div>
-              <div id="id_msg">
+              <div id="id_msg"></div>
                   
-              </div>
-              <p></p>
-              <div className="nic_name_form">
-                  <input
-                      type="text"
-                      name="nic_name"
-                      placeholder="닉네임"
-                      value={nic_name}
-                      onChange={onChange}
-                  ></input>
-              </div>
               <p></p>
               <div className="pw_form">
                   <input
@@ -176,6 +170,18 @@ const Registration_Form = () => {
                       onChange={onChange}
                   ></input>
               </div>
+
+              <p></p>
+              <div className="nic_name_form">
+                  <input
+                      type="text"
+                      name="nic_name"
+                      placeholder="닉네임"
+                      value={nic_name}
+                      onChange={onChange}
+                  ></input>
+              </div>
+
               <p></p>
               <div className="age_form">
                   <input
@@ -187,13 +193,15 @@ const Registration_Form = () => {
                   ></input>
               </div>
           </div>
-          <p></p>
+
+          <br></br>
           <button type="button" id="registration_button" onClick={registration}>가입하기</button>  
           {/* 양식 제출용이 아니라면 button type = "button" 으로 두면 된다. */}
           <p></p>
           <div id="nocheck_msg">
           </div>
         </form>
+        <button type="hidden" id="closeModal" onClick={close}></button>
     </div>
   );
 }

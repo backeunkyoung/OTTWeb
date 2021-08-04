@@ -22,7 +22,7 @@ function Login_Button() {
             </div >
             <Login_Modal open={ modalOpen } close={ closeModal } header="Login Form">
             <div>
-                <Login_Form></Login_Form>
+                <Login_Form close={ closeModal }></Login_Form>
             </div>
            </Login_Modal>
        </React.Fragment>

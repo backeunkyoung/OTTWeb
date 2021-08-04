@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Registration_Button from './Registration_Button';
 
-const Login_Form = () => {
+const Login_Form = (props) => {
     const [form, setForm] = useState({
         id: '',
         pw: '',
     });
 
     const { id, pw } = form;
+
+    const { close } = props;
 
     const onChange = (e) => {
         const nextForm = {
@@ -33,7 +35,8 @@ const Login_Form = () => {
             console.log(JSON.stringify(response));
             if (response.data.msg === "success") {
                 var nic_name = response.data.nic_name;
-                alert("로그인 성공!\n반갑습니다 " + nic_name + "닙!!");
+                alert("로그인 성공!\n반갑습니다 " + nic_name + "님!!");
+                document.getElementById('closeModal').click();
             }
             else if (response.data.msg === "id_fail") {
                 alert("등록되지 않은 ID 입니다.");
@@ -104,7 +107,7 @@ const Login_Form = () => {
             <div className="registration_info">
                 <Registration_Button></Registration_Button>
             </div>
-
+            <button type="hidden" id="closeModal" onClick={close}></button>
         </div>
     );
 };
