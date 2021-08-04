@@ -35,7 +35,7 @@ const Login_Form = (props) => {
             console.log(JSON.stringify(response));
             if (response.data.msg === "success") {
                 var nic_name = response.data.nic_name;
-                alert("로그인 성공!\n반갑습니다 " + nic_name + "닙!!");
+                alert("로그인 성공!\n반갑습니다 " + nic_name + "님!!");
                 document.getElementById('closeModal').click();
             }
             else if (response.data.msg === "id_fail") {

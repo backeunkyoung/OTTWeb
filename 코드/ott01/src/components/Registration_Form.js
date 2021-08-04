@@ -7,12 +7,12 @@ let overlap = false;
 const Registration_Form = (props) => {
   const [form, setForm] = useState({    // 상태 관리를 할 데이터(바인딩 해야 할 데이터)
     id: '',
-    nic_name: '',
     pw: '',
+    nic_name: '',
     age: '',
   });
 
-  const { id, nic_name, pw , age } = form;
+  const { id, pw , nic_name, age } = form;
 
   // close={ closeModal }
   const { close } = props;
@@ -87,7 +87,6 @@ const Registration_Form = (props) => {
 
 
   const registration = () => {
-    alert("회원가입 클릭 함\nid : " + id + " , nic_name : " + nic_name + ", pw : " + pw + ", age : " + age);
     console.log("가입하기 클릭 시점의 overlap : " + overlap);
 
     var NC = NecessaryCondition_Check(); // 필요조건 충족 확인
@@ -96,8 +95,8 @@ const Registration_Form = (props) => {
 
         axios.post( url, {  // 서버로 post방식으로 데이터 전달
             postId : id,
-            postNicName : nic_name,
             postPw : pw,
+            postNicName : nic_name,
             postAge : age
         })  // 성공시 then 진행
         .then(function (response) {
@@ -118,8 +117,8 @@ const Registration_Form = (props) => {
 
         setForm({
             id: '',
-            nic_name: '',
             pw: '',
+            nic_name: '',
             age: '',
         });
 
@@ -159,19 +158,8 @@ const Registration_Form = (props) => {
                       중복체크
                   </button>
               </div>
-              <div id="id_msg">
+              <div id="id_msg"></div>
                   
-              </div>
-              <p></p>
-              <div className="nic_name_form">
-                  <input
-                      type="text"
-                      name="nic_name"
-                      placeholder="닉네임"
-                      value={nic_name}
-                      onChange={onChange}
-                  ></input>
-              </div>
               <p></p>
               <div className="pw_form">
                   <input
@@ -182,6 +170,18 @@ const Registration_Form = (props) => {
                       onChange={onChange}
                   ></input>
               </div>
+
+              <p></p>
+              <div className="nic_name_form">
+                  <input
+                      type="text"
+                      name="nic_name"
+                      placeholder="닉네임"
+                      value={nic_name}
+                      onChange={onChange}
+                  ></input>
+              </div>
+
               <p></p>
               <div className="age_form">
                   <input
@@ -193,7 +193,8 @@ const Registration_Form = (props) => {
                   ></input>
               </div>
           </div>
-          <p></p>
+
+          <br></br>
           <button type="button" id="registration_button" onClick={registration}>가입하기</button>  
           {/* 양식 제출용이 아니라면 button type = "button" 으로 두면 된다. */}
           <p></p>
