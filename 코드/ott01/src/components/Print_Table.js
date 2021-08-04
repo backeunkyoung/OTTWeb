@@ -12,7 +12,7 @@ function Print_Table() {
         .then(function (res) {
             // 여기서 받아온 res는 JSON 타입
             console.log("get_movies함수 실행\n" + JSON.stringify(res.data));
-            console.log("추출 : \n" + JSON.stringify(res.data[1]));
+            console.log("추출 : \n" + JSON.stringify(res.data['content_id']));
             console.log("키 개수 : " + Object.keys(res.data).length);
 
             return res.data;

@@ -2,7 +2,9 @@ import React, { useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-const Registration_Form = () => {
+let overlap = false;
+
+const Registration_Form = (props) => {
   const [form, setForm] = useState({    // 상태 관리를 할 데이터(바인딩 해야 할 데이터)
     id: '',
     nic_name: '',
@@ -12,7 +14,8 @@ const Registration_Form = () => {
 
   const { id, nic_name, pw , age } = form;
 
-  let overlap = false;
+  // close={ closeModal }
+  const { close } = props;
 
   // 데이터 바인딩을 위한 이벤트(단방향 바인딩 => 리액트는 양방향 바인딩 제공 X)
   const onChange = (e) => {
@@ -39,11 +42,12 @@ const Registration_Form = () => {
     })
     .then(function (response) {
         // 여기서 받아온 response는 JSON 타입
-        console.log(JSON.stringify(response));
+        // console.log(JSON.stringify(response));
 
         if (response.data.msg === "success") {
             msg_print(response.data.msg);
             overlap = true;
+            console.log("중복체크 success => overlap : " + overlap);
         }
         else if (response.data.msg === "id_fail") {
             msg_print(response.data.msg);
@@ -98,10 +102,11 @@ const Registration_Form = () => {
         })  // 성공시 then 진행
         .then(function (response) {
             // 여기서 받아온 response는 JSON 타입
-            console.log(JSON.stringify(response));
+            // console.log(JSON.stringify(response));
 
             if (response.data.msg === "success") {
                 alert("가입 완료");
+                document.getElementById('closeModal').click();
             }
             else if (response.data.msg === "id_fail") {
                 alert("가입 실패");
@@ -116,7 +121,8 @@ const Registration_Form = () => {
             nic_name: '',
             pw: '',
             age: '',
-        });   
+        });
+
     }   // 필요조건 미충족 시 화면에 메세지 출력
     else if (NC === "overlap_no") {
         alert("중복체크 안함");
@@ -194,6 +200,7 @@ const Registration_Form = () => {
           <div id="nocheck_msg">
           </div>
         </form>
+        <button type="hidden" id="closeModal" onClick={close}></button>
     </div>
   );
 }
