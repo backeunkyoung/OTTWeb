@@ -2,29 +2,29 @@ import React, { useState } from "react";
 import axios from "axios";
 import _ from "lodash";
 
+function get_movies() { // server에게 영화DB 받아오기
+    var url = "/movieTable";
+
+    axios.post( url, {
+    })  // 성공시 then 진행
+    .then(function (res) {
+        // 여기서 받아온 res는 JSON 타입
+        console.log("get_movies함수 실행\n" + JSON.stringify(res.data));
+        console.log("추출(첫번째 요소) : \n" + JSON.stringify(res.data.data[0]));
+        
+        return res.data;
+    })  // 실패시 catch 진행
+    .catch(function (error) {
+        alert("error발생 => " + error);
+        return "error";
+    })
+}
+
+var movies = get_movies(); // 영화 데이터(JSON 타입)
+
+console.log("movies : \n" + JSON.stringify(movies));
+
 function Print_Table() {
-
-    function get_movies() { // server에게 영화DB 받아오기
-        var url = "/movieTable";
-
-        axios.post( url, {
-        })  // 성공시 then 진행
-        .then(function (res) {
-            // 여기서 받아온 res는 JSON 타입
-            console.log("get_movies함수 실행\n" + JSON.stringify(res.data));
-            console.log("추출 : \n" + JSON.stringify(res.data['content_id']));
-            console.log("키 개수 : " + Object.keys(res.data).length);
-
-            return res.data;
-        })  // 실패시 catch 진행
-        .catch(function (error) {
-            alert("error발생 => " + error);
-        })
-    }
-
-    var movies = get_movies(); // 영화 데이터(JSON 타입)
-
-    // console.log("movies : \n" + JSON.stringify(movies));
 
     return(
         <div>
