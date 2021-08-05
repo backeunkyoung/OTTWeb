@@ -2,8 +2,7 @@ import React from 'react';
 import { Link, BrowserRouter as Router } from 'react-router-dom'; //React-Router import
 import Login_Button from './Login_Button';
 import Button_tool from './Kategori_Menu';
-import Movies from '../movies/Movies';
-import Print_Table from './Print_Table';
+import Movie_Table from './movie_table/Movie_Table';
 import '../App.css';
 
 function Main_Page() {
@@ -24,8 +23,7 @@ function Main_Page() {
                 <body>
                     <div>
                         <br></br>
-                        {/* <Movies></Movies> */}
-                        <Print_Table></Print_Table>
+                        <Movie_Table></Movie_Table>
                         <br></br>
                     </div>
                 </body>
