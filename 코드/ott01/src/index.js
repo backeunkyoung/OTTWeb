@@ -6,9 +6,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(  // 브라우저 상에 리액트 컴포넌트를 보여주기 위해 사용
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode> // React의 Strict Mode : 애플리케이션 내의 잠재적인 문제를 알아내기 위한 도구 => 개발모드에서만 활성화 됨
+    <App />,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 
