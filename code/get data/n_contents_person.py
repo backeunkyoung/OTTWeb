@@ -1,8 +1,7 @@
 #content_person
 import pymysql
 
-conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db='movies_db', charset='utf8') 
-#conn = pymysql.connect(host='localhost', user='root', password='root', db='moviedata', charset='utf8') 
+conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db='movies_db', charset='utf8')
 cursor = conn.cursor()
 
 sql = "SELECT content_id FROM contents"

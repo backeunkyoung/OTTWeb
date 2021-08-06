@@ -7,7 +7,7 @@ import pymysql
 
 #current_datetime = datetime.datetime(2021, 1, 1)
 current_datetime = datetime.datetime.today() #현재 날짜
-current_datetime = current_datetime - timedelta(weeks=1) #저번 주의 박스오피스 가져오기 위해 (현재날짜 - 1weeks)
+current_datetime = current_datetime - datetime.timedelta(weeks=1) #저번 주의 박스오피스 가져오기 위해 (현재날짜 - 1weeks)
 l = []
 li = []
 
