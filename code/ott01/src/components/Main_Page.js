@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link, BrowserRouter as Router } from 'react-router-dom'; //React-Router import
-import Login_Button from './Login_Button';
-import Button_tool from './Kategori_Menu';
-import Movies from '../movies/Movies';
-import Print_Table from './Print_Table';
+import Login_Button from './login/Login_Button';
+import Kategori_Menu from './Kategori_Menu';
+import Movie_Table from './movie_table/Movie_Table';
 import '../App.css';
 
 function Main_Page() {
@@ -18,14 +17,13 @@ function Main_Page() {
                     <div>
                         <Login_Button></Login_Button>
                     </div>
-                    <Button_tool></Button_tool>
+                    <Kategori_Menu></Kategori_Menu>
                 </header>
 
                 <body>
                     <div>
                         <br></br>
-                        {/* <Movies></Movies> */}
-                        <Print_Table></Print_Table>
+                        {/* <Movie_Table></Movie_Table> */}
                         <br></br>
                     </div>
                 </body>
