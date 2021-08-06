@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import axios from 'axios';
-import Table_Header from "./Table_Header";
-import Table_Body from "./Table_Body";
+import Movie_Table_Header from "./Movie_Table_Header";
+import Movie_Table_Body from "./Movie_Table_Body";
 
 function Movie_Table() {
 
@@ -9,10 +9,10 @@ function Movie_Table() {
         <div>
             <table>
                 <tr>
-                    <Table_Header></Table_Header>   
+                    <Movie_Table_Header></Movie_Table_Header>   
                 </tr>
                 <tr>
-                    <Table_Body></Table_Body>
+                    <Movie_Table_Body></Movie_Table_Body>
                 </tr>
             </table>
         </div>

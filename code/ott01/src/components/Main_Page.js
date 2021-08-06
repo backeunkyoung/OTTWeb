@@ -23,7 +23,7 @@ function Main_Page() {
                 <body>
                     <div>
                         <br></br>
-                        {/* <Movie_Table></Movie_Table> */}
+                        <Movie_Table></Movie_Table>
                         <br></br>
                     </div>
                 </body>

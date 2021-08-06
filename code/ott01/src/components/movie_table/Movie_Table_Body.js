@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Loader from '../Loader';
 
 function Table_Body() {
-    const [movies, setMovies] = useState([]);
-    const [loading, setLoading] = useState(null);
+    const [movies, setMovies] = useState();
 
     useEffect(() => { // server에게 영화DB 받아오기
-        setLoading(true);
-
         var url = "/movieTable";
     
         axios.post( url, {
@@ -27,14 +23,14 @@ function Table_Body() {
         })
     },[]);
 
-    if (loading) {
-        return <Loader type="spin" color="gray" message={"로딩중"}></Loader>
-    }
-    console.log("movies : " + movies);
+    // console.log("movies : " + movies);
 
     return(
         <div>
             <React.Fragment>
+                {/* React는 렌더링이 화면에 커밋 된 후에 모든 효과를 실행 함*/}
+                {/* 즉, return에서 map을 반복 실행 할 때, movies에 첫 데이터가 아직 안들어와도 렌더링이 실행 된다. => undefined 오류 발생 */}
+                {/* 따라서 movies && 조건을 추가 해 movies에 값이 있으면(true) 실행되도록 한다 */}
                 {movies && movies.data.map(movie =>
                     <tr key={movie.content_id}>
                         <td>{movie.poster}</td>   {/* poster */}
