@@ -35,25 +35,6 @@ app.post("/movieTable",function(request,response) {
     db.query('SELECT * from contents', function(err, row) {
     
     if (!err){  
-        // var data="<html><head><title>mysql test</title></head>"  
-        // data += "<h1>영화목록</h1>"  
-        // data += "<table border=\"1\">"    
-        // data += "<tr> <th>content_id</th> <th>title</th>  <th>summary</th> <th>production_country</th> <th>field_genre</th>  <th>screening_date</th> <th>age_imformation</th>  <th>director</th> </tr>"  
-
-        // for (var i in rows) {  
-        //     data += "<tr>"  
-        //     data += "<td>"+rows[i].content_id +"</td>"  
-        //     data += "<td>"+rows[i].title+"</td>";  
-        //     data += "<td>"+rows[i].summary+"</td>";  
-        //     data += "<td>"+rows[i].production_country+"</td>";  
-        //     data += "<td>"+rows[i].field_genre+"</td>";  
-        //     data += "<td>"+rows[i].screening_date+"</td>";  
-        //     data += "<td>"+rows[i].age_imformation+"</td>";
-        //     data += "<td>"+rows[i].director+"</td>";
-        //     data += "</tr>"  
-        // }  
-
-        // data+="</table></html>"  
         response.send({data : row});  
     }  
     else  
@@ -66,9 +47,6 @@ app.listen(port, ()=>{
 });
 
 app.post('/login', (req, res) => {
-    // console.log("서버 실행 됨");
-    // console.log("req.body : " + JSON.stringify(req.body));
-    
     var id = req.body.postId;
     var pw = req.body.postPw;
     console.log("get_id : " + id + " , get_pw : " + pw);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Registration_Button from './Registration_Button';
+import Registration_Button from '../registration/Registration_Button';
 
 const Login_Form = (props) => {
     const [form, setForm] = useState({
