@@ -23,8 +23,6 @@ function Table_Body() {
         })
     },[]);
 
-    // console.log("movies : " + movies);
-
     return(
         <div>
             <React.Fragment>
@@ -33,7 +31,7 @@ function Table_Body() {
                 {/* 따라서 movies && 조건을 추가 해 movies에 값이 있으면(true) 실행되도록 한다 */}
                 {movies && movies.data.map(movie =>
                     <tr key={movie.content_id}>
-                        <td>{movie.poster}</td>   {/* poster */}
+                        <td><img src = {movie.poster} width="150" height="250"></img></td>   {/* poster */}
                         <td>{movie.title}</td>   {/* title */}
                         <td>{movie.director}</td>   {/* director */}
                         <td>{movie.age_information}</td>   {/* age_information */}
