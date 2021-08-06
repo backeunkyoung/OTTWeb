@@ -7,17 +7,6 @@ const db = require('./db_access/db');
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 
-app.get('/movies', (req, res) => {
-    db.query("SELECT * FROM movies_db.contents;", (err, data) => {
-        if (!err) {
-            res.send({products : data});
-        }
-        else {
-            res.send(err);
-        }
-    })
-})
-
 app.get('/boxoffice', (req, res) => {
     db.query("SELECT * FROM movies_db.boxoffice;", (err, data) => {
         if (!err) {
