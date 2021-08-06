@@ -1,27 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Pagination from './Pagination';
+import { paginate } from './paginate';
 
 function Table_Body() {
     const [movies, setMovies] = useState();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage, setPostsPerPage] = useState(10);
 
-    useEffect(() => { // server에게 영화DB 받아오기
-        var url = "/movieTable";
+    useEffect(() => {
+        
+        function get_movies() { // server에게 영화DB 받아오기
+            var url = "/movieTable";
     
-        axios.post( url, {
-        })  // 성공시 then 진행
-        .then(function (res) {
-            // 여기서 받아온 res는 JSON 타입
-            // console.log("get_movies함수 실행\n" + JSON.stringify(res.data));
-            // console.log("추출(첫번째 요소) : \n" + JSON.stringify(res.data.data[0].title));
-            console.log("get_movies 함수 실행됨");
+            axios.post( url, {
+            })  // 성공시 then 진행
+            .then(function (res) {
+                // 여기서 받아온 res는 JSON 타입
+                // console.log("get_movies함수 실행\n" + JSON.stringify(res.data));
+                // console.log("추출(첫번째 요소) : \n" + JSON.stringify(res.data.data[0].title));
+                console.log("get_movies 함수 실행됨");
 
-            setMovies(res.data);
-        })  // 실패시 catch 진행
-        .catch(function (error) {
-            alert("error발생 => " + error);
-            setMovies("error");
-        })
+                setMovies(res.data);
+            })  // 실패시 catch 진행
+            .catch(function (error) {
+                alert("error발생 => " + error);
+                setMovies("error");
+            })
+        }
+        get_movies();
+
     },[]);
+
+    const handlePageChange = (page) => {
+        setMovies({ ...movies, currentPage : page});
+    }
+
+    const pagedMovies = paginate(movies, currentPage, postsPerPage);
 
     return(
         <div>
@@ -39,6 +54,14 @@ function Table_Body() {
                     </tr>
                 )}
             </React.Fragment>
+            
+            <Pagination
+                postsPerPage={postsPerPage}
+                moviesSize={1000}
+                currentPage={setCurrentPage}
+                onPageChange={handlePageChange}
+            >
+            </Pagination>
         </div>
     )
 }
