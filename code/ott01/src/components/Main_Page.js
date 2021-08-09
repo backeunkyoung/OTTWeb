@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, BrowserRouter as Router } from 'react-router-dom'; //React-Router import
 import Login_Button from './login/Login_Button';
 import Kategori_Menu from './Kategori_Menu';
+import Country from './Country';
 import Movie_Table from './movie_table/Movie_Table';
 import '../App.css';
 
@@ -21,6 +22,10 @@ function Main_Page() {
                 </header>
 
                 <body>
+                    <div>
+                        <Country></Country>
+                    </div>
+
                     <div>
                         <br></br>
                         <Movie_Table></Movie_Table>
