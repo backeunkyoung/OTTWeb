@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Pagination from './Pagination';
-import { paginate } from './paginate';
 
 function Table_Body() {
     const [movies, setMovies] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage, setPostsPerPage] = useState(10);
 
     useEffect(() => {
         
@@ -32,11 +28,6 @@ function Table_Body() {
 
     },[]);
 
-    const handlePageChange = (page) => {
-        setMovies({ ...movies, currentPage : page});
-    }
-
-    const pagedMovies = paginate(movies, currentPage, postsPerPage);
 
     return(
         <div>
@@ -55,13 +46,6 @@ function Table_Body() {
                 )}
             </React.Fragment>
             
-            <Pagination
-                postsPerPage={postsPerPage}
-                moviesSize={1000}
-                currentPage={setCurrentPage}
-                onPageChange={handlePageChange}
-            >
-            </Pagination>
         </div>
     )
 }

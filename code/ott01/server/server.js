@@ -18,13 +18,13 @@ app.get('/boxoffice', (req, res) => {
     })
 })
 
-app.post("/movieTable",function(request,response) {
+app.post("/movieTable",function(req,res) {
     console.log("서버쪽 movieTable");
     
     db.query('SELECT * from contents', function(err, row) {
     
     if (!err){  
-        response.send({data : row});  
+        res.send({data : row});  
     }  
     else  
         console.log('에러 발생 => ' + err);  
@@ -119,4 +119,24 @@ app.post('/registration', (req, res) => {
             console.log("성공");
         }
     })
+});
+
+app.post('/country', (req, res) => { 
+    console.log("서버쪽 /country 실행됨");
+    console.log("tag")
+
+    var tag = req.body.postCountry;
+    var data;
+
+    var sql = "SELECT * FROM contents WHERE (production_country LIKE ? OR production_country LIKE ? OR production_country LIKE ? OR production_country LIKE ?)";
+    var params = [tag,tag+",%","%,"+tag,"%,"+tag+",%"];
+
+    conn.query(sql,params, (err,row) => {
+        if(err) {
+            console.log('err : ' + err);
+        }
+        else {     
+            res.send(data);
+        }
+    });
 });

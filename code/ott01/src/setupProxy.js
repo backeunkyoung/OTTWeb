@@ -35,6 +35,14 @@ module.exports = function(app) {
     );
 
     app.use(
+        '/country',
+        createProxyMiddleware({
+            target: 'http://localhost:3333',
+            changeOrigin: true,
+        })
+    );
+
+    app.use(
         '/boxoffice',
         createProxyMiddleware({
             target: 'http://localhost:3333',
