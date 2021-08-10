@@ -7,8 +7,14 @@ const db = require('./db_access/db');
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 
-app.get('/boxoffice', (req, res) => {
-    db.query("SELECT * FROM movies_db.boxoffice;", (err, data) => {
+app.listen(port, ()=>{  // 서버 실행 확인
+    console.log(`express is running on ${port}`);
+});
+
+app.get('/boxoffice', (req, res) => {   // boxoffice 랭킹 가져오기
+    var query = "SELECT * FROM movies_db.boxoffice;"
+
+    db.query(query, (err, data) => {
         if (!err) {
             res.send({products : data});
         }
@@ -18,10 +24,12 @@ app.get('/boxoffice', (req, res) => {
     })
 })
 
-app.post("/movieTable",function(req,res) {
+app.post("/movieTable",function(req,res) {  // 영화 테이블 가져오기
     console.log("서버쪽 movieTable");
+
+    var query = "SELECT * from contents"
     
-    db.query('SELECT * from contents', function(err, row) {
+    db.query(query, function(err, row) {
     
     if (!err){  
         res.send({data : row});  
@@ -31,11 +39,32 @@ app.post("/movieTable",function(req,res) {
     });  
 });  
 
-app.listen(port, ()=>{
-    console.log(`express is running on ${port}`);
-});
+app.post("/get_genre_name", function(req,res) { // 국가 목록 가져오기
+    var movieCodes = req.body.postCodes;
+    var codes = movieCodes.split(',');
+    var output = '';
+    
+    codes.forEach(element => {
+        console.log("받은 codes : " + element); 
+    
+        var query = "select attribute_name from movies_db.attribute_genres where attribute_num=" + Number(element) + ";";
+    
+        db.query(query, function(err, row) {
+            output += (row + ",")
+        });
+    });
 
-app.post('/login', (req, res) => {
+    console.log("output : " + output);
+
+    if (!err){  
+        res.send({data : output});  
+    }  
+    else {  
+        console.log('에러 발생 => ' + err);  
+    }
+}); 
+
+app.post('/login', (req, res) => {  // 로그인 처리
     var id = req.body.postId;
     var pw = req.body.postPw;
     console.log("get_id : " + id + " , get_pw : " + pw);
@@ -72,7 +101,7 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.post('/overlapCheck', (req, res) => {
+app.post('/overlapCheck', (req, res) => {   // 회원가입 시 ID 중복체크
     console.log("overlap 체크 서버 실행 됨");
     console.log("req.body : " + JSON.stringify(req.body));
     
@@ -97,7 +126,7 @@ app.post('/overlapCheck', (req, res) => {
     })   
 });
 
-app.post('/registration', (req, res) => {
+app.post('/registration', (req, res) => {   // 회원가입 처리
     console.log("서버 실행 됨");
     console.log("req.body : " + JSON.stringify(req.body));
     
@@ -121,22 +150,54 @@ app.post('/registration', (req, res) => {
     })
 });
 
-app.post('/country', (req, res) => { 
+app.post("/genres_list", function(req,res) { // 장르 목록 가져오기
+    console.log("서버쪽 genres_list");
+
+    var query = "select * from movies_db.attribute_genres;";
+    
+    db.query(query, function(err, row) {
+    
+    if (!err){  
+        res.send({data : row});  
+    }  
+    else  
+        console.log('에러 발생 => ' + err);  
+    });  
+});  
+
+app.post("/countrys_list", function(req,res) { // 국가 목록 가져오기
+    console.log("서버쪽 countrys_list");
+
+    var query = "select * from movies_db.production_countrys;";
+    
+    db.query(query, function(err, row) {
+    
+    if (!err){  
+        res.send({data : row});  
+    }  
+    else  
+        console.log('에러 발생 => ' + err);  
+    });  
+});  
+
+app.post('/country', (req, res) => {    // 국가 필터 
     console.log("서버쪽 /country 실행됨");
-    console.log("tag")
+    res.send({msg : "country success"});
 
-    var tag = req.body.postCountry;
-    var data;
+    // console.log("tag")
 
-    var sql = "SELECT * FROM contents WHERE (production_country LIKE ? OR production_country LIKE ? OR production_country LIKE ? OR production_country LIKE ?)";
-    var params = [tag,tag+",%","%,"+tag,"%,"+tag+",%"];
+    // var tag = req.body.postCountry;
+    // var data;
 
-    conn.query(sql,params, (err,row) => {
-        if(err) {
-            console.log('err : ' + err);
-        }
-        else {     
-            res.send(data);
-        }
-    });
+    // var sql = "SELECT * FROM contents WHERE (production_country LIKE ? OR production_country LIKE ? OR production_country LIKE ? OR production_country LIKE ?)";
+    // var params = [tag,tag+",%","%,"+tag,"%,"+tag+",%"];
+
+    // conn.query(sql,params, (err,row) => {
+    //     if(err) {
+    //         console.log('err : ' + err);
+    //     }
+    //     else {     
+    //         res.send(data);
+    //     }
+    // });
 });
