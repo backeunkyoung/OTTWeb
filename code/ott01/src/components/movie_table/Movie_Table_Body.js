@@ -39,7 +39,10 @@ function Table_Body() {
                     <tr key={movie.content_id}>
                         <td><img src = {movie.poster} width="150" height="250"></img></td>   {/* poster */}
                         <td>{movie.title}</td>   {/* title */}
+                        <td>{movie.screening_date}</td>   {/* screening_date */}
                         <td>{movie.director}</td>   {/* director */}
+                        <td>{movie.attribute_genre}</td>   {/* attribute_genre */}
+                        <td>{movie.production_country}</td>   {/* production_country */}
                         <td>{movie.age_information}</td>   {/* age_information */}
                         <td>{movie.summary}</td>   {/* summary */}
                     </tr>
