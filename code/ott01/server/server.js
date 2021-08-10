@@ -39,6 +39,31 @@ app.post("/movieTable",function(req,res) {  // 영화 테이블 가져오기
     });  
 });  
 
+app.post("/get_genre_name", function(req,res) { // 국가 목록 가져오기
+    var movieCodes = req.body.postCodes;
+    var codes = movieCodes.split(',');
+    var output = '';
+    
+    codes.forEach(element => {
+        console.log("받은 codes : " + element); 
+    
+        var query = "select attribute_name from movies_db.attribute_genres where attribute_num=" + Number(element) + ";";
+    
+        db.query(query, function(err, row) {
+            output += (row + ",")
+        });
+    });
+
+    console.log("output : " + output);
+
+    if (!err){  
+        res.send({data : output});  
+    }  
+    else {  
+        console.log('에러 발생 => ' + err);  
+    }
+}); 
+
 app.post('/login', (req, res) => {  // 로그인 처리
     var id = req.body.postId;
     var pw = req.body.postPw;
