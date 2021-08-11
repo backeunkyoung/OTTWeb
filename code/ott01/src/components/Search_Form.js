@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Movie_Table_Body from './movie_table/Movie_Table_Body';
+import Movie_Table from './movie_table/Movie_Table';
 
 function Search_Form() {
     const [keyword, setKeyword] = useState('');
+    const [movies, setMovies] = useState();
 
     function search_result(keyword) { // server에게 영화DB 받아오기
         var url = "/search_result";
@@ -13,10 +14,12 @@ function Search_Form() {
         })  // 성공시 then 진행
         .then(function (res) {
             console.log("keyword : " + keyword);
-            console.log("받은 결과 : \n" + JSON.stringify(res.data));
+            // console.log("받은 결과 : \n" + JSON.stringify(res.data));
+            setMovies(res.data);
         })  // 실패시 catch 진행
         .catch(function (error) {
             alert("error발생 => " + error);
+            setMovies("error");
         })
     }
 
@@ -37,6 +40,12 @@ function Search_Form() {
                 value={keyword}
                 onChange={onChange}
             ></input>
+            <hr></hr>
+
+            <div>
+                <Movie_Table list={movies}></Movie_Table>
+            </div>
+
         </div>
     )
 }
