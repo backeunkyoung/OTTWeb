@@ -66,6 +66,14 @@ module.exports = function(app) {
         })
     );
 
+    app.use(    // 검색 결과 받아오기
+        '/search_result',
+        createProxyMiddleware({
+            target: 'http://localhost:3333',
+            changeOrigin: true,
+        })
+    );
+    
     app.use(    // boxoffice 랭킹 불러오기
         '/boxoffice',
         createProxyMiddleware({

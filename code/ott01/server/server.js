@@ -39,29 +39,8 @@ app.post("/movieTable",function(req,res) {  // 영화 테이블 가져오기
     });  
 });  
 
-app.post("/get_genre_name", function(req,res) { // 국가 목록 가져오기
-    var movieCodes = req.body.postCodes;
-    var codes = movieCodes.split(',');
-    var output = '';
-    
-    codes.forEach(element => {
-        console.log("받은 codes : " + element); 
-    
-        var query = "select attribute_name from movies_db.attribute_genres where attribute_num=" + Number(element) + ";";
-    
-        db.query(query, function(err, row) {
-            output += (row + ",")
-        });
-    });
-
-    console.log("output : " + output);
-
-    if (!err){  
-        res.send({data : output});  
-    }  
-    else {  
-        console.log('에러 발생 => ' + err);  
-    }
+app.post("/get_genre_name", function(req,res) { // 장르 이름 가져오기(미완)
+    res.send({msg : "success"});  
 }); 
 
 app.post('/login', (req, res) => {  // 로그인 처리
@@ -180,7 +159,7 @@ app.post("/countrys_list", function(req,res) { // 국가 목록 가져오기
     });  
 });  
 
-app.post('/country', (req, res) => {    // 국가 필터 
+app.post('/country', (req, res) => {    // 국가 필터(미완) 
     console.log("서버쪽 /country 실행됨");
     res.send({msg : "country success"});
 
@@ -200,4 +179,21 @@ app.post('/country', (req, res) => {    // 국가 필터
     //         res.send(data);
     //     }
     // });
+});
+
+app.post("/search_result", function(req,res) { // 검색 결과 가져오기
+    var search = req.body.postKeyword;
+
+    //제목, 감독으로 검색( 띄어쓰기 상관 x )
+    var query = "SELECT * FROM contents WHERE REPLACE(title,' ','') LIKE '%" + search + "%' OR REPLACE(director,' ','') LIKE '%" + search + "%';";
+    // SELECT * FROM movies_db.contents WHERE REPLACE(title,' ','') LIKE '%반지%' OR REPLACE(director,' ','') LIKE '%반지%';
+
+    db.query(query, function(err, row){
+        if (!err){  
+            res.send({data : row});
+        } 
+        else {
+            console.log('에러 발생 => ' + err);
+        }  
+    });
 });

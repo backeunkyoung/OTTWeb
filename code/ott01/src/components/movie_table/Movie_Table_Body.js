@@ -23,10 +23,10 @@ function Table_Body() {
                 //     console.log("element : " + JSON.stringify(element.attribute_genre));
                 // });
 
-                res.data.data.map( (movie) =>   // 영화 목록을 차례로 돌면서 장르명 받아오기
-                    get_genre_name(movie.attribute_genre)
-                    // console.log("movie_genre_codes : " + JSON.stringify(movie.attribute_genre))
-                )
+                // res.data.data.map( (movie) =>   // 영화 목록을 차례로 돌면서 장르명 받아오기
+                //     get_genre_name(movie.attribute_genre)
+                //     // console.log("movie_genre_codes : " + JSON.stringify(movie.attribute_genre))
+                // )
             })  // 실패시 catch 진행
             .catch(function (error) {
                 alert("error발생 => " + error);
