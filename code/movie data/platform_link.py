@@ -1,4 +1,4 @@
-#어느 플랫폼에 영화가 있는지
+#어느 플랫폼에 영화가 있는지 (url 가져오기)
 import requests
 import json
 import pymysql
@@ -19,9 +19,9 @@ pc = cursor.fetchall()
 pedia = []
 
 for j in range(len(pc)):
-    #print(pc[j][1])
+    print(str(pc[j][0])+"||"+pc[j][1])
     link = 'https://pedia.watcha.com/ko-KR/searches/movies?query='+quote(pc[j][1])
-    #print(link)
+    print(link)
     res = requests.get(link)
     soup = BeautifulSoup(res.content, 'html.parser')
     img = soup.find_all("li","css-19dwtmk")
@@ -29,7 +29,7 @@ for j in range(len(pc)):
         if pc[j][1].replace(" ","") == soup.find_all("li", class_="css-19dwtmk")[i].find("a")['title'].replace(" ",""):
             pp = soup.find_all("li", class_="css-19dwtmk")[i].find("a")['href']
             link1 = 'https://pedia.watcha.com'+pp
-            #print(link1)
+            print(link1)
             pedia.append([str(pc[j][0]), pc[j][1], link1])
             break
 
@@ -42,3 +42,6 @@ for p in pedia:
     except:
         print('안들어감')
         pass
+    
+conn.commit()
+conn.close()
