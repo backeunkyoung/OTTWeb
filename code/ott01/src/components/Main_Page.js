@@ -25,11 +25,6 @@ function Main_Page() {
                     <div>
                         <Search_Form></Search_Form>
                     </div>
-                    <div>
-                        <br></br>
-                        <Movie_Table></Movie_Table>
-                        <br></br>
-                    </div>
                 </body>
             </Router>
             <hr></hr>

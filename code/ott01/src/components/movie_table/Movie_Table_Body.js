@@ -1,57 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
-function Table_Body() {
-    const [movies, setMovies] = useState();
+function Movie_Table_Body(props) {
+    console.log("Movie_Table_Body props : \n" + JSON.stringify(props.list));
 
-    useEffect(() => {
-        
-        function get_movies() { // server에게 영화DB 받아오기
-            var url = "/movieTable";
-    
-            axios.post( url, {
-            })  // 성공시 then 진행
-            .then(function (res) {
-                // 여기서 받아온 res는 JSON 타입
-                // console.log("get_movies함수 실행\n" + JSON.stringify(res.data));
-                // console.log("추출(첫번째 요소) : \n" + JSON.stringify(res.data.data[0].title));
-                console.log("get_movies 함수 실행됨");
+    const [movies, setMovies] = useState(null);
 
-                setMovies(res.data);
-
-                // res.data.data.forEach(element => {
-                //     console.log("element : " + JSON.stringify(element.attribute_genre));
-                // });
-
-                // res.data.data.map( (movie) =>   // 영화 목록을 차례로 돌면서 장르명 받아오기
-                //     get_genre_name(movie.attribute_genre)
-                //     // console.log("movie_genre_codes : " + JSON.stringify(movie.attribute_genre))
-                // )
-            })  // 실패시 catch 진행
-            .catch(function (error) {
-                alert("error발생 => " + error);
-                setMovies("error");
-            })
-        }
-
-        function get_genre_name(movie_genre_codes) { // server에게 영화DB 받아오기
-            var url = "/get_genre_name";
-            // console.log("받아온 코드 : " + movie_genre_codes);
-    
-            axios.post( url, {
-                postCodes : movie_genre_codes
-            })  // 성공시 then 진행
-            .then(function (res) {
-
-            })  // 실패시 catch 진행
-            .catch(function (error) {
-                alert("error발생 => " + error);
-            })
-        }
-
-    get_movies();
-
-    },[]);
+    useEffect(() => {   // 컴포넌트가 렌더링 될 때마다 특정 작업 실행
+        setMovies(props);
+    }, [movies]);  // movies가 바뀔 때 실행
 
 
     return(
@@ -73,8 +29,7 @@ function Table_Body() {
                     </tr>
                 )}
             </React.Fragment>
-            
         </div>
     )
 }
-export default Table_Body;
+export default Movie_Table_Body;

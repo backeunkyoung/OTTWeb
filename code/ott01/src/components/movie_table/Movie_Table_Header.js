@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Table_Header() {
+function Movie_Table_Header() {
 
     return(
         <div>
@@ -17,4 +17,4 @@ function Table_Header() {
         </div>
     )
 }
-export default Table_Header;
+export default Movie_Table_Header;
