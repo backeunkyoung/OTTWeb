@@ -11,5 +11,13 @@ timeout /t 1
 "C:\Python\Python39\python.exe" "C:\Users\USER\Documents\OTTWeb\code\get data\n_person_filmo.py" rem movie actor filmo list
 timeout /t 1
 "C:\Python\Python39\python.exe" "C:\Users\USER\Documents\OTTWeb\code\get data\n_contents_person.py" rem movie - actor list
+timeout /t 1
+"C:\Python\Python39\python.exe" "C:\Users\USER\Documents\OTTWeb\code\get data\n_platform_link.py" rem platform info url
+timeout /t 1
+"C:\Python\Python39\python.exe" "C:\Users\USER\Documents\OTTWeb\code\get data\n_platform.py" rem platfrom list
+timeout /t 1
+"C:\Python\Python39\python.exe" "C:\Users\USER\Documents\OTTWeb\code\get data\n_content_platform_delete.py" rem platform delete
+timeout /t 1
+"C:\Python\Python39\python.exe" "C:\Users\USER\Documents\OTTWeb\code\get data\n_content_platform_insert.py" rem platform insert
 
 pause
