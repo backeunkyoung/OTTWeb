@@ -179,12 +179,30 @@ app.post("/search_result", function(req,res) { // 검색 결과 가져오기
     });
 });
 
-app.post("/get_genre_name", function(req,res) { // 장르 이름 가져오기(미완)
+app.post("/get_genre_name", function(req,res) { // 장르 이름 가져오기
     
     var query = "select con.content_id, att.attribute_name"
     query += " from movies_db.contents con"
     query += " inner join movies_db.content_attribute conatt on conatt.content_pid = con.content_id"
     query += " inner join movies_db.attribute_genres att on att.attribute_num = conatt.attribute_num"
+    query += " order by con.content_id;"
+    
+    db.query(query, function(err, row){
+        if (!err){  
+            res.send({data : row});
+        } 
+        else {
+            console.log('에러 발생 => ' + err);
+        }  
+    });  
+});
+
+app.post("/get_country_name", function(req,res) { // 국가 이름 가져오기
+    
+    var query = "select con.content_id, prod.country_name"
+    query += " from movies_db.contents con"
+    query += " inner join movies_db.content_country country on country.content_pid = con.content_id"
+    query += " inner join movies_db.production_countrys prod on prod.country_code = country.nation_code"
     query += " order by con.content_id;"
     
     db.query(query, function(err, row){
