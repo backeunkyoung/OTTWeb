@@ -1,4 +1,4 @@
-#어느 플랫폼에 영화가 있는지 (플랫폼 리스트)
+#어느 플랫폼에 영화가 있는지 (플랫폼 리스트) platform 테이블
 import requests
 import json
 import pymysql
@@ -7,7 +7,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import time
 
-conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
+conn = pymysql.connect(host='18.188.140.138', user='user01', password='dkapflzksh0405', db='movies_db', charset='utf8')
 cursor = conn.cursor() 
 
 sql = "SELECT content_pid, pedia_link FROM platform"
@@ -30,16 +30,21 @@ for j in range(len(pc)):
             print(plaa)
             platform += plaa+', '
         platform = platform.rstrip(', ')
-        if platform != None:
-            try:
-                sql = 'UPDATE platform SET platform = "'+platform+'" WHERE content_pid = "'+movieCd+'"'
-                cursor.execute(sql)
-            except:
-                print('db넣기 실패')
-                pass
+        #if platform != None:
+        try:
+            sql = 'UPDATE platform SET platform = "'+platform+'" WHERE content_pid = "'+movieCd+'"'
+            cursor.execute(sql)
+        except:
+            print('db넣기 실패')
+            pass
     except:
         print('플랫폼 제공 안 함')
-        pass
+        try:
+            sql = 'UPDATE platform SET platform = NULL WHERE content_pid = "'+movieCd+'"'
+            cursor.execute(sql)
+        except:
+            print('db넣기 실패')
+            pass
     
     
 conn.commit()

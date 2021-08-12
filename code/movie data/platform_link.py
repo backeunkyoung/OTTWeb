@@ -1,4 +1,4 @@
-#어느 플랫폼에 영화가 있는지 (url 가져오기)
+#어느 플랫폼에 영화가 있는지 (url 가져오기) platform 테이블
 import requests
 import json
 import pymysql
@@ -7,7 +7,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import time
 
-conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
+conn = pymysql.connect(host='18.188.140.138', user='user01', password='dkapflzksh0405', db='movies_db', charset='utf8')
 cursor = conn.cursor() 
 
 sql = "SELECT content_id, title FROM contents"
