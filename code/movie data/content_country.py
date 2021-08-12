@@ -36,7 +36,7 @@ for i in range(len(mc)):
     #print(b)
     print(b['movieNm'])
     
-    #국가정보 (문자열 하나로 만들지 말고 하나하나 따로 로우로 만들어서 connect2에 저장해야 함)
+    #국가정보 (문자열 하나로 만들지 말고 하나하나 따로 로우로 만들어서 content_country에 저장해야 함)
     for j in b['nations']: #j = 영화 국가정보
         nation = j['nationNm']
         check = 0
@@ -49,7 +49,7 @@ for i in range(len(mc)):
             nation_code = 'ee'
         #print('전:'+nation+' 후:'+nation_code)
         l = [mc[i][0], nation_code]
-        sql = "INSERT INTO connect2 (content_pid, nation_code) VALUES (%s, %s)"
+        sql = "INSERT INTO content_country (content_pid, nation_code) VALUES (%s, %s)"
         try:
             cursor.execute(sql,l)
         except:

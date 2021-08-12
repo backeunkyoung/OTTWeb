@@ -37,7 +37,7 @@ for i in range(len(mc)):
     #print(b)
     print(b['movieNm'])
 
-    #장르정보 (문자열 하나로 만들지 말고 하나하나 따로 로우로 만들어서 connect에 저장해야 함)
+    #장르정보 (문자열 하나로 만들지 말고 하나하나 따로 로우로 만들어서 content_attribute에 저장해야 함)
     for k in b['genres']: #k = 영화 장르정보
         genre = k['genreNm']
         check = 0
@@ -50,7 +50,7 @@ for i in range(len(mc)):
             genre_code = 30
         #print('전:'+str(genre)+' 후:'+str(genre_code))
         l = [mc[i][0], genre_code]
-        sql = "INSERT INTO connect (content_pid, attribute_num) VALUES (%s, %s)"
+        sql = "INSERT INTO content_attribute (content_pid, attribute_num) VALUES (%s, %s)"
         try:
             cursor.execute(sql,l)
         except:
