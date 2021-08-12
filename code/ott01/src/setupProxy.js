@@ -42,6 +42,14 @@ module.exports = function(app) {
         })
     );
 
+    app.use(    // 국가 코드로 국가 명 가져오기
+        '/get_country_name',
+        createProxyMiddleware({
+            target: 'http://localhost:3333',
+            changeOrigin: true,
+        })
+    );
+
     app.use(    // 국가 목록 불러오기
         '/countrys_list',
         createProxyMiddleware({

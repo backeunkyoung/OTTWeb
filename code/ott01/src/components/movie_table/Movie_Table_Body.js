@@ -3,11 +3,16 @@ import axios from 'axios';
 import _ from 'lodash';
 
 function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영화 정보
-    const [genreList, setGenresList] = useState({   // 장르 목록
+
+    const [genresList, setGenresList] = useState({   // 장르 목록
         content_id: '',
         genre_name: '',
     });
-    const { content_id, genre_name } = genreList;
+
+    const [countrysList, setCountrysList] = useState({   // 국가 목록
+        content_id: '',
+        country_name: '',
+    });
 
     useEffect(() => {
         function get_genre_name() { // server에게 장르 이름 리스트 받아오기
@@ -25,6 +30,22 @@ function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영�
             })
         }
         get_genre_name();
+
+        function get_country_name() { // server에게 국가 이름 리스트 받아오기
+            var url = "/get_country_name";
+    
+            axios.post( url, {
+            })  // 성공시 then 진행
+            .then(function (res) {
+                // console.log("받은 결과 : \n" + JSON.stringify(res.data.data));
+                setCountrysList(res.data);
+            })  // 실패시 catch 진행
+            .catch(function (error) {
+                alert("error발생 => " + error);
+                setCountrysList("error");
+            })
+        }
+        get_country_name();
     }, [])  // 대괄호 비워 둠 => 컴포넌트가 처음 나타날때만 실행
 
 
@@ -34,11 +55,23 @@ function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영�
 
     function outputGenre(id) {
         var result = '';
-        var size = genreList.data.length;
+        var size = genresList.data.length;
 
         for (let i = 0; i < size; i++) {
-            if (genreList.data[i].content_id === id) {
-                result += genreList.data[i].attribute_name + "\n";
+            if (genresList.data[i].content_id === id) {
+                result += genresList.data[i].attribute_name + "\n";
+            }
+        }
+        return result;
+    }
+
+    function outputCountry(id) {
+        var result = '';
+        var size = countrysList.data.length;
+
+        for (let i = 0; i < size; i++) {
+            if (countrysList.data[i].content_id === id) {
+                result += countrysList.data[i].country_name + "\n";
             }
         }
         return result;
@@ -53,7 +86,7 @@ function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영�
                 date: movie.screening_date,
                 director: movie.director,
                 genre: outputGenre(movie.content_id),
-                country: '',
+                country: outputCountry(movie.content_id),
                 age: movie.age_information,
                 summary: movie.summary,
             },
