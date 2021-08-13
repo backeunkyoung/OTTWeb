@@ -8,7 +8,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
 
-conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db='movies_db', charset='utf8')
+conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
 cursor = conn.cursor()
 
 sql = "SELECT * FROM links WHERE link IS NULL" #link가 null인 것만 불러옴
@@ -24,7 +24,7 @@ for i in range(len(mc)):
 
     url = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+quote(query)
 
-    time.sleep(3)
+    time.sleep(1)
     req = requests.get(url)
     text = req.text
     soup = BeautifulSoup(text, 'html.parser')

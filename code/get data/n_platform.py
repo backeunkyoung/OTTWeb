@@ -7,6 +7,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import time
 
+
 conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
 cursor = conn.cursor() 
 

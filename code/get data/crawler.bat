@@ -4,6 +4,10 @@ timeout /t 1
 timeout /t 1
 "C:\Python\Python39\python.exe" "C:\Users\USER\Documents\OTTWeb\code\get data\n_contents_info.py" rem movie info (country, genre, age, director)
 timeout /t 1
+"C:\Python\Python39\python.exe" "C:\Users\USER\Documents\OTTWeb\code\get data\n_content_attribute.py" rem content attribute
+timeout /t 1
+"C:\Python\Python39\python.exe" "C:\Users\USER\Documents\OTTWeb\code\get data\n_content_country.py" rem content country
+timeout /t 1
 "C:\Python\Python39\python.exe" "C:\Users\USER\Documents\OTTWeb\code\get data\n_contents_summary.py" rem movie summary
 timeout /t 1
 "C:\Python\Python39\python.exe" "C:\Users\USER\Documents\OTTWeb\code\get data\n_contents_poster.py" rem movie poster

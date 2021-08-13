@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 import time
 
 
-conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db='movies_db', charset='utf8')
+conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
 cursor = conn.cursor() 
 
 sql = "SELECT * FROM links"
@@ -37,7 +37,7 @@ for j in range(len(pc)):
                     print(img)
                     sql = 'UPDATE contents SET poster = "'+img+'" WHERE content_id = "'+movieCd+'"'
                     cursor.execute(sql)
-                    time.sleep(3)  # 3초 기다림
+                    time.sleep(1)  # 1초 기다림
                 except:
                     pass
 

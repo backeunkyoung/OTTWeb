@@ -4,7 +4,8 @@ import json
 import datetime
 import pymysql
 
-conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db='movies_db', charset='utf8')
+
+conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
 cursor = conn.cursor()
 
 sql = "SELECT * FROM person WHERE filmo IS NULL" #filmo가 null인것만 불러옴

@@ -6,7 +6,7 @@ import pymysql
 import time
 
 
-conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db='movies_db', charset='utf8')
+conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
 cursor = conn.cursor()
 
 sql = "SELECT * FROM contents WHERE production_country IS NULL" #국가가 NULL인것만 불러옴
@@ -30,7 +30,7 @@ for i in range(len(mc)):
 
     url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key='+mykey+'&movieCd='+movieCd
 
-    time.sleep(3) #3초
+    time.sleep(1) #1초
     req = requests.get(url)
     text = req.text
 

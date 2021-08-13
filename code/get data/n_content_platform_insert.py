@@ -1,6 +1,7 @@
 #####content_platform 테이블
 import pymysql
 
+
 conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8') 
 cursor = conn.cursor()
 

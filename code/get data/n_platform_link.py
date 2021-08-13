@@ -1,4 +1,4 @@
-#어느 플랫폼에 영화가 있는지 (url 가져오기) platform 테이블
+#어느 플랫폼에 영화가 있는지 (url 가져오기) (이미 들어간 영화는 제외하고 실행시켜야 함) 수정
 import requests
 import json
 import pymysql
@@ -10,7 +10,7 @@ import time
 conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
 cursor = conn.cursor() 
 
-sql = "SELECT content_id, title FROM contents"
+sql = "SELECT content_id, title FROM contents WHERE content_id NOT IN (SELECT content_pid FROM platform)"
 
 cursor.execute(sql)
 pc = cursor.fetchall()

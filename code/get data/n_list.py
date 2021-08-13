@@ -11,7 +11,8 @@ current_datetime = current_datetime - datetime.timedelta(weeks=1) #저번 주의
 l = []
 li = []
 
-conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db='movies_db', charset='utf8')
+
+conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
 cursor = conn.cursor()
 
 
@@ -68,7 +69,7 @@ for i in range(len(l)):
     for j in d['movieInfoResult']['movieInfo']['actors']:
         name = j['peopleNm']
 
-        time.sleep(3) #3초
+        time.sleep(1) #3초
         url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json?key='+mykey+'&peopleNm='+name
 
         req = requests.get(url)

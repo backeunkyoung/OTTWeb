@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 import re
 
 
-conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db='movies_db', charset='utf8')
+conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
 cursor = conn.cursor() 
 
 sql = "SELECT * FROM links"
@@ -30,7 +30,7 @@ for j in range(len(pc)):
             movieCd = mc[i][0]
             if(link != None):
                 try:
-                    time.sleep(3) #3초
+                    time.sleep(1) #1초
                     res = requests.get(link)
                     soup = BeautifulSoup(res.content, 'html.parser')
                     naver = soup.find("p", class_="con_tx") #줄거리 불러옴

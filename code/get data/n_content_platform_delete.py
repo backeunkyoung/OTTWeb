@@ -1,6 +1,7 @@
 ##영화를 서비스하는 플랫폼이 사라졌을때 content_platform row 삭제하는 코드
 import pymysql
 
+
 conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8') 
 cursor = conn.cursor()
 

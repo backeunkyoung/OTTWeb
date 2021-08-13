@@ -1,4 +1,4 @@
-####content랑 country 테이블
+####content랑 country 테이블 (이미 들어간 영화는 제외하고 실행시켜야 함) 수정
 import requests
 import json
 import datetime
@@ -6,13 +6,14 @@ import pymysql
 import time
 
 
-#conn = pymysql.connect(host='18.188.140.138', user='user01', password='1111', db='movies_db', charset='utf8')
+conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
 cursor = conn.cursor()
 
-sql = "SELECT content_id, title FROM contents"
+sql = "SELECT content_id, title FROM contents WHERE content_id NOT IN (SELECT content_pid FROM content_country)"
 
 cursor.execute(sql)
 mc = cursor.fetchall() #content테이블 content_id, title 불러옴
+#print(mc)
 
 sql = "SELECT * FROM production_countrys"
 
@@ -36,7 +37,7 @@ for i in range(len(mc)):
     #print(b)
     print(b['movieNm'])
     
-    #국가정보 (문자열 하나로 만들지 말고 하나하나 따로 로우로 만들어서 content_country에 저장해야 함)
+    #국가정보 (문자열 하나로 만들지 말고 하나하나 따로 로우로 만들어서 connect2에 저장해야 함)
     for j in b['nations']: #j = 영화 국가정보
         nation = j['nationNm']
         check = 0
