@@ -209,3 +209,22 @@ th:last-child, td:last-child {
 .main-right-box {
   float: right;
 }
+
+.body-container {
+  display: flex;
+}
+
+.body-left-box {
+  background: rgb(216, 174, 174);
+  flex: 1;
+}
+.body-center-box {
+  background: rgb(148, 148, 147);
+  flex: 3;
+  text-align: center;
+}
+.body-right-box {
+  background: rgb(226, 226, 184);
+  flex: 1;
+  text-align: right;
+}

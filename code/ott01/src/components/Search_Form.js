@@ -53,9 +53,20 @@ function Search_Form() {
 
             <hr></hr>
             <br></br>
-            <div>
-                <Movie_Table list={movies}></Movie_Table>
+            <div className="body-container">
+                <div className="body-left-box">
+                    <button>왼쪽</button>
+                </div>
+
+                <div className="body-center-box">
+                    <Movie_Table list={movies}></Movie_Table>
+                </div>
+
+                <div className="body-right-box">
+                    <button>오른쪽</button>
+                </div>
             </div>
+            
 
         </div>
     )
