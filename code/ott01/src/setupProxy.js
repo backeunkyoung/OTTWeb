@@ -50,6 +50,14 @@ module.exports = function(app) {
         })
     );
 
+    app.use(    // 배우 코드로 출연 배우 목록 불러오기
+        '/get_actor_name',
+        createProxyMiddleware({
+            target: 'http://localhost:3333',
+            changeOrigin: true,
+        })
+    );
+
     app.use(    // 국가 목록 불러오기
         '/countrys_list',
         createProxyMiddleware({

@@ -14,6 +14,11 @@ function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영�
         country_name: '',
     });
 
+    const [actorsList, setActorsList] = useState({   // 출연 배우 목록
+        content_id: '',
+        actor_name: '',
+    });
+
     useEffect(() => {
         function get_genre_name() { // server에게 장르 이름 리스트 받아오기
             var url = "/get_genre_name";
@@ -46,6 +51,23 @@ function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영�
             })
         }
         get_country_name();
+
+        function get_actor_name() { // server에게 출연 배우 이름 리스트 받아오기
+            var url = "/get_actor_name";
+    
+            axios.post( url, {
+            })  // 성공시 then 진행
+            .then(function (res) {
+                // console.log("받은 결과 : \n" + JSON.stringify(res.data.data));
+                setActorsList(res.data);
+            })  // 실패시 catch 진행
+            .catch(function (error) {
+                alert("error발생 => " + error);
+                setActorsList("error");
+            })
+        }
+        get_actor_name();
+    
     }, [])  // 대괄호 비워 둠 => 컴포넌트가 처음 나타날때만 실행
 
 
@@ -59,7 +81,7 @@ function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영�
 
         for (let i = 0; i < size; i++) {
             if (genresList.data[i].content_id === id) {
-                result += genresList.data[i].attribute_name + "\n";
+                result += genresList.data[i].attribute_name + ",";
             }
         }
         return result;
@@ -71,11 +93,25 @@ function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영�
 
         for (let i = 0; i < size; i++) {
             if (countrysList.data[i].content_id === id) {
-                result += countrysList.data[i].country_name + "\n";
+                result += countrysList.data[i].country_name + ",";
             }
         }
         return result;
     }
+
+    function outputActor(id) {
+        var result = '';
+        var size = actorsList.data.length;
+
+        for (let i = 0; i < size; i++) {
+            if (actorsList.data[i].content_id === id) {
+                result += actorsList.data[i].Name + ",";
+            }
+        }
+        return result;
+    }
+
+
 
     check_undefined && check_undefined.map(movie =>
         tableBody.push(
@@ -85,9 +121,10 @@ function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영�
                 title: movie.title,
                 date: movie.screening_date,
                 director: movie.director,
+                age: movie.age_information,
                 genre: outputGenre(movie.content_id),
                 country: outputCountry(movie.content_id),
-                age: movie.age_information,
+                actor: outputActor(movie.content_id),
                 summary: movie.summary,
             },
         )
@@ -102,9 +139,10 @@ function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영�
                         <td>{movie.title}</td> 
                         <td>{movie.date}</td>
                         <td>{movie.director}</td>
+                        <td>{movie.age}</td>
                         <td>{movie.genre}</td>
                         <td>{movie.country}</td>
-                        <td>{movie.age}</td>
+                        <td>{movie.actor}</td>
                         <td>{movie.summary}</td>
                     </tr>
                 )}
