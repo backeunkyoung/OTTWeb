@@ -202,3 +202,10 @@ th:last-child, td:last-child {
 .login_button {
   padding: 20px 65px;
 }
+
+.main-left-box {
+  float: left;
+}
+.main-right-box {
+  float: right;
+}

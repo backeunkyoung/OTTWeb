@@ -33,15 +33,23 @@ function Search_Form() {
 
     return(
         <div>
-            <input
-                type="text"
-                name="keyword"
-                placeholder="제목, 배우, 감독 등 검색"
-                value={keyword}
-                onChange={onChange}
-            ></input>
-            <hr></hr>
+            <div>
+                <div className='main-left-box'>
+                    <input
+                        type="text"
+                        name="keyword"
+                        placeholder="제목, 배우, 감독 등 검색"
+                        value={keyword}
+                        onChange={onChange}
+                    ></input>
+                </div>
+                
+                <div className='main-right-box'>
+                    <button type="button">오른쪽</button>
+                </div>
+            </div>
 
+            <hr></hr>
             <div>
                 <Movie_Table list={movies}></Movie_Table>
             </div>

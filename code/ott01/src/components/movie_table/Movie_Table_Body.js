@@ -77,38 +77,50 @@ function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영�
 
     function outputGenre(id) {
         var result = '';
-        var size = genresList.data.length;
 
-        for (let i = 0; i < size; i++) {
-            if (genresList.data[i].content_id === id) {
-                result += genresList.data[i].attribute_name + ",";
+        if (genresList) {
+            var size = genresList.data.length;
+
+            for (let i = 0; i < size; i++) {
+                if (genresList.data[i].content_id === id) {
+                    result += genresList.data[i].attribute_name + ", ";
+                }
             }
+
+            return result;
         }
-        return result;
     }
 
     function outputCountry(id) {
         var result = '';
-        var size = countrysList.data.length;
 
-        for (let i = 0; i < size; i++) {
-            if (countrysList.data[i].content_id === id) {
-                result += countrysList.data[i].country_name + ",";
+        if (countrysList) {
+            var size = countrysList.data.length;
+
+            for (let i = 0; i < size; i++) {
+                if (countrysList.data[i].content_id === id) {
+                    result += countrysList.data[i].country_name + ", ";
+                }
             }
+
+            return result;
         }
-        return result;
     }
 
     function outputActor(id) {
         var result = '';
-        var size = actorsList.data.length;
+        
+        if (actorsList.data) {
+            var size = actorsList.data.length;
 
-        for (let i = 0; i < size; i++) {
-            if (actorsList.data[i].content_id === id) {
-                result += actorsList.data[i].Name + ",";
+            for (let i = 0; i < size; i++) {
+                if (actorsList.data[i].content_id === id) {
+                    result += actorsList.data[i].Name + ", ";
+                }
             }
+
+            return result;
         }
-        return result;
     }
 
 
