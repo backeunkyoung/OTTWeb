@@ -214,3 +214,21 @@ app.post("/get_country_name", function(req,res) { // 국가 이름 가져오기
         }  
     });  
 });
+
+app.post("/get_actor_name", function(req,res) { // 출연 배우 가져오기
+    
+    var query = "select con.content_id, person.Name"
+    query += " from movies_db.contents con"
+    query += " inner join movies_db.contents_persons conperson on conperson.content_pid = con.content_id"
+    query += " inner join movies_db.person person on person.person_pid = conperson.person_pid"
+    query += " order by con.content_id;"
+    
+    db.query(query, function(err, row){
+        if (!err){  
+            res.send({data : row});
+        } 
+        else {
+            console.log('에러 발생 => ' + err);
+        }  
+    });  
+});

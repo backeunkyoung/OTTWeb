@@ -5,14 +5,15 @@ function Movie_Table_Header() {
     return(
         <div>
             <React.Fragment>
-                <th>포스터</th>         {/* poster */}
-                <th>제목</th>           {/* title */}
-                <th>개봉 날짜</th>      {/* screening_date */}
-                <th>감독</th>           {/* director */}
-                <th>장르</th>           {/* attribute_genre */}
-                <th>제작 국가</th>      {/* production_country */}
-                <th>시청 가능 연령</th> {/* age_information */}
-                <th>줄거리</th>         {/* summary */}
+                <th>포스터</th>
+                <th>제목</th>
+                <th>개봉 날짜</th>
+                <th>감독</th>
+                <th>시청 가능 연령</th>
+                <th>장르</th>
+                <th>제작 국가</th>
+                <th>출연 배우</th>
+                <th>줄거리</th>
             </React.Fragment>
         </div>
     )
