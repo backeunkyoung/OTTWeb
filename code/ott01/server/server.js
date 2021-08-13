@@ -140,6 +140,21 @@ app.post("/countrys_list", function(req,res) { // 국가 목록 가져오기
     });  
 });  
 
+app.post("/years_list", function(req,res) { // 연도 목록 가져오기
+    console.log("서버쪽 countrys_list");
+
+    var query = "select distinct left(screening_date, 4) from movies_db.contents;";
+    
+    db.query(query, function(err, row) {
+    
+    if (!err){
+        res.send({data : row});  
+    }  
+    else  
+        console.log('에러 발생 => ' + err);  
+    });  
+}); 
+
 app.post('/country', (req, res) => {    // 국가 필터(미완) 
     console.log("서버쪽 /country 실행됨");
     res.send({msg : "country success"});

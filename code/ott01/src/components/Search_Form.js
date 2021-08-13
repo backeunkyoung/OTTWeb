@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Movie_Table from './movie_table/Movie_Table';
+import Year_select from './Year_select';
 
 function Search_Form() {
     const [keyword, setKeyword] = useState('');
@@ -33,6 +34,7 @@ function Search_Form() {
 
     return(
         <div>
+            <br></br>
             <div>
                 <div className='main-left-box'>
                     <input
@@ -45,11 +47,12 @@ function Search_Form() {
                 </div>
                 
                 <div className='main-right-box'>
-                    <button type="button">오른쪽</button>
+                    <Year_select></Year_select>
                 </div>
             </div>
 
             <hr></hr>
+            <br></br>
             <div>
                 <Movie_Table list={movies}></Movie_Table>
             </div>
