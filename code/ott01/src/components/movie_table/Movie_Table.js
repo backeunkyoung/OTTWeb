@@ -4,8 +4,9 @@ import Movie_Table_Body from "./Movie_Table_Body";
 
 function Movie_Table(props) {
     let keyword = props.keyword;
+    let genre = props.genre;
 
-    //console.log("Search_Form에게 받음 : " + data);
+    //console.log("genre : " + genre);
 
     return (
         <div>

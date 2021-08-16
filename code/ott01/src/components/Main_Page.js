@@ -8,15 +8,22 @@ import '../App.css';
 
 function Main_Page() {
     const [keyword, setKeyword] = useState(''); // Search_From에게 받아온 input 값 저장
-    let genre = []
+    const [genre, setGenre] = useState();
 
     function Search_Form_receive(data) {
         setKeyword(data);
         //console.log("Search_Form에게 받음 : " + JSON.stringify(keyword));
     }
 
+    function onChange(movie) {
+        const nextGenre = {
+            data : movie,
+        }
+        setGenre(nextGenre)
+    }
+
     function Kategori_receive(data) {
-        genre = data;
+        onChange(data);
         console.log("Kategori_Menu에게 받음 \n장르 : " + JSON.stringify(genre));
     }
 
@@ -46,7 +53,7 @@ function Main_Page() {
                         </div>
 
                         <div className="body-center-box">
-                            <Movie_Table keyword={keyword}></Movie_Table> {/* Search_Form 에게 받아온 input값 전달 */}
+                            <Movie_Table keyword={keyword} genre={genre}></Movie_Table> {/* Search_Form 에게 받아온 input값 전달 */}
                         </div>
 
                         <div className="body-right-box">
