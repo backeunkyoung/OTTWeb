@@ -3,7 +3,7 @@ import axios from 'axios';
 import Movie_Table from './movie_table/Movie_Table';
 import Year_select from './Year_select';
 
-function Search_Form() {
+function Search_Form(props) {
     const [keyword, setKeyword] = useState('');
     const [movies, setMovies] = useState();
 
@@ -32,8 +32,13 @@ function Search_Form() {
         search_result(keyword);
     }, [keyword]);  // keyword가 바뀔 때 실행
 
+    function sendFunction() {
+        props.func(movies);
+    }
+
     return(
         <div>
+            {sendFunction()}
             <br></br>
             <div>
                 <div className='main-left-box'>
@@ -51,11 +56,22 @@ function Search_Form() {
                 </div>
             </div>
 
-            <hr></hr>
+            {/* <hr></hr>
             <br></br>
-            <div>
-                <Movie_Table list={movies}></Movie_Table>
-            </div>
+            <div className="body-container">
+                <div className="body-left-box">
+                    <button>왼쪽</button>
+                </div>
+
+                <div className="body-center-box">
+                    <Movie_Table list={movies}></Movie_Table>
+                </div>
+
+                <div className="body-right-box">
+                    <button>오른쪽</button>
+                </div>
+            </div> */}
+            
 
         </div>
     )

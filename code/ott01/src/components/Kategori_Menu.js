@@ -61,6 +61,7 @@ const Kategori_Menu = (props) => {
                             {genreList && genreList.data.map(genre =>
                                 <div key={genre.attribute_num}>
                                     <Button id={genre.attribute_num} name={genre.attribute_name} variant="secondary">{genre.attribute_name}</Button>
+                                    {/* console.log("버튼 번호 : " + genre.attribute_num + ", 버튼 이름 : " + genre.attribute_name) */}
                                 </div>
                             )} 
                         </ButtonGroup>
