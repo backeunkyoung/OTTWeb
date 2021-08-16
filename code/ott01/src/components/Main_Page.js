@@ -7,9 +7,11 @@ import Movie_Table from './movie_table/Movie_Table';
 import '../App.css';
 
 function Main_Page() {
+    const [keyword, setKeyword] = useState(''); // Search_From에게 받아온 input 값 저장
     
-    function search_receive(data) {
-        console.log("search에게 받음 : " + JSON.stringify(data));
+    function Search_Form_receive(data) {
+        setKeyword(data);
+        //console.log("Search_Form에게 받음 : " + JSON.stringify(keyword));
     }
 
     return (
@@ -27,7 +29,7 @@ function Main_Page() {
 
                 <body>
                     <div>
-                        <Search_Form func={search_receive}></Search_Form>
+                        <Search_Form func={Search_Form_receive}></Search_Form>  {/* Search_Form 에서 input값을 받기 위한 함수 전달 */}
                     </div>
                     
                     <hr></hr>
@@ -38,7 +40,7 @@ function Main_Page() {
                         </div>
 
                         <div className="body-center-box">
-                            <Movie_Table list={movies}></Movie_Table>
+                            <Movie_Table keyword={keyword}></Movie_Table> {/* Search_Form 에게 받아온 input값 전달 */}
                         </div>
 
                         <div className="body-right-box">
