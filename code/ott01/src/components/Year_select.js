@@ -30,7 +30,7 @@ function Year_select() {
                     // console.log("받은 결과 : \n" + JSON.stringify(res.data.data[i]));
                     year_list.push(res.data.data[i])
                 }
-                console.log("결과 : \n" + JSON.stringify(year_list))
+                // console.log("결과 : \n" + JSON.stringify(year_list))
             })  // 실패시 catch 진행
             .catch(function (error) {
                 alert("error발생 => " + error);
