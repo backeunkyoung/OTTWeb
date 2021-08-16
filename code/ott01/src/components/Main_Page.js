@@ -8,7 +8,7 @@ import '../App.css';
 
 function Main_Page() {
     const [keyword, setKeyword] = useState(''); // Search_From에게 받아온 input 값 저장
-    const [genre, setGenre] = useState();
+    let genre = []
 
     function Search_Form_receive(data) {
         setKeyword(data);
@@ -16,7 +16,7 @@ function Main_Page() {
     }
 
     function Kategori_receive(data) {
-        //setGenre(data);
+        genre = data;
         console.log("Kategori_Menu에게 받음 \n장르 : " + JSON.stringify(genre));
     }
 

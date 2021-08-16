@@ -48,11 +48,8 @@ const Kategori_Menu = (props) => {
         }
         get_country();
 
+        send_Main_Page();
     },[]);
-
-    const onChange = (e) => {
-        send_Main_Page()
-    }
 
     let buttonState = [];
 
@@ -63,15 +60,13 @@ const Kategori_Menu = (props) => {
                 state: false,
             },
         )
-        //console.log("\n\nbuttonState : \n" + JSON.stringify(buttonState));
     }
 
-    useEffect(() => {
-        onChange();
-    }, [buttonState])
+    const onChange = (e) => {   // 버튼 클릭할때마다 실행
+        send_Main_Page()
+    }
 
     function genreClick(genreNum) {
-        onChange();
         buttonState[genreNum-1].state = !buttonState[genreNum-1].state
         
         if (buttonState[genreNum-1].state) {    // true
@@ -80,24 +75,24 @@ const Kategori_Menu = (props) => {
         else {  // false
             document.getElementById(genreNum).style.color="white";
         }
-        //console.log("버튼 상태 : " + JSON.stringify(buttonState[genreNum-1]))
+
+        onChange();
     }
 
     // Movie_Table에게 필터 값을 전달하기 위한 함수
     function send_Main_Page() {
-        let select = []
-            
+        let select = []    
+
         buttonState && buttonState.map(element => {
             if (element.state === true) {
                 select.push({
                     genreID: element.genreNum,
                 })
             }
-            console.log("select : " + JSON.stringify(select));
         })
 
-        // console.log("select : " + JSON.stringify(genreSelect));
-        //props.func(select);    // func : Movie_Table에서 받은 Kategori_receive 함수
+        props.func(select);    // func : Movie_Table에서 받은 Kategori_receive 함수
+        //console.log("select : " + JSON.stringify(select))
     }
   
     return (
