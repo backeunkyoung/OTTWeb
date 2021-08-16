@@ -8,14 +8,16 @@ import '../App.css';
 
 function Main_Page() {
     const [keyword, setKeyword] = useState(''); // Search_From에게 받아온 input 값 저장
-    
+    const [genre, setGenre] = useState();
+
     function Search_Form_receive(data) {
         setKeyword(data);
         //console.log("Search_Form에게 받음 : " + JSON.stringify(keyword));
     }
 
-    function Kategori_receive(genre, country) {
-        console.log("Kategori_Menu에게 받음 \n장르 : " + JSON.stringify(genre) + "\n국가 : " + JSON.stringify(country));
+    function Kategori_receive(data) {
+        //setGenre(data);
+        console.log("Kategori_Menu에게 받음 \n장르 : " + JSON.stringify(genre));
     }
 
     return (

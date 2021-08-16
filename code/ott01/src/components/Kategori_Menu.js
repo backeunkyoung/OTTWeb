@@ -50,6 +50,10 @@ const Kategori_Menu = (props) => {
 
     },[]);
 
+    const onChange = (e) => {
+        send_Main_Page()
+    }
+
     let buttonState = [];
 
     function setButtonState(genreNum) { // 장르 버튼 상태값 정의
@@ -62,16 +66,38 @@ const Kategori_Menu = (props) => {
         //console.log("\n\nbuttonState : \n" + JSON.stringify(buttonState));
     }
 
+    useEffect(() => {
+        onChange();
+    }, [buttonState])
+
     function genreClick(genreNum) {
-        console.log("클릭 값 : " + genreNum);
+        onChange();
         buttonState[genreNum-1].state = !buttonState[genreNum-1].state
-        document.getElementById(genreNum).variant="dark"
-        console.log("버튼 상태 : " + JSON.stringify(buttonState[genreNum-1]))
+        
+        if (buttonState[genreNum-1].state) {    // true
+            document.getElementById(genreNum).style.color="blue";
+        }
+        else {  // false
+            document.getElementById(genreNum).style.color="white";
+        }
+        //console.log("버튼 상태 : " + JSON.stringify(buttonState[genreNum-1]))
     }
 
     // Movie_Table에게 필터 값을 전달하기 위한 함수
-    function send_Main_Page(genre, country) {
-        props.func(genre, country);    // func : Movie_Table에서 받은 Kategori_receive 함수
+    function send_Main_Page() {
+        let select = []
+            
+        buttonState && buttonState.map(element => {
+            if (element.state === true) {
+                select.push({
+                    genreID: element.genreNum,
+                })
+            }
+            console.log("select : " + JSON.stringify(select));
+        })
+
+        // console.log("select : " + JSON.stringify(genreSelect));
+        //props.func(select);    // func : Movie_Table에서 받은 Kategori_receive 함수
     }
   
     return (
@@ -88,7 +114,7 @@ const Kategori_Menu = (props) => {
                                     <Button id={genre.attribute_num}
                                         name={genre.attribute_name}
                                         onClick={() => genreClick(genre.attribute_num)}
-                                        variant="secondary"
+                                        color={"secondary"}
                                     >
                                     {genre.attribute_name}
                                     </Button>
@@ -115,7 +141,7 @@ const Kategori_Menu = (props) => {
                     </Card>
                 </Collapse>
             </div>
-            {send_Main_Page(11, "KR")} {/* Main_Page에게 필터 값 전달 */}
+            {/* {send_Main_Page()} Main_Page에게 필터 값 전달 */}
         </div>
     );
 }
