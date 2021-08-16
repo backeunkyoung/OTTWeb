@@ -14,6 +14,10 @@ function Main_Page() {
         //console.log("Search_Form에게 받음 : " + JSON.stringify(keyword));
     }
 
+    function Kategori_receive(genre, country) {
+        console.log("Kategori_Menu에게 받음 \n장르 : " + JSON.stringify(genre) + "\n국가 : " + JSON.stringify(country));
+    }
+
     return (
         <div>
             <Router>
@@ -24,7 +28,7 @@ function Main_Page() {
                     <div>
                         <Login_Button></Login_Button>
                     </div>
-                    <Kategori_Menu></Kategori_Menu>
+                    <Kategori_Menu func={Kategori_receive}></Kategori_Menu> {/* Kategori_Menu 에서 필터값을 받기 위한 함수 전달 */}
                 </header>
 
                 <body>

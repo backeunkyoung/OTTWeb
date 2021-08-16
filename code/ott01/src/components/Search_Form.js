@@ -8,9 +8,9 @@ function Search_Form(props) {
         setKeyword(e.target.value);
     }
 
-    // Movie_Table에게 input 값을 전달하기 위한 함수
+    // Main_Page에게 input 값을 전달하기 위한 함수
     function send_Main_Page() {
-        props.func(keyword);    // func : Movie_Table에서 받은 Search_Form_receive 함수
+        props.func(keyword);    // func : Main_Page에서 받은 Search_Form_receive 함수
     }
 
     return(
@@ -28,9 +28,9 @@ function Search_Form(props) {
                     ></input>
                 </div>
                 
-                {/* <div className='main-right-box'>
+                <div className='main-right-box'>
                     <Year_select></Year_select>
-                </div> */}
+                </div>
             </div>
 
         </div>

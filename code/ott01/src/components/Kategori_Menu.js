@@ -9,8 +9,8 @@ const Kategori_Menu = (props) => {
     const toggleAttribute = () => setCollapseAttribute(!collapseAttribute);
     const toggleCountry = () => setCollapseCountry(!collapseCountry);
 
-    const [genreList, setGenreList] = useState();
-    const [countryList, setCountryList] = useState();
+    const [genreList, setGenreList] = useState();       // 전체 장르 목록
+    const [countryList, setCountryList] = useState();   // 전체 국가 목록
 
     useEffect(() => {
         
@@ -49,6 +49,30 @@ const Kategori_Menu = (props) => {
         get_country();
 
     },[]);
+
+    let buttonState = [];
+
+    function setButtonState(genreNum) { // 장르 버튼 상태값 정의
+        buttonState.push(
+            {
+                genreNum: genreNum,
+                state: false,
+            },
+        )
+        //console.log("\n\nbuttonState : \n" + JSON.stringify(buttonState));
+    }
+
+    function genreClick(genreNum) {
+        console.log("클릭 값 : " + genreNum);
+        buttonState[genreNum-1].state = !buttonState[genreNum-1].state
+        document.getElementById(genreNum).variant="dark"
+        console.log("버튼 상태 : " + JSON.stringify(buttonState[genreNum-1]))
+    }
+
+    // Movie_Table에게 필터 값을 전달하기 위한 함수
+    function send_Main_Page(genre, country) {
+        props.func(genre, country);    // func : Movie_Table에서 받은 Kategori_receive 함수
+    }
   
     return (
         <div>
@@ -60,8 +84,14 @@ const Kategori_Menu = (props) => {
                         <ButtonGroup className="AttributeGenre">
                             {genreList && genreList.data.map(genre =>
                                 <div key={genre.attribute_num}>
-                                    <Button id={genre.attribute_num} name={genre.attribute_name} variant="secondary">{genre.attribute_name}</Button>
-                                    {/* console.log("버튼 번호 : " + genre.attribute_num + ", 버튼 이름 : " + genre.attribute_name) */}
+                                    {setButtonState(genre.attribute_num)}
+                                    <Button id={genre.attribute_num}
+                                        name={genre.attribute_name}
+                                        onClick={() => genreClick(genre.attribute_num)}
+                                        variant="secondary"
+                                    >
+                                    {genre.attribute_name}
+                                    </Button>
                                 </div>
                             )} 
                         </ButtonGroup>
@@ -85,6 +115,7 @@ const Kategori_Menu = (props) => {
                     </Card>
                 </Collapse>
             </div>
+            {send_Main_Page(11, "KR")} {/* Main_Page에게 필터 값 전달 */}
         </div>
     );
 }
