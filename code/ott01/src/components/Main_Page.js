@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, BrowserRouter as Router } from 'react-router-dom'; //React-Router import
 import Login_Button from './login/Login_Button';
 import Kategori_Menu from './Kategori_Menu';
@@ -6,25 +6,35 @@ import Search_Form from './Search_Form';
 import Movie_Table from './movie_table/Movie_Table';
 import '../App.css';
 
+// react 리렌더링 조건
+// 1. state 값이 변경될 때
+// 2. 새로운 props이 들어올 때
+// 3. 부모 컴포넌트가 렌더링 될 때
+// 4. forceUpdate가 실행될 때
+
 function Main_Page() {
+    // < 리렌더링 >
+    // 1. state 값(keyword) 변경 시 리렌더링 됨
+
     const [keyword, setKeyword] = useState(''); // Search_From에게 받아온 input 값 저장
-    const [genre, setGenre] = useState();
+
+    let genre = []
+
+    useEffect(() => {
+        Kategori_receive();
+    }, [])
 
     function Search_Form_receive(data) {
         setKeyword(data);
         //console.log("Search_Form에게 받음 : " + JSON.stringify(keyword));
     }
 
-    function onChange(movie) {
-        const nextGenre = {
-            data : movie,
-        }
-        setGenre(nextGenre)
-    }
-
     function Kategori_receive(data) {
-        onChange(data);
-        console.log("Kategori_Menu에게 받음 \n장르 : " + JSON.stringify(genre));
+        genre = data;
+
+        if (genre) {
+            //console.log("Kategori_Menu에게 받음 \n장르 : " + JSON.stringify(genre));
+        }
     }
 
     return (

@@ -6,7 +6,9 @@ function Movie_Table(props) {
     let keyword = props.keyword;
     let genre = props.genre;
 
-    //console.log("genre : " + genre);
+    if (genre) {
+        //console.log("genre : " + JSON.stringify(genre));
+    }
 
     return (
         <div>

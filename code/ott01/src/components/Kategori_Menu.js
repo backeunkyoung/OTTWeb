@@ -1,19 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Collapse, Button, ButtonGroup, CardBody, Card } from 'reactstrap';
 import axios from 'axios';
 
+// react 리렌더링 조건
+// 1. state 값이 변경될 때
+// 2. 새로운 props이 들어올 때
+// 3. 부모 컴포넌트가 렌더링 될 때
+// 4. forceUpdate가 실행될 때
+
 const Kategori_Menu = (props) => {
-    const [collapseAttribute, setCollapseAttribute] = useState(false);  // 장르
-    const [collapseCountry, setCollapseCountry] = useState(false);      // 국가
+    console.log("리렌더링")
+    const [collapseAttribute, setCollapseAttribute] = useState(false);  // 장르 Tab open/close 상태
+    const [collapseCountry, setCollapseCountry] = useState(false);      // 국가 Tab open/close 상태
   
+
     const toggleAttribute = () => setCollapseAttribute(!collapseAttribute);
     const toggleCountry = () => setCollapseCountry(!collapseCountry);
 
     const [genreList, setGenreList] = useState();       // 전체 장르 목록
     const [countryList, setCountryList] = useState();   // 전체 국가 목록
 
+
+    // 컴포넌트가 마운트 될 때만 실행됨
+    // 마운트 : 컴포넌트를 특정 영역에 끼워넣는 행위
     useEffect(() => {
-        
+
         function get_genres() { // server에게 장르 목록 받아오기
             var url = "/genres_list";
     
@@ -21,7 +32,6 @@ const Kategori_Menu = (props) => {
             })  // 성공시 then 진행
             .then(function (res) {
                 // 여기서 받아온 res는 JSON 타입
-                // console.log("get_genres함수 실행\n" + JSON.stringify(res.data));
                 setGenreList(res.data);
             })  // 실패시 catch 진행
             .catch(function (error) {
@@ -38,7 +48,6 @@ const Kategori_Menu = (props) => {
             })  // 성공시 then 진행
             .then(function (res) {
                 // 여기서 받아온 res는 JSON 타입
-                // console.log("get_genres함수 실행\n" + JSON.stringify(res.data));
                 setCountryList(res.data);
             })  // 실패시 catch 진행
             .catch(function (error) {
@@ -92,7 +101,7 @@ const Kategori_Menu = (props) => {
         })
 
         props.func(select);    // func : Movie_Table에서 받은 Kategori_receive 함수
-        //console.log("select : " + JSON.stringify(select))
+        console.log("select : " + JSON.stringify(select))
     }
   
     return (
@@ -136,7 +145,7 @@ const Kategori_Menu = (props) => {
                     </Card>
                 </Collapse>
             </div>
-            {/* {send_Main_Page()} Main_Page에게 필터 값 전달 */}
+            {send_Main_Page()} 
         </div>
     );
 }
