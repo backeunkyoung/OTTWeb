@@ -23,6 +23,7 @@ const Kategori_Menu = (props) => {
     // 컴포넌트가 마운트 될 때만 실행됨
     // 마운트 : 컴포넌트를 특정 영역에 끼워넣는 행위
     useEffect(() => {
+        console.log("마운트")
 
         function get_genres() { // server에게 장르 목록 받아오기
             var url = "/genres_list";
@@ -32,6 +33,13 @@ const Kategori_Menu = (props) => {
             .then(function (res) {
                 // 여기서 받아온 res는 JSON 타입
                 setGenreList(res.data);
+
+                // 장르 버튼에 상태 속성(id 및 state) 부여
+                genreList && genreList.data.map(genre => {
+                    setButtonState(genre.attribute_num)
+                    console.log("buttonState : " + JSON.stringify(buttonState));
+                });
+                
             })  // 실패시 catch 진행
             .catch(function (error) {
                 alert("error발생 => " + error);
@@ -56,29 +64,32 @@ const Kategori_Menu = (props) => {
         }
         get_country();
 
+        function setButtonState(genreNum) { // 장르 버튼 상태값 정의(false)
+            buttonState.push(
+                {
+                    genreNum: genreNum,
+                    state: false,
+                },
+            )
+        }
+        
         send_Main_Page();
+        
     },[]);
 
-    function setButtonState(genreNum) { // 장르 버튼 상태값 정의(false)
-        buttonState.push(
-            {
-                genreNum: genreNum,
-                state: false,
-            },
-        )
-    }
 
     function genreClick(genreNum) { // 장르 버튼 클릭 시 실행
-        buttonState[genreNum-1].state = !buttonState[genreNum-1].state
+        console.log("buttonState : " + buttonState);
+        // buttonState[genreNum-1].state = !buttonState[genreNum-1].state
         
-        if (buttonState[genreNum-1].state) {    // true(활성화)
-            document.getElementById(genreNum).style.color="blue";
-        }
-        else {  // false
-            document.getElementById(genreNum).style.color="white";
-        }
+        // if (buttonState[genreNum-1].state) {    // true(활성화)
+        //     document.getElementById(genreNum).style.color="blue";
+        // }
+        // else {  // false
+        //     document.getElementById(genreNum).style.color="white";
+        // }
 
-        onChange();
+        // onChange();
     }
 
     const onChange = (e) => {   // 장르 버튼을 클릭할때마다
@@ -113,7 +124,7 @@ const Kategori_Menu = (props) => {
                         <ButtonGroup className="AttributeGenre">
                             {genreList && genreList.data.map(genre =>
                                 <div key={genre.attribute_num}>
-                                    {setButtonState(genre.attribute_num)}
+                                    {/* {setButtonState(genre.attribute_num)} */}
                                     <Button id={genre.attribute_num}
                                         name={genre.attribute_name}
                                         onClick={() => genreClick(genre.attribute_num)}
