@@ -38,8 +38,8 @@ function Main_Page() {
         if (genre) {
             console.log("\nKategori_Menu에게 받은 장르 : " + JSON.stringify(genre));
             
-            setGenreSelect(genre)
-            console.log("genre state : " + JSON.stringify(genreSelect));
+            //setGenreSelect(genre)
+            //console.log("genre state : " + JSON.stringify(genreSelect));
         }
     }
 

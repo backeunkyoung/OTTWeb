@@ -18,7 +18,9 @@ const Kategori_Menu = (props) => {
     const [genreList, setGenreList] = useState();       // 전체 장르 목록
     const [countryList, setCountryList] = useState();   // 전체 국가 목록
 
-    let buttonState = [];
+    // let buttonState = [];
+
+    const [genreState, setGenreState] = useState([]);
 
     // 컴포넌트가 마운트 될 때만 실행됨
     // 마운트 : 컴포넌트를 특정 영역에 끼워넣는 행위
@@ -36,8 +38,14 @@ const Kategori_Menu = (props) => {
 
                 // 장르 버튼에 상태 속성(id 및 state) 부여
                 genreList && genreList.data.map(genre => {
-                    setButtonState(genre.attribute_num)
-                    console.log("buttonState : " + JSON.stringify(buttonState));
+                    let add = {
+                        genreNum: genre.attribute_num,
+                        state: false,
+                    }
+                    setGenreState(genreState.concat(add))
+                    
+                    //setButtonState(genre.attribute_num)
+                    //console.log("buttonState : " + JSON.stringify(buttonState));
                 });
                 
             })  // 실패시 catch 진행
@@ -64,14 +72,14 @@ const Kategori_Menu = (props) => {
         }
         get_country();
 
-        function setButtonState(genreNum) { // 장르 버튼 상태값 정의(false)
-            buttonState.push(
-                {
-                    genreNum: genreNum,
-                    state: false,
-                },
-            )
-        }
+        // function setButtonState(genreNum) { // 장르 버튼 상태값 정의(false)
+        //     buttonState.push(
+        //         {
+        //             genreNum: genreNum,
+        //             state: false,
+        //         },
+        //     )
+        // }
         
         send_Main_Page();
         
@@ -79,7 +87,9 @@ const Kategori_Menu = (props) => {
 
 
     function genreClick(genreNum) { // 장르 버튼 클릭 시 실행
-        console.log("buttonState : " + buttonState);
+        console.log("genreState : " + JSON.stringify(genreState))
+        console.log("실행")
+        //console.log("buttonState : " + buttonState);
         // buttonState[genreNum-1].state = !buttonState[genreNum-1].state
         
         // if (buttonState[genreNum-1].state) {    // true(활성화)
@@ -101,13 +111,13 @@ const Kategori_Menu = (props) => {
         let select = []    
 
         // 장르 버튼이 눌러진 것(true인 것)만 select에 push
-        buttonState && buttonState.map(element => {
-            if (element.state === true) {
-                select.push({
-                    genreID: element.genreNum,
-                })
-            }
-        })
+        // buttonState && buttonState.map(element => {
+        //     if (element.state === true) {
+        //         select.push({
+        //             genreID: element.genreNum,
+        //         })
+        //     }
+        // })
 
         // func : Main_Page 에서 받은 Kategori_receive 함수
         props.func(select);
