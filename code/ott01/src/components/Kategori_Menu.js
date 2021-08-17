@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Collapse, Button, ButtonGroup, CardBody, Card } from 'reactstrap';
 import axios from 'axios';
 
@@ -9,10 +9,8 @@ import axios from 'axios';
 // 4. forceUpdate가 실행될 때
 
 const Kategori_Menu = (props) => {
-    console.log("리렌더링")
     const [collapseAttribute, setCollapseAttribute] = useState(false);  // 장르 Tab open/close 상태
     const [collapseCountry, setCollapseCountry] = useState(false);      // 국가 Tab open/close 상태
-  
 
     const toggleAttribute = () => setCollapseAttribute(!collapseAttribute);
     const toggleCountry = () => setCollapseCountry(!collapseCountry);
@@ -20,6 +18,7 @@ const Kategori_Menu = (props) => {
     const [genreList, setGenreList] = useState();       // 전체 장르 목록
     const [countryList, setCountryList] = useState();   // 전체 국가 목록
 
+    let buttonState = [];
 
     // 컴포넌트가 마운트 될 때만 실행됨
     // 마운트 : 컴포넌트를 특정 영역에 끼워넣는 행위
@@ -60,9 +59,7 @@ const Kategori_Menu = (props) => {
         send_Main_Page();
     },[]);
 
-    let buttonState = [];
-
-    function setButtonState(genreNum) { // 장르 버튼 상태값 정의
+    function setButtonState(genreNum) { // 장르 버튼 상태값 정의(false)
         buttonState.push(
             {
                 genreNum: genreNum,
@@ -71,14 +68,10 @@ const Kategori_Menu = (props) => {
         )
     }
 
-    const onChange = (e) => {   // 버튼 클릭할때마다 실행
-        send_Main_Page()
-    }
-
-    function genreClick(genreNum) {
+    function genreClick(genreNum) { // 장르 버튼 클릭 시 실행
         buttonState[genreNum-1].state = !buttonState[genreNum-1].state
         
-        if (buttonState[genreNum-1].state) {    // true
+        if (buttonState[genreNum-1].state) {    // true(활성화)
             document.getElementById(genreNum).style.color="blue";
         }
         else {  // false
@@ -88,10 +81,15 @@ const Kategori_Menu = (props) => {
         onChange();
     }
 
+    const onChange = (e) => {   // 장르 버튼을 클릭할때마다
+        send_Main_Page()        // Main_Page에게 select 값 전송
+    }
+
     // Movie_Table에게 필터 값을 전달하기 위한 함수
     function send_Main_Page() {
         let select = []    
 
+        // 장르 버튼이 눌러진 것(true인 것)만 select에 push
         buttonState && buttonState.map(element => {
             if (element.state === true) {
                 select.push({
@@ -100,8 +98,9 @@ const Kategori_Menu = (props) => {
             }
         })
 
-        props.func(select);    // func : Movie_Table에서 받은 Kategori_receive 함수
-        console.log("select : " + JSON.stringify(select))
+        // func : Main_Page 에서 받은 Kategori_receive 함수
+        props.func(select);
+        // console.log("select : " + JSON.stringify(select))
     }
   
     return (
@@ -145,7 +144,6 @@ const Kategori_Menu = (props) => {
                     </Card>
                 </Collapse>
             </div>
-            {send_Main_Page()} 
         </div>
     );
 }

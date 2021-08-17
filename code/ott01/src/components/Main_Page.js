@@ -17,6 +17,7 @@ function Main_Page() {
     // 1. state 값(keyword) 변경 시 리렌더링 됨
 
     const [keyword, setKeyword] = useState(''); // Search_From에게 받아온 input 값 저장
+    const [genreSelect, setGenreSelect] = useState();
 
     let genre = []
 
@@ -29,11 +30,21 @@ function Main_Page() {
         //console.log("Search_Form에게 받음 : " + JSON.stringify(keyword));
     }
 
+    // 장르 버튼을 누를때마다 Kategori_Menu쪽에서 해당 함수가 실행됨
     function Kategori_receive(data) {
         genre = data;
 
         if (genre) {
-            //console.log("Kategori_Menu에게 받음 \n장르 : " + JSON.stringify(genre));
+            console.log("\nKategori_Menu에게 받음 \n장르 : " + JSON.stringify(genre));
+            
+            // let num = 0;
+            // genre.map(element =>
+            //     setGenreSelect(genre[num]),
+            //     console.log("genre : " + JSON.stringify(genre)),
+            //     // console.log("genre[num]: " + JSON.stringify(genre[num])),
+            //     num++,
+            // )
+            //console.log("genre : " + JSON.stringify(genreSelect));
         }
     }
 
