@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, BrowserRouter as Router } from 'react-router-dom'; //React-Router import
 import Login_Button from './login/Login_Button';
-import Kategori_Menu from './Kategori_Menu';
+import Categori_Menu from './Categori_Menu';
 import Search_Form from './Search_Form';
 import Movie_Table from './movie_table/Movie_Table';
 import '../App.css';
@@ -19,9 +19,9 @@ function Main_Page() {
     const [keyword, setKeyword] = useState(''); // Search_From에게 받아온 input 값 저장
     const [clickGenre, setClickGenre] = useState([])// 장르 버튼 상태 관리
 
-    useEffect(() => {
-        Kategori_receive();
-    }, [])
+    // useEffect(() => {
+    //     Kategori_receive();
+    // }, [])
 
     function Search_Form_receive(data) {
         setKeyword(data);
@@ -32,10 +32,10 @@ function Main_Page() {
 
     function Kategori_receive(clickButton, buttonLength) {
         genre = clickButton
-        //console.log("클릭한 genre : " + JSON.stringify(genre))
+        console.log("클릭한 genre : " + JSON.stringify(genre))
         // console.log("클릭 데이터 :  " + clickButton);
 
-        setClickGenre(genre);
+        //setClickGenre(genre);
         // console.log("state 데이터 : " + clickGenre)
     }
 
@@ -49,7 +49,7 @@ function Main_Page() {
                     <div>
                         <Login_Button></Login_Button>
                     </div>
-                    <Kategori_Menu func={Kategori_receive}></Kategori_Menu> {/* Kategori_Menu 에서 필터값을 받기 위한 함수 전달 */}
+                    <Categori_Menu func={Kategori_receive}></Categori_Menu> {/* Kategori_Menu 에서 필터값을 받기 위한 함수 전달 */}
                 </header>
 
                 <body>

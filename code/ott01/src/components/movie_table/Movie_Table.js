@@ -7,7 +7,7 @@ function Movie_Table(props) {
     let genre = props.genre;
 
     if (genre) {
-        //console.log("Table쪽 genre : " + JSON.stringify(genre));
+        console.log("Table쪽 genre : " + JSON.stringify(genre));
     }
 
     return (
