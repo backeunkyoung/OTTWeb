@@ -199,6 +199,21 @@ th:last-child, td:last-child {
   }
 }
 
+.registration_info{
+  position:relative;
+  right: 100px;
+}
+
+#registration_button{
+  position:relative;
+  left: 50px;
+}
+
+.login_form{
+  position:relative;
+  left: 50px;
+}
+
 .login_button {
   padding: 20px 65px;
 }
