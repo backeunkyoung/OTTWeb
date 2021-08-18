@@ -18,8 +18,6 @@ const Kategori_Menu = (props) => {
     const [genreList, setGenreList] = useState();       // 전체 장르 목록
     const [countryList, setCountryList] = useState();   // 전체 국가 목록
 
-    // let buttonState = [];
-
     const [genreState, setGenreState] = useState([]);   // 장르 버튼 상태 관리
 
     // 컴포넌트가 마운트 될 때만 실행됨
@@ -34,56 +32,29 @@ const Kategori_Menu = (props) => {
             })  // 성공시 then 진행
             .then(function (res) {
                 // 여기서 받아온 res는 JSON 타입
-                setGenreList(res.data);
+                setGenreList(res.data); // genreList에 넣기
 
                 // 장르 버튼에 상태 속성(id 및 state) 부여
                 let size; 
                 let genre;
 
+                // 장르 리스트를 받아온 후에 실행됨
                 if (genreList) {
                     size = Object.keys(genreList.data).length;
-                    console.log("size : ", size)
                     genre = genreList.data
+
+                    let pushList = [];
+
+                    // 장르 버튼 생성
+                    for (let i = 0; i < size; i++) {
+
+                        pushList.push({
+                            genreID : genre[i].attribute_num,
+                            genreClick : false,
+                        })
+                    }
+                    setGenreState(pushList)
                 }
-
-                let l = [];
-
-                //console.log("genre : " + JSON.stringify(genre))
-                for (let i = 0; i < size; i++) {
-                    //console.log("genre_ID : " + JSON.stringify(genre[i].attribute_num))
-
-                    l.push({
-                        genreID : genre[i].attribute_num,
-                        genreClick : false,
-                    })
-                    //console.log(l);
-                }
-                setGenreState(l)
-
-                // console.log("genreState : " + JSON.stringify(genreState));
-                // console.log("---")
-                
-
-                genreList && genreList.data.map(genre => {
-                    // console.log("genre : " + JSON.stringify(genre.attribute_num))
-
-                    // setGenreState({
-                    //     genreID : genre.attribute_num,
-                    //     genreClick : false,
-                    // })
-
-                    // console.log("genreState : " + JSON.stringify(genreState));
-                    // console.log("---")
-
-                    // let add = {
-                    //     genreNum: genre.attribute_num,
-                    //     state: false,
-                    // }
-                    // setGenreState(genreState.concat(add))
-                    
-                    //setButtonState(genre.attribute_num)
-                    //console.log("buttonState : " + JSON.stringify(buttonState));
-                });
                 
             })  // 실패시 catch 진행
             .catch(function (error) {
@@ -108,35 +79,14 @@ const Kategori_Menu = (props) => {
             })
         }
         get_country();
-
-        // function setButtonState(genreNum) { // 장르 버튼 상태값 정의(false)
-        //     buttonState.push(
-        //         {
-        //             genreNum: genreNum,
-        //             state: false,
-        //         },
-        //     )
-        // }
         
         send_Main_Page();
         
     },[]);
 
-
-    console.log("genreState : " + JSON.stringify(genreState));
-                console.log("---")
-
     function genreClick(genreNum) { // 장르 버튼 클릭 시 실행
-        console.log("실행")
-        // if (genreState.length != 0) {
-        //     let num = 0
-        //     genreState.map(element => {
-        //         console.log("genreState : " + JSON.stringify(genreState[num]))
-        //         num++
-        //     })
-        // }  
         
-        //console.log("buttonState : " + buttonState);
+        console.log("클릭 genreState : " + JSON.stringify(genreState));
         // buttonState[genreNum-1].state = !buttonState[genreNum-1].state
         
         // if (buttonState[genreNum-1].state) {    // true(활성화)
