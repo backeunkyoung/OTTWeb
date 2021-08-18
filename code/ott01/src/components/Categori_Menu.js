@@ -11,16 +11,12 @@ import axios from 'axios';
 const Categori_Menu = (props) => {
     const [collapseAttribute, setCollapseAttribute] = useState(false);  // 장르 Tab open/close 상태
     const [collapseCountry, setCollapseCountry] = useState(false);      // 국가 Tab open/close 상태
-  
 
     const toggleAttribute = () => setCollapseAttribute(!collapseAttribute);
     const toggleCountry = () => setCollapseCountry(!collapseCountry);
 
     const [genreList, setGenreList] = useState();       // 전체 장르 목록
     const [countryList, setCountryList] = useState();   // 전체 국가 목록
-
-    // const setting = () => window.localStorage.getItem("genreState") || [];
-    // const [genreState, setGenreState] = useState([])// 장르 버튼 상태 관리
 
     // 컴포넌트가 마운트 될 때만 실행됨
     // 마운트 : 컴포넌트를 특정 영역에 끼워넣는 행위
