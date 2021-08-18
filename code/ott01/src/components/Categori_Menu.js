@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Collapse, Button, ButtonGroup, CardBody, Card } from 'reactstrap';
 import axios from 'axios';
 
+// 병합
+
 // react 리렌더링 조건
 // 1. state 값이 변경될 때
 // 2. 새로운 props이 들어올 때
