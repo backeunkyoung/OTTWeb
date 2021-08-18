@@ -19,10 +19,13 @@ const Kategori_Menu = (props) => {
     const [genreList, setGenreList] = useState();       // 전체 장르 목록
     const [countryList, setCountryList] = useState();   // 전체 국가 목록
 
+    // const setting = () => window.localStorage.getItem("genreState") || [];
+    const [genreState, setGenreState] = useState([])// 장르 버튼 상태 관리
 
     // 컴포넌트가 마운트 될 때만 실행됨
     // 마운트 : 컴포넌트를 특정 영역에 끼워넣는 행위
     useEffect(() => {
+        console.log("마운트")
 
         function get_genres() { // server에게 장르 목록 받아오기
             var url = "/genres_list";
@@ -32,6 +35,32 @@ const Kategori_Menu = (props) => {
             .then(function (res) {
                 // 여기서 받아온 res는 JSON 타입
                 setGenreList(res.data);
+
+                // 장르 버튼에 상태 속성(id 및 state) 부여
+                let size; 
+                let genre;
+
+                // 장르 리스트를 받아온 후에 실행됨
+                if (genreList) {
+                    size = Object.keys(genreList.data).length;
+                    genre = genreList.data
+
+                    let pushList = [];
+
+                    console.log("size : " + size)
+                    // 장르 버튼 생성
+                    for (let i = 0; i < size; i++) {
+
+                        pushList.push({
+                            genreID : genre[i].attribute_num,
+                            genreClick : false,
+                        })
+                    }
+                    
+                    console.log("확인 : " + JSON.stringify(pushList));
+                    // window.localStorage.setItem("genreState", pushList);
+                    setGenreState(pushList);
+                }
             })  // 실패시 catch 진행
             .catch(function (error) {
                 alert("error발생 => " + error);
@@ -59,46 +88,33 @@ const Kategori_Menu = (props) => {
         send_Main_Page();
     },[]);
 
-    let buttonState = [];
-
-    function setButtonState(genreNum) { // 장르 버튼 상태값 정의
-        buttonState.push(
-            {
-                genreNum: genreNum,
-                state: false,
-            },
-        )
-    }
-
     const onChange = (e) => {   // 버튼 클릭할때마다 실행
         send_Main_Page()
     }
 
     function genreClick(genreNum) {
-        buttonState[genreNum-1].state = !buttonState[genreNum-1].state
+        genreState[genreNum-1].genreClick = !genreState[genreNum-1].genreClick
         
-        if (buttonState[genreNum-1].state) {    // true
+        if (genreState[genreNum-1].genreClick) {    // true
             document.getElementById(genreNum).style.color="blue";
         }
         else {  // false
             document.getElementById(genreNum).style.color="white";
         }
+        console.log(genreState[genreNum-1].genreID + "클릭, state : " + genreState[genreNum-1].genreClick)
 
         onChange();
     }
 
     // Movie_Table에게 필터 값을 전달하기 위한 함수(장르 버튼을 클릭할 때마다 전송)
     function send_Main_Page() {
-        console.log("\n리렌더링")
+        console.log("\n리렌더링!")
 
-        let select = []    
+        let size = Object.keys(genreState).length;
+        let select = [];
 
-        let buttonLength = Object.keys(buttonState).length;
-        // console.log("버튼 크기 : " + Object.keys(buttonState).length);
-
-
-        buttonState && buttonState.map(element => {
-            console.log("buttonState 확인 : " + JSON.stringify(element))
+        genreState && genreState.map(element => {
+            console.log("genreState : " + JSON.stringify(genreState));
             if (element.state === true) {
                 select.push({
                     genreID: element.genreNum,
@@ -106,7 +122,7 @@ const Kategori_Menu = (props) => {
             }
         })
 
-        props.func(select, buttonLength);    // func : Movie_Table에서 받은 Kategori_receive 함수
+        props.func(select);    // func : Movie_Table에서 받은 Kategori_receive 함수
         console.log("select : " + JSON.stringify(select))
     }
   
@@ -120,7 +136,6 @@ const Kategori_Menu = (props) => {
                         <ButtonGroup className="AttributeGenre">
                             {genreList && genreList.data.map(genre =>
                                 <div key={genre.attribute_num}>
-                                    {setButtonState(genre.attribute_num)}
                                     <Button id={genre.attribute_num}
                                         name={genre.attribute_name}
                                         onClick={() => genreClick(genre.attribute_num)}

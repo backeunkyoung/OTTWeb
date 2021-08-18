@@ -32,7 +32,7 @@ function Main_Page() {
 
     function Kategori_receive(clickButton, buttonLength) {
         genre = clickButton
-        console.log("클릭한 genre : " + JSON.stringify(genre))
+        //console.log("클릭한 genre : " + JSON.stringify(genre))
         // console.log("클릭 데이터 :  " + clickButton);
 
         setClickGenre(genre);
