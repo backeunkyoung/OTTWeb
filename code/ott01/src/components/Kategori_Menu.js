@@ -9,7 +9,6 @@ import axios from 'axios';
 // 4. forceUpdate가 실행될 때
 
 const Kategori_Menu = (props) => {
-    console.log("리렌더링")
     const [collapseAttribute, setCollapseAttribute] = useState(false);  // 장르 Tab open/close 상태
     const [collapseCountry, setCollapseCountry] = useState(false);      // 국가 Tab open/close 상태
   
@@ -88,9 +87,14 @@ const Kategori_Menu = (props) => {
         onChange();
     }
 
-    // Movie_Table에게 필터 값을 전달하기 위한 함수
+    // Movie_Table에게 필터 값을 전달하기 위한 함수(장르 버튼을 클릭할 때마다 전송)
     function send_Main_Page() {
+        // console.log("보냄")
         let select = []    
+
+        let buttonLength = Object.keys(buttonState).length;
+        // console.log("버튼 크기 : " + Object.keys(buttonState).length);
+
 
         buttonState && buttonState.map(element => {
             if (element.state === true) {
@@ -100,8 +104,8 @@ const Kategori_Menu = (props) => {
             }
         })
 
-        props.func(select);    // func : Movie_Table에서 받은 Kategori_receive 함수
-        console.log("select : " + JSON.stringify(select))
+        props.func(select, buttonLength);    // func : Movie_Table에서 받은 Kategori_receive 함수
+        //console.log("select : " + JSON.stringify(select))
     }
   
     return (
