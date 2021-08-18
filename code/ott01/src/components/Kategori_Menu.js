@@ -25,7 +25,7 @@ const Kategori_Menu = (props) => {
     // 컴포넌트가 마운트 될 때만 실행됨
     // 마운트 : 컴포넌트를 특정 영역에 끼워넣는 행위
     useEffect(() => {
-        console.log("마운트!")
+        console.log("마운트!!")
 
         function get_genres() { // server에게 장르 목록 받아오기
             var url = "/genres_list";
@@ -38,26 +38,31 @@ const Kategori_Menu = (props) => {
 
                 // 장르 버튼에 상태 속성(id 및 state) 부여
                 let size; 
+                let genre;
 
                 if (genreList) {
                     size = Object.keys(genreList.data).length;
                     console.log("size : ", size)
+                    genre = genreList.data
                 }
 
-                let genre = genreList.data
+                let l = [];
 
-                console.log("genre : " + JSON.stringify(genre))
+                //console.log("genre : " + JSON.stringify(genre))
                 for (let i = 0; i < size; i++) {
-                    console.log("genre_ID : " + JSON.stringify(genre.attribute_num))
+                    //console.log("genre_ID : " + JSON.stringify(genre[i].attribute_num))
 
-                    // setGenreState({
-                    //     genreID : genre.attribute_num,
-                    //     genreClick : false,
-                    // })
-
-                    // console.log("genreState : " + JSON.stringify(genreState));
-                    // console.log("---")
+                    l.push({
+                        genreID : genre[i].attribute_num,
+                        genreClick : false,
+                    })
+                    //console.log(l);
                 }
+                setGenreState(l)
+
+                // console.log("genreState : " + JSON.stringify(genreState));
+                // console.log("---")
+                
 
                 genreList && genreList.data.map(genre => {
                     // console.log("genre : " + JSON.stringify(genre.attribute_num))
@@ -118,6 +123,9 @@ const Kategori_Menu = (props) => {
     },[]);
 
 
+    console.log("genreState : " + JSON.stringify(genreState));
+                console.log("---")
+
     function genreClick(genreNum) { // 장르 버튼 클릭 시 실행
         console.log("실행")
         // if (genreState.length != 0) {
@@ -171,7 +179,7 @@ const Kategori_Menu = (props) => {
                     <Card>
                     <CardBody>
                         <ButtonGroup className="AttributeGenre">
-                            {genreList && genreList.data.map(genre =>
+                            {genreList && genreList.data && genreList.data.map(genre =>
                                 <div key={genre.attribute_num}>
                                     <Button id={genre.attribute_num}
                                         name={genre.attribute_name}
