@@ -2,7 +2,32 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 
-function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영화 정보
+function Movie_Table_Body(props) {
+    const [movies, setMovies] = useState();
+
+    let keyword = props.keyword // Search_Form의 input 값
+    //console.log("keyword : " + keyword);
+
+    function search_result(keyword) { // server에게 영화DB 받아오기
+        var url = "/search_result";
+
+        axios.post( url, {
+            postKeyword : keyword
+        })  // 성공시 then 진행
+        .then(function (res) {
+            console.log("keyword : " + keyword);
+            setMovies(res.data.data);
+            //console.log("res : " + JSON.stringify(res.data.data));
+        })  // 실패시 catch 진행
+        .catch(function (error) {
+            alert("error발생 => " + error);
+            setMovies("error");
+        })
+    }
+
+    useEffect(() => {   // 컴포넌트가 렌더링 될 때마다 특정 작업 실행
+        search_result(keyword);
+    }, [keyword]);  // keyword가 바뀔 때 실행
 
     const [genresList, setGenresList] = useState({   // 장르 목록
         content_id: '',
@@ -70,10 +95,7 @@ function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영�
     
     }, [])  // 대괄호 비워 둠 => 컴포넌트가 처음 나타날때만 실행
 
-
-    const check_undefined = _.get(props, "list.list.data");
-
-    var tableBody = [];
+    var tableBody = []; // TableBody에 넣을 데이터
 
     function outputGenre(id) {
         var result = '';
@@ -123,9 +145,10 @@ function Movie_Table_Body(props) {  // props는 Search_Form에서 받아온 영�
         }
     }
 
+    const check_undefined = _.get(props, "movies");
 
-
-    check_undefined && check_undefined.map(movie =>
+    // check_undefined && check_undefined.map(movie =>
+    movies && movies.map(movie =>
         tableBody.push(
             {
                 id: movie.content_id,

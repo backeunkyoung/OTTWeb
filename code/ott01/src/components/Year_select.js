@@ -24,7 +24,7 @@ function Year_select() {
             })  // 성공시 then 진행
             .then(function (res) {
                 let size = res.data.data.length;
-                console.log("size : " + size);
+                //console.log("size : " + size);
 
                 for (let i = 0; i < size; i++) {
                     // console.log("받은 결과 : \n" + JSON.stringify(res.data.data[i]));

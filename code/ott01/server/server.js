@@ -132,7 +132,8 @@ app.post("/countrys_list", function(req,res) { // 국가 목록 가져오기
     
     db.query(query, function(err, row) {
     
-    if (!err){  
+    if (!err){
+        // console.log("data : " + JSON.stringify(row))
         res.send({data : row});  
     }  
     else  
@@ -141,7 +142,7 @@ app.post("/countrys_list", function(req,res) { // 국가 목록 가져오기
 });  
 
 app.post("/years_list", function(req,res) { // 연도 목록 가져오기
-    console.log("서버쪽 countrys_list");
+    console.log("서버쪽 years_list");
 
     var query = "select distinct left(screening_date, 4) from movies_db.contents;";
     
