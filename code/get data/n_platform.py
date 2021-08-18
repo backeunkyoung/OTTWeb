@@ -24,14 +24,13 @@ for j in range(len(pc)):
     res = requests.get(link)
     soup = BeautifulSoup(res.content, 'html.parser')
     try:
+        #제공하는 플랫폼 있으면
         pla = soup.find("section","css-l1ynz5").find_all("li", class_="css-wj6fn0")
         for k in range(len(pla)):
             plaa = soup.find("section","css-l1ynz5").find_all("li", class_="css-wj6fn0")[k].find("a")['title']
-            #print(soup1.find_all("li", class_="css-wj6fn0")[k].find("a"))
             print(plaa)
             platform += plaa+', '
         platform = platform.rstrip(', ')
-        #if platform != None:
         try:
             sql = 'UPDATE platform SET platform = "'+platform+'" WHERE content_pid = "'+movieCd+'"'
             cursor.execute(sql)
@@ -39,6 +38,7 @@ for j in range(len(pc)):
             print('db넣기 실패')
             pass
     except:
+        #제공하는 플랫폼 없으면
         print('플랫폼 제공 안 함')
         try:
             sql = 'UPDATE platform SET platform = NULL WHERE content_pid = "'+movieCd+'"'

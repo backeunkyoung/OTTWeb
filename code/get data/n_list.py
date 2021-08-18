@@ -1,4 +1,4 @@
-###정기적으로 영화 목록 받아오는 코드(스케줄러 사용) contents, links테이블 목록추가 코드 + 영화배우 목록 추가
+### 정기적으로 영화 목록 받아오는 코드(스케줄러 사용) contents, links테이블 목록추가 코드 + 영화배우 목록 추가
 import requests
 import json
 import datetime
@@ -21,7 +21,7 @@ link_sql = "INSERT INTO links (content_id, title) VALUES (%s, %s)"
 person_sql = "INSERT INTO person (person_pid, Name) VALUES (%s, %s)"
 
 
-targetDt = current_datetime.strftime('%Y%m%d')
+targetDt = current_datetime.strftime('%Y%m%d') #yyyymmdd형태
 
 url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json?key='+mykey+'&targetDt='+targetDt
 
@@ -35,8 +35,8 @@ d = json.loads(text)
 for b in d['boxOfficeResult']['weeklyBoxOfficeList']:
     if(b['openDt']!=' '): #개봉일이 있는 영화만
         #print(int(b['movieCd']), b['movieNm'], b['openDt'])
-        l.append([int(b['movieCd']), b['movieNm'], b['openDt']])
-        li.append([b['movieCd'],b['movieNm']])
+        l.append([int(b['movieCd']), b['movieNm'], b['openDt']]) #영화코드,영화이름, 개봉일
+        li.append([b['movieCd'],b['movieNm']]) #영화코드, 영화이름
 
 
 for b,d in zip(l,li):
@@ -69,7 +69,7 @@ for i in range(len(l)):
     for j in d['movieInfoResult']['movieInfo']['actors']:
         name = j['peopleNm']
 
-        time.sleep(1) #3초
+        time.sleep(1) #1초
         url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json?key='+mykey+'&peopleNm='+name
 
         req = requests.get(url)

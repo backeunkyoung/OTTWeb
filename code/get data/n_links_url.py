@@ -1,4 +1,4 @@
-#####links_url
+#####links_url 영화정보 가져올 url불러오기
 import requests
 import json
 import time
@@ -19,7 +19,7 @@ mc = cursor.fetchall()
 
 for i in range(len(mc)):
     movieCd = str(mc[i][0])
-    title = str(mc[i][1])
+    title = mc[i][1]
     query = '영화 '+title
 
     url = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+quote(query)

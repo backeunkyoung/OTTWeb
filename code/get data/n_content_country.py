@@ -9,6 +9,7 @@ import time
 conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
 cursor = conn.cursor()
 
+#content_country테이블에 없는 영화만
 sql = "SELECT content_id, title FROM contents WHERE content_id NOT IN (SELECT content_pid FROM content_country)"
 
 cursor.execute(sql)

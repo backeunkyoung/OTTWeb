@@ -5,6 +5,7 @@ import pymysql
 conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8') 
 cursor = conn.cursor()
 
+#제공하는 플랫폼이 하나 이상인 영화
 sql = "SELECT content_pid, title, platform FROM platform WHERE platform IS NOT NULL"
 
 cursor.execute(sql)
