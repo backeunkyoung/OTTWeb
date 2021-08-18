@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, BrowserRouter as Router } from 'react-router-dom'; //React-Router import
 import Login_Button from './login/Login_Button';
 import Kategori_Menu from './Kategori_Menu';
@@ -35,8 +35,8 @@ function Main_Page() {
         console.log("클릭한 genre : " + JSON.stringify(genre))
         // console.log("클릭 데이터 :  " + clickButton);
 
-        //setClickGenre(genre);
-        //console.log("state 데이터 : " + clickGenre)
+        setClickGenre(genre);
+        // console.log("state 데이터 : " + clickGenre)
     }
 
     return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Collapse, Button, ButtonGroup, CardBody, Card } from 'reactstrap';
 import axios from 'axios';
 
@@ -89,7 +89,8 @@ const Kategori_Menu = (props) => {
 
     // Movie_Table에게 필터 값을 전달하기 위한 함수(장르 버튼을 클릭할 때마다 전송)
     function send_Main_Page() {
-        // console.log("보냄")
+        console.log("\n리렌더링")
+
         let select = []    
 
         let buttonLength = Object.keys(buttonState).length;
@@ -97,6 +98,7 @@ const Kategori_Menu = (props) => {
 
 
         buttonState && buttonState.map(element => {
+            console.log("buttonState 확인 : " + JSON.stringify(element))
             if (element.state === true) {
                 select.push({
                     genreID: element.genreNum,
@@ -105,7 +107,7 @@ const Kategori_Menu = (props) => {
         })
 
         props.func(select, buttonLength);    // func : Movie_Table에서 받은 Kategori_receive 함수
-        //console.log("select : " + JSON.stringify(select))
+        console.log("select : " + JSON.stringify(select))
     }
   
     return (
@@ -149,7 +151,6 @@ const Kategori_Menu = (props) => {
                     </Card>
                 </Collapse>
             </div>
-            {send_Main_Page()} 
         </div>
     );
 }
