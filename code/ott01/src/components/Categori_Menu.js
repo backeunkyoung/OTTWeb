@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Collapse, Button, ButtonGroup, CardBody, Card } from 'reactstrap';
 import axios from 'axios';
 
+// 병합
+
 // react 리렌더링 조건
 // 1. state 값이 변경될 때
 // 2. 새로운 props이 들어올 때
@@ -17,8 +19,6 @@ const Kategori_Menu = (props) => {
 
     const [genreList, setGenreList] = useState();       // 전체 장르 목록
     const [countryList, setCountryList] = useState();   // 전체 국가 목록
-
-    const [genreState, setGenreState] = useState([]);   // 장르 버튼 상태 관리
 
     // 컴포넌트가 마운트 될 때만 실행됨
     // 마운트 : 컴포넌트를 특정 영역에 끼워넣는 행위
