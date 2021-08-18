@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
@@ -62,10 +62,10 @@ const Registration_Form = (props) => {
   // ID 중복 체크 결과 메시지를 화면에 붙여넣기(DOM 이용)
   function msg_print(msg) {
     var element = '';
-    if (msg == "success") {
+    if (msg === "success") {
         element = "사용 가능한 ID";
     }
-    else if (msg == "id_fail") {
+    else if (msg === "id_fail") {
         element = "중복된 ID";
     }
     ReactDOM.render(element, document.getElementById('id_msg'));
@@ -125,12 +125,12 @@ const Registration_Form = (props) => {
     }   // 필요조건 미충족 시 화면에 메세지 출력
     else if (NC === "overlap_no") {
         alert("중복체크 안함");
-        var element = "ID 중복체크를 해주세요";
+        let element = "ID 중복체크를 해주세요";
         ReactDOM.render(element, document.getElementById('nocheck_msg'));
     }
     else if (NC === "input_no") {
         alert("정보 입력 모두 안함");
-        var element = "입력하지 않은 정보가 있습니다.";
+        let element = "입력하지 않은 정보가 있습니다.";
         ReactDOM.render(element, document.getElementById('nocheck_msg'));
     }
   }

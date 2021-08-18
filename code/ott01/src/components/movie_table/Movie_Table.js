@@ -7,7 +7,11 @@ function Movie_Table(props) {
     let genre = props.genre;
 
     if (genre) {
+<<<<<<< HEAD
         //console.log("Moive_Table쪽 genre : " + JSON.stringify(genre));
+=======
+        console.log("Table쪽 genre : " + JSON.stringify(genre));
+>>>>>>> test01
     }
 
     return (
