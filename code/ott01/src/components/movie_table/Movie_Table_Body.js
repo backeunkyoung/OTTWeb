@@ -11,6 +11,8 @@ function Movie_Table_Body(props) {
     let genre = props.genre;  // Categori_Menu의 선택한 장르 값
     let genreLength = Object(genre).length;
 
+    let outputMovies = []
+
     if (genre) {
         console.log("선택한 장르 값 : " + JSON.stringify(genre))
         genre_filter(genre)
@@ -30,6 +32,27 @@ function Movie_Table_Body(props) {
             .then(function (res) {
                 console.log("\nrepetitionCount : " + repetitionCount);
                 console.log("res : " + JSON.stringify(res.data.data));
+            
+                if (Object(outputMovies).length === 0) {    // 1번만 초기화
+                    outputMovies = (res.data.data);
+                }
+                
+                if (Object(outputMovies).length !== 0) {    // 초기화했으면 출력
+                    console.log("outputMovies : " + JSON.stringify(outputMovies));
+                    
+                    outputMovies.map(element => {   // 비교하면서 겹치는 ID값만 따로 모은다
+                        console.log("element : " + JSON.stringify(element.content_pid))
+                    
+                        res.data.data.map(nowElement => {
+                            //console.log("nowElement : " + JSON.stringify(nowElement.content_pid))
+                            if (element.content_pid === nowElement.content_pid) {
+                                console.log("같은 ID : " + nowElement.content_pid);
+                            }
+                        })
+                        
+                    })
+                }
+            
             })  // 실패시 catch 진행
             .catch(function (error) {
                 alert("error발생 => " + error);
@@ -38,20 +61,6 @@ function Movie_Table_Body(props) {
 
             repetitionCount--;
         }
-        // if (genreLength != 0) {
-        //     var url = "/genre_filter";
-
-        //     axios.post( url, {
-        //         postFirstGenre : genre[0].genreId
-        //     })  // 성공시 then 진행
-        //     .then(function (res) {
-        //         console.log("res : " + JSON.stringify(res.data.data));
-        //     })  // 실패시 catch 진행
-        //     .catch(function (error) {
-        //         alert("error발생 => " + error);
-        //         setMovies("error");
-        //     })
-        // }
     }
 
     function search_result(keyword) { // server에게 영화DB 받아오기
