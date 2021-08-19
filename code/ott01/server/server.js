@@ -161,8 +161,9 @@ app.post("/search_result", function(req,res) { // 검색 결과 가져오기
     var keywordBlankDelete = inputKeyword.replace(/ /g,"");   // input 키워드의 공백 제거
 
     //제목, 감독으로 검색( 띄어쓰기 상관 x )
-    //var query = "SELECT * FROM contents WHERE REPLACE(title,' ','') LIKE '%" + keywordBlankDelete + "%' OR REPLACE(director,' ','') LIKE '%" + keywordBlankDelete + "%';";
-    var query = "SELECT * FROM contents WHERE REPLACE(title,' ','') LIKE '%" + keywordBlankDelete + "%' OR REPLACE(director,' ','') LIKE '%" + keywordBlankDelete + "%' OR content_id IN (SELECT content_pid FROM contents_persons WHERE person_pid IN (SELECT person_pid FROM person WHERE REPLACE(Name,' ','') LIKE '%" + keywordBlankDelete +"%') );";
+    var query = "SELECT * FROM contents WHERE REPLACE(title,' ','') LIKE '%" + keywordBlankDelete
+                + "%' OR REPLACE(director,' ','') LIKE '%" + keywordBlankDelete 
+                + "%' OR content_id IN (SELECT content_pid FROM contents_persons WHERE person_pid IN (SELECT person_pid FROM person WHERE REPLACE(Name,' ','') LIKE '%" + keywordBlankDelete +"%') );";
 
     db.query(query, function(err, row){
         if (!err){  

@@ -12,42 +12,36 @@ const Years = [
   { label: "7", value: 58 }
 ];
 
-var year_list = [];
-
 function Year_select() {
+    let yearList = [];
+    let optionsLIst = [];
 
-    useEffect(() => {
-        function years_list() { // server에게 영화DB 받아오기
-            var url = "/years_list";
+    // server에게 영화DB 받아오기
+    var url = "/years_list";
 
-            axios.post( url, {
-            })  // 성공시 then 진행
-            .then(function (res) {
-                let size = res.data.data.length;
-                //console.log("size : " + size);
+    axios.post( url, {
+    })  // 성공시 then 진행
+    .then(function (res) {
+        let size = res.data.data.length;
+        //console.log("size : " + size);
 
-                for (let i = 0; i < size; i++) {
-                    // console.log("받은 결과 : \n" + JSON.stringify(res.data.data[i]));
-                    year_list.push(res.data.data[i])
-                }
-                // console.log("결과 : \n" + JSON.stringify(year_list))
-            })  // 실패시 catch 진행
-            .catch(function (error) {
-                alert("error발생 => " + error);
-            })
+        for (let i = 0; i < size; i++) {
+            //console.log("받은 결과 : \n" + JSON.stringify(res.data.data[i]));
+            yearList.push(res.data.data[i])
         }
-
-        years_list();
-    }, [])  // 대괄호 비워 둠 => 컴포넌트가 처음 나타날때만 실행
+        //console.log("결과 : \n" + JSON.stringify(yearList))
+    })  // 실패시 catch 진행
+    .catch(function (error) {
+        alert("error발생 => " + error);
+    })
 
     return (
         <div>
             <Select
-                options={Years} 
+                options={Years}
             >
             </Select>
         </div>
     );
 }
-
 export default Year_select

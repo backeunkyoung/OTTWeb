@@ -34,7 +34,7 @@ function Search_Form(props) {
                     <input
                         type="text"
                         name="keyword"
-                        placeholder="제목, 배우, 감독 등 검색"
+                        placeholder="제목, 배우, 감독 검색"
                         value={keyword}
                         onChange={onChange}
                     ></input>
