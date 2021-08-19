@@ -156,34 +156,13 @@ app.post("/years_list", function(req,res) { // 연도 목록 가져오기
     });  
 }); 
 
-app.post('/country', (req, res) => {    // 국가 필터(미완) 
-    console.log("서버쪽 /country 실행됨");
-    res.send({msg : "country success"});
-
-    // console.log("tag")
-
-    // var tag = req.body.postCountry;
-    // var data;
-
-    // var sql = "SELECT * FROM contents WHERE (production_country LIKE ? OR production_country LIKE ? OR production_country LIKE ? OR production_country LIKE ?)";
-    // var params = [tag,tag+",%","%,"+tag,"%,"+tag+",%"];
-
-    // conn.query(sql,params, (err,row) => {
-    //     if(err) {
-    //         console.log('err : ' + err);
-    //     }
-    //     else {     
-    //         res.send(data);
-    //     }
-    // });
-});
-
 app.post("/search_result", function(req,res) { // 검색 결과 가져오기
     var inputKeyword = req.body.postKeyword;
     var keywordBlankDelete = inputKeyword.replace(/ /g,"");   // input 키워드의 공백 제거
 
     //제목, 감독으로 검색( 띄어쓰기 상관 x )
-    var query = "SELECT * FROM contents WHERE REPLACE(title,' ','') LIKE '%" + keywordBlankDelete + "%' OR REPLACE(director,' ','') LIKE '%" + keywordBlankDelete + "%';";
+    //var query = "SELECT * FROM contents WHERE REPLACE(title,' ','') LIKE '%" + keywordBlankDelete + "%' OR REPLACE(director,' ','') LIKE '%" + keywordBlankDelete + "%';";
+    var query = "SELECT * FROM contents WHERE REPLACE(title,' ','') LIKE '%" + keywordBlankDelete + "%' OR REPLACE(director,' ','') LIKE '%" + keywordBlankDelete + "%' OR content_id IN (SELECT content_pid FROM contents_persons WHERE person_pid IN (SELECT person_pid FROM person WHERE REPLACE(Name,' ','') LIKE '%" + keywordBlankDelete +"%') );";
 
     db.query(query, function(err, row){
         if (!err){  
@@ -239,7 +218,7 @@ app.post("/get_actor_name", function(req,res) { // 출연 배우 가져오기
     query += " inner join movies_db.person person on person.person_pid = conperson.person_pid"
     query += " order by con.content_id;"
     
-    db.query(query, function(err, row){
+    db.query(query, function(err, row) {
         if (!err){  
             res.send({data : row});
         } 
@@ -247,4 +226,46 @@ app.post("/get_actor_name", function(req,res) { // 출연 배우 가져오기
             console.log('에러 발생 => ' + err);
         }  
     });  
+});
+
+app.post('/genre_filter', (req, res) => {    // 장르 필터
+    console.log("서버쪽 /genre_filter 실행됨");
+
+    var firstGenre = req.body.postFirstGenre;
+    var data;
+
+    console.log("firstGenre : " + firstGenre);
+
+    var query = "select content_pid from movies_db.content_attribute where attribute_num=" + firstGenre + ";";
+
+    db.query(query, function(err, row) {
+        if(err) {
+            console.log('err : ' + err);
+        }
+        else {     
+            res.send({data : row});
+        }
+    });
+});
+
+app.post('/country', (req, res) => {    // 국가 필터(미완) 
+    console.log("서버쪽 /country 실행됨");
+    res.send({msg : "country success"});
+
+    // console.log("tag")
+
+    // var tag = req.body.postCountry;
+    // var data;
+
+    // var sql = "SELECT * FROM contents WHERE (production_country LIKE ? OR production_country LIKE ? OR production_country LIKE ? OR production_country LIKE ?)";
+    // var params = [tag,tag+",%","%,"+tag,"%,"+tag+",%"];
+
+    // conn.query(sql,params, (err,row) => {
+    //     if(err) {
+    //         console.log('err : ' + err);
+    //     }
+    //     else {     
+    //         res.send(data);
+    //     }
+    // });
 });

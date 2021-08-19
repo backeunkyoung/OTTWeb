@@ -23,7 +23,7 @@ const Categori_Menu = (props) => {
     useEffect(() => {
         console.log("마운트")
 
-         // server에게 장르 목록 받아오기
+        // server에게 장르 목록 받아오기
         var genreUrl = "/genres_list";
 
         axios.post( genreUrl, {
@@ -78,7 +78,7 @@ const Categori_Menu = (props) => {
                 })
             }
         }
-        console.log("select : " + JSON.stringify(select));
+        //console.log("select : " + JSON.stringify(select));
 
         props.func(select);    // func : Movie_Table에서 받은 Kategori_receive 함수
     }

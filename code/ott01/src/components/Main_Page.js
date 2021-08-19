@@ -13,8 +13,6 @@ import '../App.css';
 // 4. forceUpdate가 실행될 때
 
 function Main_Page() {
-    // < 리렌더링 >
-    // 1. state 값(keyword) 변경 시 리렌더링 됨
 
     const [keyword, setKeyword] = useState(''); // Search_From에게 받아온 input 값 저장
     const [clickGenre, setClickGenre] = useState([])// 장르 버튼 상태 관리
@@ -28,11 +26,7 @@ function Main_Page() {
 
     function Kategori_receive(clickButton, buttonLength) {
         genre = clickButton
-        console.log("클릭한 genre : " + JSON.stringify(genre))
-        // console.log("클릭 데이터 :  " + clickButton);
-
-        //setClickGenre(genre);
-        // console.log("state 데이터 : " + clickGenre)
+        setClickGenre(genre);
     }
 
     return (
@@ -61,7 +55,7 @@ function Main_Page() {
                         </div>
 
                         <div className="body-center-box">
-                            <Movie_Table keyword={keyword} genre={genre}></Movie_Table> {/* Search_Form 에게 받아온 input값 전달 */}
+                            <Movie_Table keyword={keyword} genre={clickGenre}></Movie_Table> {/* Search_Form 에게 받아온 input값 전달 */}
                         </div>
 
                         <div className="body-right-box">
