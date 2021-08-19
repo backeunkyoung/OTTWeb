@@ -19,10 +19,6 @@ function Main_Page() {
     const [keyword, setKeyword] = useState(''); // Search_From에게 받아온 input 값 저장
     const [clickGenre, setClickGenre] = useState([])// 장르 버튼 상태 관리
 
-    // useEffect(() => {
-    //     Kategori_receive();
-    // }, [])
-
     function Search_Form_receive(data) {
         setKeyword(data);
         //console.log("Search_Form에게 받음 : " + JSON.stringify(keyword));
