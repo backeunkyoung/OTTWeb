@@ -4,9 +4,44 @@ import _ from 'lodash';
 
 function Movie_Table_Body(props) {
     const [movies, setMovies] = useState();
+    let movieContentCount;  // 불러온 영화 컨텐츠 개수
 
-    let keyword = props.keyword // Search_Form의 input 값
+    let keyword = props.keyword; // Search_Form의 input 값
     //console.log("keyword : " + keyword);
+
+    let genre = props.genre;  // Categori_Menu의 선택한 장르 값
+    let genreLength = Object(genre).length;
+    
+    let checkGenreId = [];
+
+    if (genre) {
+        genre_filter(genre)
+    }
+
+    function genre_filter(genre) { // server에게 장르 필터 결과 받아오기
+        console.log("genreLength : " + genreLength);
+        console.log("genre : " + JSON.stringify(genre));
+
+        if (genreLength != 0) {
+            var url = "/genre_filter";
+
+            axios.post( url, {
+                postFirstGenre : genre[0].genreId
+            })  // 성공시 then 진행
+            .then(function (res) {
+                checkGenreId.push(res.data.data);
+                //console.log("res : " + JSON.stringify(res.data.data))
+                //console.log("res : " + JSON.stringify(res.data.data));
+            })  // 실패시 catch 진행
+            .catch(function (error) {
+                alert("error발생 => " + error);
+                setMovies("error");
+            })
+        }
+        else {
+            checkGenreId.push(genre);
+        }
+    }
 
     function search_result(keyword) { // server에게 영화DB 받아오기
         var url = "/search_result";
@@ -45,53 +80,47 @@ function Movie_Table_Body(props) {
     });
 
     useEffect(() => {
-        function get_genre_name() { // server에게 장르 이름 리스트 받아오기
-            var url = "/get_genre_name";
-    
-            axios.post( url, {
-            })  // 성공시 then 진행
-            .then(function (res) {
-                // console.log("받은 결과 : \n" + JSON.stringify(res.data.data));
-                setGenresList(res.data);
-            })  // 실패시 catch 진행
-            .catch(function (error) {
-                alert("error발생 => " + error);
-                setGenresList("error");
-            })
-        }
-        get_genre_name();
+        // server에게 장르 이름 리스트 받아오기
+        var genreListUrl = "/get_genre_name";
 
-        function get_country_name() { // server에게 국가 이름 리스트 받아오기
-            var url = "/get_country_name";
-    
-            axios.post( url, {
-            })  // 성공시 then 진행
-            .then(function (res) {
-                // console.log("받은 결과 : \n" + JSON.stringify(res.data.data));
-                setCountrysList(res.data);
-            })  // 실패시 catch 진행
-            .catch(function (error) {
-                alert("error발생 => " + error);
-                setCountrysList("error");
-            })
-        }
-        get_country_name();
+        axios.post( genreListUrl, {
+        })  // 성공시 then 진행
+        .then(function (res) {
+            // console.log("받은 결과 : \n" + JSON.stringify(res.data.data));
+            setGenresList(res.data);
+        })  // 실패시 catch 진행
+        .catch(function (error) {
+            alert("error발생 => " + error);
+            setGenresList("error");
+        })
 
-        function get_actor_name() { // server에게 출연 배우 이름 리스트 받아오기
-            var url = "/get_actor_name";
-    
-            axios.post( url, {
-            })  // 성공시 then 진행
-            .then(function (res) {
-                // console.log("받은 결과 : \n" + JSON.stringify(res.data.data));
-                setActorsList(res.data);
-            })  // 실패시 catch 진행
-            .catch(function (error) {
-                alert("error발생 => " + error);
-                setActorsList("error");
-            })
-        }
-        get_actor_name();
+        // server에게 국가 이름 리스트 받아오기
+        var countryLIstUrl = "/get_country_name";
+
+        axios.post( countryLIstUrl, {
+        })  // 성공시 then 진행
+        .then(function (res) {
+            // console.log("받은 결과 : \n" + JSON.stringify(res.data.data));
+            setCountrysList(res.data);
+        })  // 실패시 catch 진행
+        .catch(function (error) {
+            alert("error발생 => " + error);
+            setCountrysList("error");
+        })
+
+        // server에게 출연 배우 이름 리스트 받아오기
+        var actorListUrl = "/get_actor_name";
+
+        axios.post( actorListUrl, {
+        })  // 성공시 then 진행
+        .then(function (res) {
+            // console.log("받은 결과 : \n" + JSON.stringify(res.data.data));
+            setActorsList(res.data);
+        })  // 실패시 catch 진행
+        .catch(function (error) {
+            alert("error발생 => " + error);
+            setActorsList("error");
+        })
     
     }, [])  // 대괄호 비워 둠 => 컴포넌트가 처음 나타날때만 실행
 
@@ -149,20 +178,34 @@ function Movie_Table_Body(props) {
 
     // check_undefined && check_undefined.map(movie =>
     movies && movies.map(movie =>
-        tableBody.push(
-            {
-                id: movie.content_id,
-                poster: movie.poster,
-                title: movie.title,
-                date: movie.screening_date,
-                director: movie.director,
-                age: movie.age_information,
-                genre: outputGenre(movie.content_id),
-                country: outputCountry(movie.content_id),
-                actor: outputActor(movie.content_id),
-                summary: movie.summary,
-            },
-        )
+        {
+            // for (let i = 0; i < genreLength; i++) {
+            //     console.log("선택 장르 ID : " + genre[i].genreId)
+                
+            //     let nowContentId = []
+
+            //     if (genresList) {
+            //         let genreListLength = Object.genreList
+            //         if (movie.content_id === genresList.data[i].content_id)
+            //     }
+            // }
+            if(true) {
+                tableBody.push(
+                    {
+                        id: movie.content_id,
+                        poster: movie.poster,
+                        title: movie.title,
+                        date: movie.screening_date,
+                        director: movie.director,
+                        age: movie.age_information,
+                        genre: outputGenre(movie.content_id),
+                        country: outputCountry(movie.content_id),
+                        actor: outputActor(movie.content_id),
+                        summary: movie.summary,
+                    },
+                )
+            }
+        }
     )
 
     return(
