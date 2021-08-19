@@ -179,14 +179,11 @@ app.post('/country', (req, res) => {    // 국가 필터(미완)
 });
 
 app.post("/search_result", function(req,res) { // 검색 결과 가져오기
-    var search = req.body.postKeyword;
-    var s = search.replace(/ /g,"");
+    var inputKeyword = req.body.postKeyword;
+    var keywordBlankDelete = inputKeyword.replace(/ /g,"");   // input 키워드의 공백 제거
 
     //제목, 감독으로 검색( 띄어쓰기 상관 x )
-    //var query = "SELECT * FROM contents WHERE REPLACE(title,' ','') LIKE '%" + search + "%' OR REPLACE(director,' ','') LIKE '%" + search + "%';";
-    
-    var query = "SELECT * FROM contents WHERE REPLACE(title,' ','') LIKE '%" + s + "%' OR REPLACE(director,' ','') LIKE '%" + s + "%';";
-    // SELECT * FROM movies_db.contents WHERE REPLACE(title,' ','') LIKE '%반지%' OR REPLACE(director,' ','') LIKE '%반지%';
+    var query = "SELECT * FROM contents WHERE REPLACE(title,' ','') LIKE '%" + keywordBlankDelete + "%' OR REPLACE(director,' ','') LIKE '%" + keywordBlankDelete + "%';";
 
     db.query(query, function(err, row){
         if (!err){  
