@@ -11,12 +11,28 @@ function Movie_Table_Body(props) {
     let genre = props.genre;  // Categori_Menu의 선택한 장르 값
     let genreLength = Object(genre).length;
 
+    let outputMovies = []   // 출력 할 영화 ID 저장
+
     if (genre) {
+        // if (Object(genre).length === 0) {   // 아무 장르 버튼도 선택되지 않은 경우
+        //     let genrePush = []
+        //     movies && movies.map(element => {
+        //         genrePush.push({
+        //             content_pid: element.content_id
+        //         });
+        //         //console.log("genre : " + JSON.stringify(element))
+        //     })
+        //     if (Object(genrePush).length !== 0) {
+        //         genre = genrePush;
+        //         if (genre === genrePush) {
+        //             console.log("출력 genre : \n" + JSON.stringify(genre))
+        //         }
+        //     }
+        // }
+
         console.log("선택한 장르 값 : " + JSON.stringify(genre))
         genre_filter(genre)
     }
-
-    let outputMovies = []   // 출력 할 영화 ID 저장
 
     function genre_filter(genre) { // server에게 장르 필터 결과 받아오기
         //console.log("genreLength : " + genreLength);
@@ -25,59 +41,82 @@ function Movie_Table_Body(props) {
 
         let flag = true;
 
-        while(repetitionCount !== 0) {
-            var url = "/genre_filter";
-
-            axios.post( url, {
-                postFirstGenre : genre[repetitionCount-1].genreId
-            })  // 성공시 then 진행
-            .then(function (res) {
-                console.log("\n현재 장르 : " + JSON.stringify(res.data.genreNum));
-                //console.log("res : \n" + JSON.stringify(res.data.data));
-            
-                let nowData = res.data.data
-
-                if (nowData) {
-                    console.log("nowData : \n" + JSON.stringify(nowData))
-                }
-
-                if (flag && nowData && Object(outputMovies).length === 0) {    // 1번만 초기화
-                    outputMovies = nowData;
-                    // console.log("outputMoviesLength : " + Object(outputMovies).length);
-                    flag = false;
-                }
-                
-                let overlapData = []    // 겹치는 값만 저장할 배열
-                
-                outputMovies && outputMovies.map(element => {   // 비교하면서 겹치는 ID값만 push하기
-                    //console.log("outputMovies : " + JSON.stringify(element))
-                
-                    nowData && nowData.map(nowElement => {
-                        //console.log("nowElement : " + JSON.stringify(nowElement.content_pid))
-                        if (element.content_pid === nowElement.content_pid) {
-                            overlapData.push(nowElement)
-                            //console.log("같은 ID : " + nowElement.content_pid);
-                        }
-                    })
-                })
-
-                if (overlapData) {  // 위 함수에서 겹치는 데이터를 모두 push 했다면
-                    outputMovies = overlapData; // outputMovies 교체
-                    if (outputMovies === overlapData) {
-                        console.log("새로운 outputMovies : " + JSON.stringify(outputMovies));
-                        overlapData = []
-                    }
-                    //console.log("overlapData : " + JSON.stringify(overlapData));
-                }
-            
-            })  // 실패시 catch 진행
-            .catch(function (error) {
-                alert("error발생 => " + error);
-                setMovies("error");
+        if (repetitionCount === 0) {    // 아무 장르 버튼도 선택되지 않은 경우, 모든 영화 ID값을 넘김
+            let genrePush = []
+            movies && movies.map(element => {
+                genrePush.push({
+                    content_pid: element.content_id
+                });
+                //console.log("genre : " + JSON.stringify(element))
             })
-
-            repetitionCount--;
+            if (Object(genrePush).length !== 0) {
+                genre = genrePush;
+                if (genre === genrePush) {
+                    movieGenreFiltering(genre);
+                    //console.log("출력 genre : \n" + JSON.stringify(genre))
+                }
+            }
         }
+        else {
+            while(repetitionCount !== 0) {
+                var url = "/genre_filter";
+    
+                axios.post( url, {
+                    postFirstGenre : genre[repetitionCount-1].genreId
+                })  // 성공시 then 진행
+                .then(function (res) {
+                    console.log("\n현재 장르 : " + JSON.stringify(res.data.genreNum));
+                    //console.log("res : \n" + JSON.stringify(res.data.data));
+                
+                    let nowData = res.data.data
+    
+                    if (nowData) {
+                        //console.log("nowData : \n" + JSON.stringify(nowData))
+                    }
+    
+                    if (flag && nowData && Object(outputMovies).length === 0) {    // 1번만 초기화
+                        outputMovies = nowData;
+                        // console.log("outputMoviesLength : " + Object(outputMovies).length);
+                        flag = false;
+                    }
+                    
+                    let overlapData = []    // 겹치는 값만 저장할 배열
+                    
+                    outputMovies && outputMovies.map(element => {   // 비교하면서 겹치는 ID값만 push하기
+                        //console.log("outputMovies : " + JSON.stringify(element))
+                    
+                        nowData && nowData.map(nowElement => {
+                            //console.log("nowElement : " + JSON.stringify(nowElement.content_pid))
+                            if (element.content_pid === nowElement.content_pid) {
+                                overlapData.push(nowElement)
+                                //console.log("같은 ID : " + nowElement.content_pid);
+                            }
+                        })
+                    })
+    
+                    if (overlapData) {  // 위 함수에서 겹치는 데이터를 모두 push 했다면
+                        outputMovies = overlapData; // outputMovies 교체
+                        if (outputMovies === overlapData) {
+                            //console.log("새로운 outputMovies : " + JSON.stringify(outputMovies));
+                            movieGenreFiltering(outputMovies);
+                            overlapData = []
+                        }
+                        //console.log("overlapData : " + JSON.stringify(overlapData));
+                    }
+                
+                })  // 실패시 catch 진행
+                .catch(function (error) {
+                    alert("error발생 => " + error);
+                    setMovies("error");
+                })
+    
+                repetitionCount--;
+            }
+        }
+    }
+
+    function movieGenreFiltering(outputMovies) {
+        console.log("outputMovies : \n" + JSON.stringify(outputMovies));
     }
 
     function search_result(keyword) { // server에게 영화DB 받아오기
