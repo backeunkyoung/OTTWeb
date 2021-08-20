@@ -9,6 +9,7 @@ import time
 conn = pymysql.connect(host='18.188.140.138', user='user01', password=password, db='movies_db', charset='utf8')
 cursor = conn.cursor()
 
+#content_attribute테이블에 없는 영화만
 sql = "SELECT content_id, title FROM contents WHERE content_id NOT IN (SELECT content_pid FROM content_attribute)"
 
 cursor.execute(sql)
@@ -43,7 +44,11 @@ for i in range(len(mc)):
         genre = k['genreNm']
         check = 0
         for j in range(len(g_table)): #장르를 코드로 치환
-            if genre == g_table[j][1]:
+            if genre in g_table[j][1]:
+                genre_code = g_table[j][0]
+                check = 1
+                break
+            if g_table[j][1] in genre:
                 genre_code = g_table[j][0]
                 check = 1
                 break
