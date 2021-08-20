@@ -11,17 +11,19 @@ function Movie_Table_Body(props) {
     let genre = props.genre;  // Categori_Menu의 선택한 장르 값
     let genreLength = Object(genre).length;
 
-    let outputMovies = []
-
     if (genre) {
         console.log("선택한 장르 값 : " + JSON.stringify(genre))
         genre_filter(genre)
     }
 
+    let outputMovies = []   // 출력 할 영화 ID 저장
+
     function genre_filter(genre) { // server에게 장르 필터 결과 받아오기
         //console.log("genreLength : " + genreLength);
         //console.log("genre : " + JSON.stringify(genre));
         let repetitionCount = genreLength;
+
+        let flag = true;
 
         while(repetitionCount !== 0) {
             var url = "/genre_filter";
@@ -30,27 +32,42 @@ function Movie_Table_Body(props) {
                 postFirstGenre : genre[repetitionCount-1].genreId
             })  // 성공시 then 진행
             .then(function (res) {
-                console.log("\nrepetitionCount : " + repetitionCount);
-                console.log("res : " + JSON.stringify(res.data.data));
+                console.log("\n현재 장르 : " + JSON.stringify(res.data.genreNum));
+                //console.log("res : \n" + JSON.stringify(res.data.data));
             
-                if (Object(outputMovies).length === 0) {    // 1번만 초기화
-                    outputMovies = (res.data.data);
+                let nowData = res.data.data
+
+                if (nowData) {
+                    console.log("nowData : \n" + JSON.stringify(nowData))
+                }
+
+                if (flag && nowData && Object(outputMovies).length === 0) {    // 1번만 초기화
+                    outputMovies = nowData;
+                    // console.log("outputMoviesLength : " + Object(outputMovies).length);
+                    flag = false;
                 }
                 
-                if (Object(outputMovies).length !== 0) {    // 초기화했으면 출력
-                    console.log("outputMovies : " + JSON.stringify(outputMovies));
-                    
-                    outputMovies.map(element => {   // 비교하면서 겹치는 ID값만 따로 모은다
-                        console.log("element : " + JSON.stringify(element.content_pid))
-                    
-                        res.data.data.map(nowElement => {
-                            //console.log("nowElement : " + JSON.stringify(nowElement.content_pid))
-                            if (element.content_pid === nowElement.content_pid) {
-                                console.log("같은 ID : " + nowElement.content_pid);
-                            }
-                        })
-                        
+                let overlapData = []    // 겹치는 값만 저장할 배열
+                
+                outputMovies && outputMovies.map(element => {   // 비교하면서 겹치는 ID값만 push하기
+                    //console.log("outputMovies : " + JSON.stringify(element))
+                
+                    nowData && nowData.map(nowElement => {
+                        //console.log("nowElement : " + JSON.stringify(nowElement.content_pid))
+                        if (element.content_pid === nowElement.content_pid) {
+                            overlapData.push(nowElement)
+                            //console.log("같은 ID : " + nowElement.content_pid);
+                        }
                     })
+                })
+
+                if (overlapData) {  // 위 함수에서 겹치는 데이터를 모두 push 했다면
+                    outputMovies = overlapData; // outputMovies 교체
+                    if (outputMovies === overlapData) {
+                        console.log("새로운 outputMovies : " + JSON.stringify(outputMovies));
+                        overlapData = []
+                    }
+                    //console.log("overlapData : " + JSON.stringify(overlapData));
                 }
             
             })  // 실패시 catch 진행
