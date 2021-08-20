@@ -231,14 +231,11 @@ function Movie_Table_Body(props) {
         console.log("셋팅할 outputMovies : \n" + JSON.stringify(outputMovies));
         let moviePush = []
 
-        //console.log("movies : " + JSON.stringify(movies));
-
         outputMovies.map(printId => {
             movies && movies.map(movie => {
-                //console.log("movie : " + JSON.stringify(movie.content_id))
                 if (printId.content_pid === movie.content_id) {
-                    console.log("겹치는 title : " + movie.title)
-                    tableBody.push(
+                    //console.log("겹치는 title : " + movie.title)
+                    moviePush.push(
                         {
                             id: movie.content_id,
                             poster: movie.poster,
@@ -254,7 +251,16 @@ function Movie_Table_Body(props) {
                     )
                 }
             })
-        }) 
+        })
+
+        if (moviePush) {
+            tableBody = moviePush
+            if (tableBody === moviePush) {
+                tableBody.map(element => {
+                    console.log("tableBody의 title : \n" + JSON.stringify(element.title))
+                })
+            }
+        }
     }
 
     return(
