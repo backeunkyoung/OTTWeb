@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
+import ShowMore from 'react-show-more-button/dist/module';
 
 function Movie_Table_Body(props) {
     const [movies, setMovies] = useState();
@@ -241,7 +242,9 @@ function Movie_Table_Body(props) {
                         <td>{movie.genre}</td>
                         <td>{movie.country}</td>
                         <td>{movie.actor}</td>
-                        <td>{movie.summary}</td>
+                        <td>
+                            <ShowMore className='moreButton' maxHeight={200} style={{background:'rgb(148, 148, 147)'}} styleButton={{background:'gray', float:'center'}}>{movie.summary}</ShowMore>
+                        </td>
                     </tr>
                 )}
             </React.Fragment>
