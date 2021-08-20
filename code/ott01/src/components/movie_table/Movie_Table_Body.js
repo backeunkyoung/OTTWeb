@@ -4,7 +4,6 @@ import _ from 'lodash';
 
 function Movie_Table_Body(props) {
     const [movies, setMovies] = useState();
-    let movieContentCount;  // 불러온 영화 컨텐츠 개수
 
     let keyword = props.keyword; // Search_Form의 input 값
 
@@ -13,30 +12,29 @@ function Movie_Table_Body(props) {
 
     let outputMovies = []   // 출력 할 영화 ID 저장
 
-    if (genre) {
-        // if (Object(genre).length === 0) {   // 아무 장르 버튼도 선택되지 않은 경우
-        //     let genrePush = []
-        //     movies && movies.map(element => {
-        //         genrePush.push({
-        //             content_pid: element.content_id
-        //         });
-        //         //console.log("genre : " + JSON.stringify(element))
-        //     })
-        //     if (Object(genrePush).length !== 0) {
-        //         genre = genrePush;
-        //         if (genre === genrePush) {
-        //             console.log("출력 genre : \n" + JSON.stringify(genre))
-        //         }
-        //     }
-        // }
+    let tableBody = []; // TableBody에 넣을 데이터
 
+    const [genresList, setGenresList] = useState({   // 장르 목록
+        content_id: '',
+        genre_name: '',
+    });
+
+    const [countrysList, setCountrysList] = useState({   // 국가 목록
+        content_id: '',
+        country_name: '',
+    });
+
+    const [actorsList, setActorsList] = useState({   // 출연 배우 목록
+        content_id: '',
+        actor_name: '',
+    });
+
+    if (genre) {
         console.log("선택한 장르 값 : " + JSON.stringify(genre))
         genre_filter(genre)
     }
 
-    function genre_filter(genre) { // server에게 장르 필터 결과 받아오기
-        //console.log("genreLength : " + genreLength);
-        //console.log("genre : " + JSON.stringify(genre));
+    function genre_filter(genre) { // 장르 버튼에 따른 필터 결과값 받아오기(content_pid로 저장)
         let repetitionCount = genreLength;
 
         let flag = true;
@@ -52,7 +50,7 @@ function Movie_Table_Body(props) {
             if (Object(genrePush).length !== 0) {
                 genre = genrePush;
                 if (genre === genrePush) {
-                    movieGenreFiltering(genre);
+                    movieFiltering(genre);
                     //console.log("출력 genre : \n" + JSON.stringify(genre))
                 }
             }
@@ -98,7 +96,7 @@ function Movie_Table_Body(props) {
                         outputMovies = overlapData; // outputMovies 교체
                         if (outputMovies === overlapData) {
                             //console.log("새로운 outputMovies : " + JSON.stringify(outputMovies));
-                            movieGenreFiltering(outputMovies);
+                            movieFiltering(outputMovies);
                             overlapData = []
                         }
                         //console.log("overlapData : " + JSON.stringify(overlapData));
@@ -113,10 +111,6 @@ function Movie_Table_Body(props) {
                 repetitionCount--;
             }
         }
-    }
-
-    function movieGenreFiltering(outputMovies) {
-        console.log("outputMovies : \n" + JSON.stringify(outputMovies));
     }
 
     function search_result(keyword) { // server에게 영화DB 받아오기
@@ -139,21 +133,6 @@ function Movie_Table_Body(props) {
     useEffect(() => {   // 컴포넌트가 렌더링 될 때마다 특정 작업 실행
         search_result(keyword);
     }, [keyword]);  // keyword가 바뀔 때 실행
-
-    const [genresList, setGenresList] = useState({   // 장르 목록
-        content_id: '',
-        genre_name: '',
-    });
-
-    const [countrysList, setCountrysList] = useState({   // 국가 목록
-        content_id: '',
-        country_name: '',
-    });
-
-    const [actorsList, setActorsList] = useState({   // 출연 배우 목록
-        content_id: '',
-        actor_name: '',
-    });
 
     useEffect(() => {
         // server에게 장르 이름 리스트 받아오기
@@ -200,9 +179,7 @@ function Movie_Table_Body(props) {
     
     }, [])  // 대괄호 비워 둠 => 컴포넌트가 처음 나타날때만 실행
 
-    var tableBody = []; // TableBody에 넣을 데이터
-
-    function outputGenre(id) {
+    function outputGenre(id) {  // 장르 id코드를 한글로 변환
         var result = '';
 
         if (genresList) {
@@ -218,7 +195,7 @@ function Movie_Table_Body(props) {
         }
     }
 
-    function outputCountry(id) {
+    function outputCountry(id) {    // 국가 id코드를 한글로 변환
         var result = '';
 
         if (countrysList) {
@@ -234,7 +211,7 @@ function Movie_Table_Body(props) {
         }
     }
 
-    function outputActor(id) {
+    function outputActor(id) {  // 배우 id코드를 한글로 변환
         var result = '';
         
         if (actorsList.data) {
@@ -250,39 +227,35 @@ function Movie_Table_Body(props) {
         }
     }
 
-    const check_undefined = _.get(props, "movies");
+    function movieFiltering(outputMovies) { // 출력할 영화 목록 셋팅
+        console.log("셋팅할 outputMovies : \n" + JSON.stringify(outputMovies));
+        let moviePush = []
 
-    // check_undefined && check_undefined.map(movie =>
-    movies && movies.map(movie =>
-        {
-            // for (let i = 0; i < genreLength; i++) {
-            //     console.log("선택 장르 ID : " + genre[i].genreId)
-                
-            //     let nowContentId = []
+        //console.log("movies : " + JSON.stringify(movies));
 
-            //     if (genresList) {
-            //         let genreListLength = Object.genreList
-            //         if (movie.content_id === genresList.data[i].content_id)
-            //     }
-            // }
-            if(true) {
-                tableBody.push(
-                    {
-                        id: movie.content_id,
-                        poster: movie.poster,
-                        title: movie.title,
-                        date: movie.screening_date,
-                        director: movie.director,
-                        age: movie.age_information,
-                        genre: outputGenre(movie.content_id),
-                        country: outputCountry(movie.content_id),
-                        actor: outputActor(movie.content_id),
-                        summary: movie.summary,
-                    },
-                )
-            }
-        }
-    )
+        outputMovies.map(printId => {
+            movies && movies.map(movie => {
+                //console.log("movie : " + JSON.stringify(movie.content_id))
+                if (printId.content_pid === movie.content_id) {
+                    console.log("겹치는 title : " + movie.title)
+                    tableBody.push(
+                        {
+                            id: movie.content_id,
+                            poster: movie.poster,
+                            title: movie.title,
+                            date: movie.screening_date,
+                            director: movie.director,
+                            age: movie.age_information,
+                            genre: outputGenre(movie.content_id),
+                            country: outputCountry(movie.content_id),
+                            actor: outputActor(movie.content_id),
+                            summary: movie.summary,
+                        },
+                    )
+                }
+            })
+        }) 
+    }
 
     return(
         <div>
