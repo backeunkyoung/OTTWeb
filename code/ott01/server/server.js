@@ -194,6 +194,20 @@ app.post("/get_genre_name", function(req,res) { // 장르 이름 가져오기
     });  
 });
 
+app.post("/get_content_connect_genre", function(req,res) { // 장르 이름 가져오기
+    
+    var query = "select * from movies_db.content_attribute;"
+    
+    db.query(query, function(err, row){
+        if (!err){  
+            res.send({data : row});
+        } 
+        else {
+            console.log('에러 발생 => ' + err);
+        }  
+    });  
+});
+
 app.post("/get_country_name", function(req,res) { // 국가 이름 가져오기
     
     var query = "select con.content_id, prod.country_name"

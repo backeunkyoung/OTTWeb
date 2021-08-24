@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
-import ShowMore from 'react-show-more-button/dist/module';
 
 function Movie_Table_Body(props) {
     let keyword = props.keyword;
@@ -10,12 +9,33 @@ function Movie_Table_Body(props) {
 
     let movies = [];    // 영화 데이터(키워드에 따른)
 
-    let genreList = []  // 장르 목록
+    let genreList = []  // 전체 장르 리스트(content_id, genre_name)
+    let contentGenreList = []   // 영화, 장르 연결 리스트(content_pid, attribute_num)
 
-    function getGenreList() {
+    function getDB() {
 
+        // 영화, 장르 연결 리스트(content_pid, attribute_num) 받아오기
+        var contentGenreListUrl = "/get_content_connect_genre";
+        axios.post( contentGenreListUrl, {
+        })  // 성공시 then 진행
+        .then(function (res) {
+
+            let resList = res.data.data;
+
+            resList && resList.map((element) => {
+                contentGenreList.push({
+                    content_id: element.content_pid,
+                    genre_num: element.attribute_num,
+                })
+            })
+    
+        })  // 실패시 catch 진행
+        .catch(function (error) {
+            alert("error발생 => " + error);
+        })
+
+        // 전체 장르 리스트(content_id, genre_name) 받아오기
         var genreListUrl = "/get_genre_name";
-
         axios.post( genreListUrl, {
         })  // 성공시 then 진행
         .then(function (res) {
@@ -27,8 +47,6 @@ function Movie_Table_Body(props) {
                     genre_name: element.attribute_name,
                 })
             })
-
-            console.log("받은 장르 리스트 : \n" + JSON.stringify(genreList));
     
         })  // 실패시 catch 진행
         .catch(function (error) {
@@ -39,15 +57,23 @@ function Movie_Table_Body(props) {
     function genre_filter(moviesInputSetting) { // 장르 버튼에 따른 필터 결과값 받아오기(content_pid로 저장)
         let repetitionCount = Object(genres).length;
 
-        getGenreList();
+        getDB(); // DB에서 리스트 받아오기
+
+        contentGenreList && contentGenreList.map((connect) => {
+            genreList && genreList.map((content) => {
+                if (connect.content_id === content.content_id) {
+                    console.log("같은 id : " + content.content_id)
+                }
+            })
+        })
 
         // genresList && genresList.map((element) => {
         //     console.log("장르 목록 보기 : " + JSON.stringify(element));
         // })
 
-        moviesInputSetting && moviesInputSetting.map((element) => {
-            console.log("inputMovieId: " + JSON.stringify(element.content_id));
-        })
+        // moviesInputSetting && moviesInputSetting.map((element) => {
+        //     console.log("inputMovieId: " + JSON.stringify(element.content_id));
+        // })
 
         // 해당되는 장르의 ID값을 넘김
         //     let once = true;
