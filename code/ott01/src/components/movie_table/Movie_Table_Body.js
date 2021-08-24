@@ -9,36 +9,46 @@ function Movie_Table_Body(props) {
 
     let movies = [];    // 영화 데이터(키워드에 따른)
 
-    const [genresList, setGenresList] = useState({   // 장르 목록
-        content_id: '',
-        genre_name: '',
-    });
+    let genreList = []  // 장르 목록
+
+    function getGenreList() {
+
+        var genreListUrl = "/get_genre_name";
+
+        axios.post( genreListUrl, {
+        })  // 성공시 then 진행
+        .then(function (res) {
+            let resList = res.data.data;
+
+            resList && resList.map((element) => {
+                genreList.push({
+                    content_id: element.content_id,
+                    genre_name: element.attribute_name,
+                })
+            })
+
+            console.log("받은 장르 리스트 : \n" + JSON.stringify(genreList));
+    
+        })  // 실패시 catch 진행
+        .catch(function (error) {
+            alert("error발생 => " + error);
+        })
+    }
 
     function genre_filter(moviesInputSetting) { // 장르 버튼에 따른 필터 결과값 받아오기(content_pid로 저장)
         let repetitionCount = Object(genres).length;
 
+        getGenreList();
+
+        // genresList && genresList.map((element) => {
+        //     console.log("장르 목록 보기 : " + JSON.stringify(element));
+        // })
+
         moviesInputSetting && moviesInputSetting.map((element) => {
-            //console.log("movie: " + JSON.stringify(element.content_id));
-            //console.log("movie: " + JSON.stringify(element.attribute_genre));
+            console.log("inputMovieId: " + JSON.stringify(element.content_id));
         })
 
-        // if (repetitionCount === 0) {    // 아무 장르 버튼도 선택되지 않은 경우, 모든 영화 ID값을 넘김
-        //     let idPush = []
-
-        //     movies && movies.map(element => {
-        //         idPush.push({
-        //             content_pid: element.content_id
-        //         });
-        //     })
-
-        //     if (Object(idPush).length !== 0) {
-        //         selectId = idPush;
-
-        //         console.log("selectId : " + selectId);
-        //         //movieFiltering(genre);
-        //     }
-        // }
-        // else {  // 장르 버튼을 선택한 경우, 해당되는 장르의 ID값을 넘김
+        // 해당되는 장르의 ID값을 넘김
         //     let once = true;
 
         //     while(repetitionCount !== 0) {
@@ -113,18 +123,18 @@ function Movie_Table_Body(props) {
 
     useEffect(() => {   // 테이블에 필요한 리스트들(장르, 국가, 배우) 받아오기
         // server에게 장르 이름 리스트 받아오기
-        var genreListUrl = "/get_genre_name";
+        // var genreListUrl = "/get_genre_name";
 
-        axios.post( genreListUrl, {
-        })  // 성공시 then 진행
-        .then(function (res) {
-            //console.log("받은 장르 리스트 : \n" + JSON.stringify(res.data.data));
-            setGenresList(res.data);
-        })  // 실패시 catch 진행
-        .catch(function (error) {
-            alert("error발생 => " + error);
-            setGenresList("error");
-        })
+        // axios.post( genreListUrl, {
+        // })  // 성공시 then 진행
+        // .then(function (res) {
+        //     // console.log("받은 장르 리스트 : \n" + JSON.stringify(res.data.data));
+        //     setGenresList(res.data.data);
+        // })  // 실패시 catch 진행
+        // .catch(function (error) {
+        //     alert("error발생 => " + error);
+        //     setGenresList("error");
+        // })
 
         // // server에게 국가 이름 리스트 받아오기
         // var countryLIstUrl = "/get_country_name";
