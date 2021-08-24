@@ -10,6 +10,10 @@ function Movie_Table(props) {
     //     console.log("Table쪽 genre : " + JSON.stringify(genre));
     // }
 
+    // if (genre) {
+    //     console.log("Table쪽 keyword : " + keyword);
+    // }
+
     return (
         <div>
             <table>

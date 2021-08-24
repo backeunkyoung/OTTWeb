@@ -64,7 +64,6 @@ const Categori_Menu = (props) => {
 
     // Movie_Table에게 필터 값을 전달하기 위한 함수(장르 버튼을 클릭할 때마다 전송)
     function send_Main_Page() {
-        //console.log("\n리렌더링!");
         let size = (genreList) ? Object.keys(genreList).length : 0;
         let select = [];
 
@@ -78,6 +77,15 @@ const Categori_Menu = (props) => {
                 })
             }
         }
+
+        if (select.length === 0) {
+            genreList && genreList.map((element) => {
+                select.push( {
+                    genreId: element.attribute_num
+                })
+            })
+        }
+    
         //console.log("select : " + JSON.stringify(select));
 
         props.func(select);    // func : Movie_Table에서 받은 Kategori_receive 함수
