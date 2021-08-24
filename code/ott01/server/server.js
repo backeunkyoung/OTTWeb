@@ -158,6 +158,7 @@ app.post("/years_list", function(req,res) { // 연도 목록 가져오기
 
 app.post("/search_result", function(req,res) { // 검색 결과 가져오기
     var inputKeyword = req.body.postKeyword;
+
     var keywordBlankDelete = inputKeyword.replace(/ /g,"");   // input 키워드의 공백 제거
 
     //제목, 감독으로 검색( 띄어쓰기 상관 x )
@@ -232,19 +233,18 @@ app.post("/get_actor_name", function(req,res) { // 출연 배우 가져오기
 app.post('/genre_filter', (req, res) => {    // 장르 필터
     console.log("서버쪽 /genre_filter 실행됨");
 
-    var firstGenre = req.body.postFirstGenre;
-    var data;
+    var nowGenre = req.body.postFirstGenre;
 
-    console.log("firstGenre : " + firstGenre);
+    console.log("nowGenre : " + nowGenre);
 
-    var query = "select content_pid from movies_db.content_attribute where attribute_num=" + firstGenre + ";";
+    var query = "select content_pid from movies_db.content_attribute where attribute_num=" + nowGenre + ";";
 
     db.query(query, function(err, row) {
         if(err) {
             console.log('err : ' + err);
         }
         else {     
-            res.send({data : row});
+            res.send({genreNum : nowGenre, data : row});
         }
     });
 });
