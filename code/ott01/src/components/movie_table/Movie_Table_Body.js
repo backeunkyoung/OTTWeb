@@ -4,16 +4,15 @@ import _ from 'lodash';
 
 function Movie_Table_Body(props) {
     const [movies, setMovies] = useState(); // 전체 영화 목록
+    
+    const [allMovies, setAllMovies] = useState();
+    //let allMovies = [];
 
     let keyword = props.keyword; // Search_Form의 input 값
 
     let genre = props.genre;  // Categori_Menu의 선택한 장르 값
 
     let outputMovies = []   // 출력 할 영화 ID 저장
-
-    let tableBody = []; // TableBody에 넣을 데이터
-
-    let tablePrint = false;
 
     const [genresList, setGenresList] = useState({   // 장르 목록
         content_id: '',
@@ -31,7 +30,7 @@ function Movie_Table_Body(props) {
     });
 
     if (genre) {
-        console.log("선택한 장르 값 : " + JSON.stringify(genre))
+        //console.log("선택한 장르 값 : " + JSON.stringify(genre))
         genre_filter(genre)
     }
 
@@ -43,7 +42,7 @@ function Movie_Table_Body(props) {
         if (repetitionCount === 0) {    // 아무 장르 버튼도 선택되지 않은 경우, 모든 영화 ID값을 넘김
             let genrePush = []
 
-            movies && movies.map(element => {
+            allMovies && allMovies.map(element => {
                 genrePush.push({
                     content_pid: element.content_id
                 });
@@ -52,6 +51,7 @@ function Movie_Table_Body(props) {
             if (Object(genrePush).length !== 0) {
                 genre = genrePush;
                 if (genre === genrePush) {
+                    console.log("무한루프1")
                     movieFiltering(genre);
                 }
             }
@@ -64,7 +64,7 @@ function Movie_Table_Body(props) {
                     postFirstGenre : genre[repetitionCount-1].genreId
                 })  // 성공시 then 진행
                 .then(function (res) {
-                    console.log("\n현재 장르 : " + JSON.stringify(res.data.genreNum));
+                    //console.log("\n현재 장르 : " + JSON.stringify(res.data.genreNum));
                     //console.log("res : \n" + JSON.stringify(res.data.data));
                 
                     let nowData = res.data.data
@@ -89,6 +89,7 @@ function Movie_Table_Body(props) {
                     if (overlapData) {  // 위 함수에서 겹치는 데이터를 모두 push 했다면
                         outputMovies = overlapData; // outputMovies 교체
                         if (outputMovies === overlapData) {
+                            console.log("무한루프2")
                             movieFiltering(outputMovies);
                             overlapData = []
                         }
@@ -113,7 +114,10 @@ function Movie_Table_Body(props) {
         })  // 성공시 then 진행
         .then(function (res) {
             console.log("keyword : " + keyword);
-            setMovies(res.data.data);
+            setAllMovies(res.data.data)
+            //allMovies = res.data.data;
+            console.log("All movies Setting ")
+            //setMovies(res.data.data);
             //console.log("res : " + JSON.stringify(res.data.data));
         })  // 실패시 catch 진행
         .catch(function (error) {
@@ -220,14 +224,14 @@ function Movie_Table_Body(props) {
     }
 
     function movieFiltering(outputMovies) { // 출력할 영화 목록 셋팅
-        console.log("셋팅할 outputMovies : \n" + JSON.stringify(outputMovies));
-        let moviePush = []
-
+        //console.log("셋팅할 outputMovies : \n" + JSON.stringify(outputMovies));
+        let filterMovie = []
+        
         outputMovies.map(printId => {
-            movies && movies.map(movie => {
+            allMovies && allMovies.map(movie => {
                 if (printId.content_pid === movie.content_id) {
                     //console.log("겹치는 title : " + movie.title)
-                    moviePush.push(
+                    filterMovie.push(
                         {
                             id: movie.content_id,
                             poster: movie.poster,
@@ -241,28 +245,20 @@ function Movie_Table_Body(props) {
                             summary: movie.summary,
                         },
                     )
+                    
                 }
             })
         })
+        setMovies(filterMovie);
+        console.log("allMovies");
 
-        if (moviePush) {
-            tableBody = moviePush
-
-            if (tableBody === moviePush) {
-                //console.log("출력할 데이터 : \n" + JSON.stringify(tableBody))
-                tablePrint = true;
-
-                // tableBody.map(element => {
-                //     console.log("tableBody의 title : \n" + JSON.stringify(element.title))
-                // })
-            }
-        }
+        console.log("셋팅할 filterMovie ");
     }
 
     return(
         <div>
             <React.Fragment>
-                {tablePrint && tableBody && tableBody.map(movie =>
+                {movies && movies.map(movie =>
                     <tr key={movie.content_id}>
                         <td><img src = {movie.poster} width="150" height="250"></img></td>   {/* poster */}
                         <td>{movie.title}</td> 

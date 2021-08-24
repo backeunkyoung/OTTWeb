@@ -64,7 +64,7 @@ const Categori_Menu = (props) => {
 
     // Movie_Table에게 필터 값을 전달하기 위한 함수(장르 버튼을 클릭할 때마다 전송)
     function send_Main_Page() {
-        console.log("\n리렌더링!");
+        //console.log("\n리렌더링!");
         let size = (genreList) ? Object.keys(genreList).length : 0;
         let select = [];
 
