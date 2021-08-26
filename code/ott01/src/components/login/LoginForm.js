@@ -55,21 +55,6 @@ const LoginForm = (props) => {
         });
     };
 
-    const add_user = () => {
-        alert("add_user 실행");
-        var url = "/registration";
-
-        axios.get( url, {} )  // 성공시 then 진행
-        .then(function (response) {
-            if (response.data.msg === "success") {
-                alert("이동");
-            }
-        })  // 실패시 catch 진행
-        .catch(function (error) {
-            alert("error발생 => " + error);
-        })
-    }
-
     return (
         <div>
             <form className="login_form">

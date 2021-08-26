@@ -20,7 +20,7 @@ const CategoriMenu = (props) => {
 
     // 컴포넌트가 마운트 될 때만 실행됨
     // 마운트 : 컴포넌트를 특정 영역에 끼워넣는 행위
-    useEffect(() => {
+    useEffect(() => {   // 비동기
         // server에게 장르 목록 받아오기
         var genreUrl = "/genres_list";
 
@@ -32,7 +32,7 @@ const CategoriMenu = (props) => {
 
             if (resGenre) {
                 setGenreList(res.data.data);
-                console.log("장르 목록 : " + JSON.stringify(genreList));
+                //console.log("장르 목록 : " + JSON.stringify(genreList));
             }
         })  // 실패시 catch 진행
         .catch(function (error) {
@@ -48,7 +48,7 @@ const CategoriMenu = (props) => {
         .then(function (res) {
             // 여기서 받아온 res는 JSON 타입
             setCountryList(res.data.data);
-            console.log("국가 목록 : " + JSON.stringify(countryList));
+            //console.log("국가 목록 : " + JSON.stringify(countryList));
         })  // 실패시 catch 진행
         .catch(function (error) {
             alert("error발생 => " + error);
@@ -62,8 +62,7 @@ const CategoriMenu = (props) => {
     function genreClick(genreNum) {
         // 장르 버튼 클릭 시 색 변환
         document.getElementById(genreNum).style.color = (document.getElementById(genreNum).style.color === 'blue') ? 'white' : 'blue';
-        
-        console.log("클릭!")
+
         sendMainPage()
     }
 
@@ -84,15 +83,15 @@ const CategoriMenu = (props) => {
             }
         }
 
-        if (select.length === 0) {
-            genreList && genreList.map((element) => {
-                select.push( {
-                    genreId: element.attribute_num
-                })
-            })
-        }
+        // if (select.length === 0) {
+        //     genreList && genreList.map((element) => {
+        //         select.push( {
+        //             genreId: element.attribute_num
+        //         })
+        //     })
+        // }
     
-        console.log("select : " + JSON.stringify(select));
+        //console.log("select : " + JSON.stringify(select));
 
         props.func(select);    // func : Movie_Table에서 받은 Kategori_receive 함수
     }
