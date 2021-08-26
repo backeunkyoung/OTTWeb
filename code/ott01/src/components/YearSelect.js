@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Select from 'react-select'; 
 import axios from 'axios';
 
@@ -12,9 +12,8 @@ const Years = [
   { label: "7", value: 58 }
 ];
 
-function Year_select() {
+function YearSelect() {
     let yearList = [];
-    let optionsLIst = [];
 
     // server에게 영화DB 받아오기
     var url = "/years_list";
@@ -44,4 +43,4 @@ function Year_select() {
         </div>
     );
 }
-export default Year_select
+export default YearSelect

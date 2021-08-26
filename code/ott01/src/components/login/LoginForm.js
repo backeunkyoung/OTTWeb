@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Registration_Button from '../registration/Registration_Button';
+import RegistrationButton from '../registration/RegistrationButton';
 
-const Login_Form = (props) => {
+const LoginForm = (props) => {
     const [form, setForm] = useState({
         id: '',
         pw: '',
@@ -105,10 +105,10 @@ const Login_Form = (props) => {
             
             <p></p>
             <div className="registration_info">
-                <Registration_Button></Registration_Button>
+                <RegistrationButton></RegistrationButton>
             </div>
             <button type="hidden" id="closeModal" onClick={close}></button>
         </div>
     );
 };
-export default Login_Form;
+export default LoginForm;

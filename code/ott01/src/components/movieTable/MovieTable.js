@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Movie_Table_Header from "./Movie_Table_Header";
-import Movie_Table_Body from "./Movie_Table_Body";
+import React from "react";
+import MovieTableHeader from "./MovieTableHeader";
+import MovieTableBody from "./MovieTableBody";
 
-function Movie_Table(props) {
+function MovieTable(props) {
     let keyword = props.keyword;
     let genre = props.genre;
 
@@ -18,14 +18,14 @@ function Movie_Table(props) {
         <div>
             <table>
                 <tr>
-                    <Movie_Table_Header></Movie_Table_Header>   
+                    <MovieTableHeader></MovieTableHeader>   
                 </tr>
                 <tr>
-                    <Movie_Table_Body keyword={keyword} genre={genre}></Movie_Table_Body>
+                    <MovieTableBody keyword={keyword} genre={genre}></MovieTableBody>
                 </tr>
             </table>
         </div>
     )
 }
 
-export default Movie_Table
+export default MovieTable

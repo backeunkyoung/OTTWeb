@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button } from 'reactstrap';
-import Registration_Modal from './Registration_Modal';
-import Registration_Form from './Registration_Form';
+import RegistrationModal from './RegistrationModal';
+import RegistrationForm from './RegistrationForm';
 
-function Registration_Button() {
+function RegistrationButton() {
 
    // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
    const [ modalOpen, setModalOpen ] = useState(false);
@@ -22,13 +22,13 @@ function Registration_Button() {
                 <Button onClick={ openModal }>회원가입</Button>
             </div >
 
-            <Registration_Modal open={ modalOpen } close={ closeModal } header="Registration Form">
+            <RegistrationModal open={ modalOpen } close={ closeModal } header="Registration Form">
                 {/* 모달 창 안의 내용 */}
                 <div>
-                    <Registration_Form close={ closeModal }></Registration_Form>
+                    <RegistrationForm close={ closeModal }></RegistrationForm>
                 </div>
-           </Registration_Modal>
+           </RegistrationModal>
        </React.Fragment>
    )
 }
-export default Registration_Button;
+export default RegistrationButton;

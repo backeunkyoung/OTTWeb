@@ -3,14 +3,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Main_Page from './components/Main_Page';
+import MainPage from './components/MainPage';
 
 function App() {
 
   return (
     <div>
       <div>
-        <Main_Page></Main_Page>
+        <MainPage></MainPage>
       </div>
     </div>
   );

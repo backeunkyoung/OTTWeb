@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 
-function Movie_Table_Body(props) {
-    let keyword = props.keyword;
-    let genres = props.genre;
+function MovieTableBody(props) {
+
     let selectId = [];
 
     let movies = [];    // 영화 데이터(키워드에 따른)
@@ -54,7 +53,7 @@ function Movie_Table_Body(props) {
         })
     }
 
-    function genre_filter(moviesInputSetting) { // 장르 버튼에 따른 필터 결과값 받아오기(content_pid로 저장)
+    function genreFilter(moviesInputSetting, keyword, genres) { // 장르 버튼에 따른 필터 결과값 받아오기(content_pid로 저장)
         let repetitionCount = Object(genres).length;
 
         getDB(); // DB에서 리스트 받아오기
@@ -126,8 +125,18 @@ function Movie_Table_Body(props) {
         // }
     }
     
-    search_result(keyword);
-    function search_result(keyword) { // server에게 영화DB 받아오기
+    searchResult();
+    function searchResult() { // server에게 영화DB 받아오기
+        
+        let keyword = props.keyword;
+        let genres = props.genre;
+
+        if (genres.length !== 0) {
+            console.log("props : " + JSON.stringify(props))
+            // console.log("props keyword : " + keyword);
+            // console.log("props genres : " + genres)
+        }
+
         var url = "/search_result";
         let moviesInputSetting = [];
 
@@ -135,11 +144,11 @@ function Movie_Table_Body(props) {
             postKeyword : keyword
         })  // 성공시 then 진행
         .then(function (res) {
-            console.log("현재 keyword : " + keyword);
-            console.log("현재 genres : " + JSON.stringify(genres));
+            // console.log("현재 keyword : " + keyword);
+            // console.log("현재 genres : " + JSON.stringify(genres));
             moviesInputSetting = res.data.data
-            console.log("moviesInputSetting complete")
-            genre_filter(moviesInputSetting)
+            //console.log("moviesInputSetting complete")
+            genreFilter(moviesInputSetting, keyword, genres)
             //console.log("moviesInputSetting : " + JSON.stringify(moviesInputSetting));
         })  // 실패시 catch 진행
         .catch(function (error) {
@@ -439,4 +448,4 @@ function Movie_Table_Body(props) {
         </div>
     )
 }
-export default Movie_Table_Body;
+export default MovieTableBody;

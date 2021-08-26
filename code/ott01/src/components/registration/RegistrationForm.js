@@ -4,7 +4,7 @@ import axios from 'axios';
 
 let overlap = false;
 
-const Registration_Form = (props) => {
+const RegistrationForm = (props) => {
   const [form, setForm] = useState({    // 상태 관리를 할 데이터(바인딩 해야 할 데이터)
     id: '',
     pw: '',
@@ -206,4 +206,4 @@ const Registration_Form = (props) => {
   );
 }
 
-export default Registration_Form
+export default RegistrationForm

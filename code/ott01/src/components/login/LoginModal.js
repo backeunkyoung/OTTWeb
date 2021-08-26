@@ -1,7 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import '../../App.css';
 
-const Login_Modal = ( props ) => {
+const LoginModal = ( props ) => {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
     const { open, close, header } = props;
 
@@ -23,4 +23,4 @@ const Login_Modal = ( props ) => {
     )
 }
 
-export default Login_Modal;
+export default LoginModal;

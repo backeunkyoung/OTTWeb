@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../App.css';
 
-const Registration_Modal = ( props ) => {
+const RegistrationModal = ( props ) => {
     // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
     // open={ modalOpen } close={ closeModal } header="Registration Form"
     const { open, close, header } = props;
@@ -28,4 +28,4 @@ const Registration_Modal = ( props ) => {
     )
 }
 
-export default Registration_Modal;
+export default RegistrationModal;
