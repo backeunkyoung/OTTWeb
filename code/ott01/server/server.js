@@ -161,10 +161,22 @@ app.post("/search_result", function(req,res) { // 검색 결과 가져오기
 
     var keywordBlankDelete = inputKeyword.replace(/ /g,"");   // input 키워드의 공백 제거
 
-    //제목, 감독으로 검색( 띄어쓰기 상관 x )
-    var query = "SELECT * FROM contents WHERE REPLACE(title,' ','') LIKE '%" + keywordBlankDelete
-                + "%' OR REPLACE(director,' ','') LIKE '%" + keywordBlankDelete 
-                + "%' OR content_id IN (SELECT content_pid FROM contents_persons WHERE person_pid IN (SELECT person_pid FROM person WHERE REPLACE(Name,' ','') LIKE '%" + keywordBlankDelete +"%') );";
+    //제목, 감독, 배우로 검색( 띄어쓰기 상관 x )
+    var query = " SELECT * FROM contents " +
+                " INNER JOIN ( " +
+                "       SELECT content_pid, GROUP_CONCAT(attribute_num) genres " +
+                "       FROM content_attribute " +
+                "       GROUP BY content_pid " +
+                " ) genre on genre.content_pid = contents.content_id " +
+                " WHERE REPLACE(title,' ','') LIKE '%" + keywordBlankDelete + "%' " +
+                " OR REPLACE(director,' ','') LIKE '%" + keywordBlankDelete + "%' " + 
+                " OR content_id IN ( " +
+                "     SELECT content_pid " + 
+                "     FROM contents_persons " + 
+                "     WHERE person_pid IN ( " +
+                "         SELECT person_pid FROM person WHERE REPLACE(Name,' ','') LIKE '%" + keywordBlankDelete +"%' " +
+                "     ) " + 
+                " );";
 
     db.query(query, function(err, row){
         if (!err){  

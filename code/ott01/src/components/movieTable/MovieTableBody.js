@@ -10,138 +10,15 @@ function MovieTableBody(props) {
     let contentGenreList = []   // 영화, 장르 연결 리스트(content_pid, attribute_num)
     let genreList = []  // 전체 장르 리스트(content_id, genre_name)
 
-    let movieTable = [];
+    const [movieTable, setMovieTable] = useState([])
+    let allMovies = [];
 
-    function getData() {    // 영화, 장르 연결 리스트 + 전체 장르 리스트 받아오기
-        // 영화, 장르 연결 리스트(content_pid, attribute_num) 받아오기
-        var contentGenreListUrl = "/get_content_connect_genre";
-        axios.post( contentGenreListUrl, {
-        })  // 성공시 then 진행
-        .then(function (res) {
-
-            let resList = res.data.data;
-
-            resList && resList.map((element) => {
-                contentGenreList.push({
-                    content_id: element.content_pid,
-                    genre_num: element.attribute_num,
-                })
-            })
-            console.log("contentGenreList 완료");
-        })  // 실패시 catch 진행
-        .catch(function (error) {
-            alert("error발생 => " + error);
-        })
-
-        // 전체 장르 리스트(content_id, genre_name) 받아오기
-        var genreListUrl = "/get_genre_name";
-        axios.post( genreListUrl, {
-        })  // 성공시 then 진행
-        .then(function (res) {
-            let resList = res.data.data;
-
-            resList && resList.map((element) => {
-                genreList.push({
-                    content_id: element.content_id,
-                    genre_name: element.attribute_name,
-                })
-            })
-            console.log("genreList 완료");
-        })  // 실패시 catch 진행
-        .catch(function (error) {
-            alert("error발생 => " + error);
-        })
-    }
-
-    function genreFilter(movieList, genre) { // 장르 버튼에 따른 필터 결과값 받아오기(content_pid로 저장)
-        //let genreCount = Object(genre).length;
-        let movieCount = Object(movieList).length;
-
-        console.log("영화 개수 : " + movieCount);
-
-        MovieTable(movieList);
-
-        // movieList && movieList.map((movie) => {
-        //     //console.log("movie ID : " + movie.content_id)
-
-        //     if (genreCount == 0) {
-        //         genre
-        //     }
-        // })
-
-        // console.log("장르 : " + JSON.stringify(genre))
-
-        // console.log("contentGenreList : " + JSON.stringify(contentGenreList));
-        // console.log("genreList : " + JSON.stringify(genreList))
-
-        // contentGenreList && contentGenreList.map((connect) => {
-        //     movieList && movieList.map((content) => {
-        //         if (connect.content_id === content.content_id) {
-        //             console.log("같은 id : " + content.content_id)
-        //         }
-        //     })
-        // })
-
-        // genresList && genresList.map((element) => {
-        //     console.log("장르 목록 보기 : " + JSON.stringify(element));
-        // })
-
-
-        // 해당되는 장르의 ID값을 넘김
-        //     let once = true;
-
-        //     while(repetitionCount !== 0) {
-        //         var url = "/genre_filter";
-    
-        //         axios.post( url, {
-        //             postFirstGenre : genres[repetitionCount-1].genreId
-        //         })  // 성공시 then 진행
-        //         .then(function (res) {
-        //             console.log("\n현재 장르 : " + JSON.stringify(res.data.genreNum));
-                
-        //             let nowData = res.data.data
-        //             console.log("nowData : " + JSON.stringify(nowData));
-    
-        //             if (once && nowData && Object(outputMovies).length === 0) {    // 1번만 초기화
-        //                 outputMovies = nowData;
-        //                 once = false;
-        //             }
-                    
-        //             let overlapData = []    // 겹치는 값만 저장할 배열
-                    
-        //             outputMovies && outputMovies.map(element => {   // 비교하면서 겹치는 ID값만 push하기
-                    
-        //                 nowData && nowData.map(nowElement => {
-        //                     if (element.content_pid === nowElement.content_pid) {
-        //                         overlapData.push(nowElement)
-        //                         //console.log("같은 ID : " + nowElement.content_pid);
-        //                     }
-        //                 })
-        //             })
-    
-        //             if (overlapData) {  // 위 함수에서 겹치는 데이터를 모두 push 했다면
-        //                 outputMovies = overlapData; // outputMovies 교체
-        //                 if (outputMovies === overlapData) {
-        //                     console.log("무한루프2")
-        //                     movieFiltering(outputMovies);
-        //                     overlapData = []
-        //                 }
-        //             }
-                
-        //         })  // 실패시 catch 진행
-        //         .catch(function (error) {
-        //             alert("error발생 => " + error);
-        //         })
-    
-        //         repetitionCount--;
-        //     }
-        // }
-    }
+    let printMovieTable = [];
     
     function searchResult() { // server에게 영화DB 받아오기
 
         let keyword = props.keyword;
-        let genre = props.genre;
+        //let genre = props.genre;
         let keywordMovieList = [];
 
         var url = "/search_result";
@@ -153,12 +30,46 @@ function MovieTableBody(props) {
             keywordMovieList = res.data.data
             //console.log("moviesInputSetting complete")
             //console.log("keywordMovieList : " + JSON.stringify(keywordMovieList));
-
-            genreFilter(keywordMovieList, genre)
+            allMovies = keywordMovieList;
+            movieFilter();
+            //genreFilter(keywordMovieList, genre)
         })  // 실패시 catch 진행
         .catch(function (error) {
             alert("error발생 => " + error);
         })
+    }
+
+    function movieFilter() {
+        //console.log("장르 : " + JSON.stringify(props.genre));
+        //console.log("테이블 : " + JSON.stringify(movieTable));
+        
+        // => [1,2]
+
+        let selectGenre = _.map(props.genre, "genreId");
+        let selectGenreLen = selectGenre.length;
+        
+        let newMovies = [];
+        allMovies && allMovies.map((movie) => {
+            //[1,2,3]
+            let movieGenre = movie.genres.split(",");
+
+            //let match = selectGenre.every(val => movieGenre.includes(val));
+
+            let match = true;
+            for ( let i =0 ; i< selectGenreLen; i++) {
+                match = movieGenre.includes(""+selectGenre[i]);
+
+                if (!match) break; 
+            }
+
+            if (match) {
+                newMovies.push(movie);
+            }
+        });
+
+        // console.log("new : " + JSON.stringify(newMovies));
+        setMovieTable(newMovies);
+        //movieTable(newMovies)
     }
     
     useEffect(() => {
@@ -167,8 +78,6 @@ function MovieTableBody(props) {
 
 
     useEffect(() => {
-        //searchResult(); // input창에 따른 영화 리스트 받아오기
-        getData();  // 테이블에 필요한 리스트들(장르, 국가, 배우) 받아오기
 
         // server에게 장르 이름 리스트 받아오기
         var genreListUrl = "/get_genre_name";
@@ -176,8 +85,8 @@ function MovieTableBody(props) {
         axios.post( genreListUrl, {
         })  // 성공시 then 진행
         .then(function (res) {
-            // console.log("받은 장르 리스트 : \n" + JSON.stringify(res.data.data));
             setGenresList(res.data.data);
+            //console.log("받은 장르 리스트 : \n" + JSON.stringify(genresList));
         })  // 실패시 catch 진행
         .catch(function (error) {
             alert("error발생 => " + error);
@@ -214,8 +123,6 @@ function MovieTableBody(props) {
     
     }, [])  // 대괄호 비워 둠 => 컴포넌트가 처음 나타날때만 실행
 
-    // let outputMovies = [];   // 출력 할 영화 ID 저장
-
     const [genresList, setGenresList] = useState({   // 장르 목록
         content_id: '',
         genre_name: '',
@@ -239,6 +146,7 @@ function MovieTableBody(props) {
 
             for (let i = 0; i < size; i++) {
                 if (genresList.data[i].content_id === id) {
+                    //console.log("확인 : " + id)
                     result += genresList.data[i].attribute_name + ", ";
                 }
             }
@@ -291,9 +199,9 @@ function MovieTableBody(props) {
                     date: movie.screening_date,
                     director: movie.director,
                     age: movie.age_information,
-                    // genre: outputGenre(movie.content_id),
-                    // country: outputCountry(movie.content_id),
-                    // actor: outputActor(movie.content_id),
+                    genre: outputGenre(movie.content_id),
+                    country: outputCountry(movie.content_id),
+                    actor: outputActor(movie.content_id),
                     summary: movie.summary,
                 },
             )
@@ -303,7 +211,21 @@ function MovieTableBody(props) {
 
     return(
         <div>
-            {console.log("movieTable : " + JSON.stringify(movieTable))}
+            <React.Fragment>
+                {movieTable && movieTable.map(movie =>
+                    <tr key={movie.content_id}>
+                        <td><img src = {movie.poster} width="150" height="250"></img></td>   {/* poster */}
+                        <td>{movie.title}</td> 
+                        <td>{movie.date}</td>
+                        <td>{movie.director}</td>
+                        <td>{movie.age}</td>
+                        {/* <td>{movie.genre}</td>
+                        <td>{movie.country}</td>
+                        <td>{movie.actor}</td> */}
+                        <td>{movie.summary}</td>
+                    </tr>
+                )}
+            </React.Fragment>
         </div>
     )
 }
