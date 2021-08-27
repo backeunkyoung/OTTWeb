@@ -10,10 +10,8 @@ function MovieTableBody(props) {
     let contentGenreList = []   // 영화, 장르 연결 리스트(content_pid, attribute_num)
     let genreList = []  // 전체 장르 리스트(content_id, genre_name)
 
-    const [movieTable, setMovieTable] = useState([])
-    let allMovies = [];
-
-    let printMovieTable = [];
+    const [movieTable, setMovieTable] = useState([])    // 테이블로 표현할 데이터
+    let allMovies = []; // 모든 영화
     
     function searchResult() { // server에게 영화DB 받아오기
 
@@ -68,8 +66,8 @@ function MovieTableBody(props) {
         });
 
         // console.log("new : " + JSON.stringify(newMovies));
-        setMovieTable(newMovies);
-        //movieTable(newMovies)
+        // setMovieTable(newMovies);
+        MovieTable(newMovies);
     }
     
     useEffect(() => {
@@ -189,9 +187,10 @@ function MovieTableBody(props) {
 
     function MovieTable(getMovie) { // 출력할 영화 목록 셋팅
         // console.log("셋팅할 Movies : \n" + JSON.stringify(getMovie));
+        let pushMovie = [];
         
         getMovie && getMovie.map(movie => {
-            movieTable.push(
+            pushMovie.push(
                 {
                     id: movie.content_id,
                     poster: movie.poster,
@@ -200,13 +199,15 @@ function MovieTableBody(props) {
                     director: movie.director,
                     age: movie.age_information,
                     genre: outputGenre(movie.content_id),
-                    country: outputCountry(movie.content_id),
-                    actor: outputActor(movie.content_id),
+                    // country: outputCountry(movie.content_id),
+                    // actor: outputActor(movie.content_id),
                     summary: movie.summary,
                 },
             )
         })
-        console.log("출력할 Movies : \n" + JSON.stringify(movieTable));
+
+        setMovieTable(pushMovie);
+        //console.log("출력할 Movies : \n" + JSON.stringify(movieTable));
     }
 
     return(
@@ -219,9 +220,9 @@ function MovieTableBody(props) {
                         <td>{movie.date}</td>
                         <td>{movie.director}</td>
                         <td>{movie.age}</td>
-                        {/* <td>{movie.genre}</td>
+                        {/* <td>{movie.genre}</td> */}
                         <td>{movie.country}</td>
-                        <td>{movie.actor}</td> */}
+                        <td>{movie.actor}</td>
                         <td>{movie.summary}</td>
                     </tr>
                 )}
