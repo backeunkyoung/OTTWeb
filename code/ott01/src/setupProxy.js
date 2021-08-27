@@ -34,14 +34,6 @@ module.exports = function(app) {
         })
     );
 
-    app.use(    // 컨텐츠-장르 연결 정보 불러오기
-        '/get_content_connect_genre',
-        createProxyMiddleware({
-            target: 'http://localhost:3333',
-            changeOrigin: true,
-        })
-    );
-
     app.use(    // 장르 코드로 장르 명 가져오기
         '/get_genre_name',
         createProxyMiddleware({
