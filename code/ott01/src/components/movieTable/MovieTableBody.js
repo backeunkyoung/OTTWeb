@@ -124,7 +124,7 @@ function MovieTableBody(props) {
         genreIdNameList && genreIdNameList.map((genre) => {
             if (genre.content_id === id) {
                 
-                console.log("해당 ID : " + id + " ,해당 장르 : " + genre.attribute_name);
+                //console.log("해당 ID : " + id + " ,해당 장르 : " + genre.attribute_name);
                 
                 result += genre.attribute_name + ", ";
             }
