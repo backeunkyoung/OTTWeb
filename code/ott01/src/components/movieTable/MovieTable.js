@@ -5,6 +5,7 @@ import MovieTableBody from "./MovieTableBody";
 function MovieTable(props) {
     let keyword = props.keyword;
     let genre = props.genre;
+    let country = props.country;
 
     // if (genre) {
     //     console.log("Table쪽 genre : " + JSON.stringify(genre));
@@ -21,7 +22,7 @@ function MovieTable(props) {
                     <MovieTableHeader></MovieTableHeader>   
                 </tr>
                 <tr>
-                    <MovieTableBody keyword={keyword} genre={genre}></MovieTableBody>
+                    <MovieTableBody keyword={keyword} genre={genre} country={country}></MovieTableBody>
                 </tr>
             </table>
         </div>

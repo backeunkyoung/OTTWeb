@@ -66,34 +66,47 @@ const CategoriMenu = (props) => {
         sendMainPage()
     }
 
+    function countryClick(genreNum) {
+        // 국가 버튼 클릭 시 색 변환
+        document.getElementById(genreNum).style.color = (document.getElementById(genreNum).style.color === 'blue') ? 'white' : 'blue';
+
+        sendMainPage()
+    }
+
     // Movie_Table에게 필터 값을 전달하기 위한 함수(장르 버튼을 클릭할 때마다 전송)
     function sendMainPage() {
 
-        let size = (genreList) ? Object.keys(genreList).length : 0;
-        let select = [];
+        let genreSize = (genreList) ? Object.keys(genreList).length : 0;
+        let genreSelect = [];
 
-        for (let i = 0; i < size; i++) {
+        for (let i = 0; i < genreSize; i++) {
             let genre = genreList[i];
             let attribute_num = genre.attribute_num;
             let elColor = document.getElementById(attribute_num).style.color;
             if (elColor === 'blue') {
-                select.push( {
+                genreSelect.push( {
                     genreId: attribute_num
                 })
             }
         }
 
-        // if (select.length === 0) {
-        //     genreList && genreList.map((element) => {
-        //         select.push( {
-        //             genreId: element.attribute_num
-        //         })
-        //     })
-        // }
-    
-        //console.log("select : " + JSON.stringify(select));
+        let countrySize = (genreList) ? Object.keys(countryList).length : 0;
+        let countrySelect = [];
 
-        props.func(select);    // func : Movie_Table에서 받은 Kategori_receive 함수
+        for (let i = 0; i < countrySize; i++) {
+            let country = countryList[i];
+            let country_code = country.country_code;
+            let elColor = document.getElementById(country_code).style.color;
+            if (elColor === 'blue') {
+                countrySelect.push( {
+                    countryCode: country_code
+                })
+            }
+        }
+    
+        // console.log("국가select : " + JSON.stringify(countrySelect));
+
+        props.func(genreSelect, countrySelect);    // func : Movie_Table에서 받은 Kategori_receive 함수
     }
   
     return (
@@ -125,10 +138,16 @@ const CategoriMenu = (props) => {
                 <Collapse isOpen={collapseCountry}>
                     <Card>
                     <CardBody>
-                        <ButtonGroup className="Country">
+                        <ButtonGroup className="countryGenre">
                             {countryList && countryList.map(country =>
                                 <div key={country.country_code}>
-                                    <Button id={country.country_code} name={country.country_name} variant="secondary">{country.country_name}</Button>
+                                    <Button id={country.country_code}
+                                        name={country.country_name}
+                                        onClick={() => countryClick(country.country_code)}
+                                        color={"secondary"}
+                                    >
+                                    {country.country_name}
+                                    </Button>
                                 </div>
                             )} 
                         </ButtonGroup>

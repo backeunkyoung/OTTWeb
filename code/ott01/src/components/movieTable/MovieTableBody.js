@@ -25,6 +25,7 @@ function MovieTableBody(props) {
         .then(function (res) {
             keywordMovieList = res.data.data
             allMovies = keywordMovieList;
+            // console.log("res : " + JSON.stringify(allMovies));
             movieFilter();
         })  // 실패시 catch 진행
         .catch(function (error) {
@@ -36,23 +37,35 @@ function MovieTableBody(props) {
 
         let selectGenre = _.map(props.genre, "genreId");
         let selectGenreLen = selectGenre.length;
-        
+        let selectCountry = _.map(props.country, "countryCode");
+        let selectCountryLen = selectCountry.length;
+
         let newMovies = [];
 
         allMovies && allMovies.map((movie) => {
             //[1,2,3]
             let movieGenre = movie.genres.split(",");
+            let movieCountry = movie.countrys.split(",");
 
             //let match = selectGenre.every(val => movieGenre.includes(val));
 
-            let match = true;
-            for ( let i =0 ; i< selectGenreLen; i++) {
-                match = movieGenre.includes(""+selectGenre[i]);
+            let genreMatch = true;
+            let countryMatch = true;
 
-                if (!match) break; 
+            for ( let i = 0 ; i < selectGenreLen; i++) {
+                genreMatch = movieGenre.includes(""+selectGenre[i]);
+                
+                if (!genreMatch) break;
             }
 
-            if (match) {
+            for (let i = 0; i < selectCountryLen; i++) {
+                countryMatch = movieCountry.includes("" + selectCountry[i]);
+                
+                if (!countryMatch) break;
+            }
+
+
+            if (genreMatch && countryMatch) {
                 newMovies.push(movie);
             }
         });

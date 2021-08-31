@@ -15,17 +15,22 @@ import '../App.css';
 function MainPage() {
     const [keyword, setKeyword] = useState(''); // Search_From에게 받아온 input 값 저장
     const [clickGenre, setClickGenre] = useState([])// 장르 버튼 상태 관리
+    const [clickCountry, setClickCountry] = useState([])// 국가 버튼 상태 관리
 
     function SearchFormReceive(data) {
         setKeyword(data);
         //console.log("받은 keyword : " + JSON.stringify(keyword));
     }
 
-    let genre = null
+    let genre = null;
+    let country = null;
 
-    function KategoriReceive(clickButton, buttonLength) {
-        genre = clickButton
+    function KategoriReceive(genreButton, countryButton) {
+        genre = genreButton;
         setClickGenre(genre);
+
+        country = countryButton;
+        setClickCountry(country);
         //console.log("받은 genre : " + JSON.stringify(genre));
     }
 
@@ -55,7 +60,7 @@ function MainPage() {
                         </div>
 
                         <div className="body-center-box">
-                            <MovieTable keyword={keyword} genre={clickGenre}></MovieTable> {/* Search_Form 에게 받아온 input값 전달 */}
+                            <MovieTable keyword={keyword} genre={clickGenre} country={clickCountry}></MovieTable> {/* Search_Form 에게 받아온 input값 전달 */}
                         </div>
 
                         <div className="body-right-box">

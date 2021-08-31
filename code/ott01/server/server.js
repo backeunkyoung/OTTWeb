@@ -168,6 +168,11 @@ app.post("/search_result", function(req,res) { // 검색 결과 가져오기
                 "       FROM content_attribute " +
                 "       GROUP BY content_pid " +
                 " ) genre on genre.content_pid = contents.content_id " +
+                " inner join ( " +
+                "       SELECT content_pid, GROUP_CONCAT(nation_code) countrys " +
+                "       FROM content_country " +
+                "       GROUP BY content_pid " +
+                " ) country on country.content_pid = contents.content_id " +
                 " WHERE REPLACE(title,' ','') LIKE '%" + keywordBlankDelete + "%' " +
                 " OR REPLACE(director,' ','') LIKE '%" + keywordBlankDelete + "%' " + 
                 " OR content_id IN ( " +
@@ -179,7 +184,7 @@ app.post("/search_result", function(req,res) { // 검색 결과 가져오기
                 " );";
 
     db.query(query, function(err, row){
-        if (!err){  
+        if (!err){
             res.send({data : row});
         } 
         else {
