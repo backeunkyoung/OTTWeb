@@ -5,7 +5,9 @@ import _ from 'lodash';
 function MovieTableBody(props) {
     console.log("props : " + JSON.stringify(props))
 
-    let genreIdNameList = []  // 전체 장르 리스트(content_id, genre_name)
+    const [genreName, setGenreName] = useState([]);         // 전체 장르 리스트(content_id, genre_name)
+    const [countryName, setCountryName] = useState([]);     // 전체 국가 리스트(content_id, country_name)
+    const [actorName, setActorName] = useState([]);         // 전체 출연 배우 리스트(content_id, Name)
 
     const [movieTable, setMovieTable] = useState([])    // 테이블로 표현할 데이터
     let allMovies = []; // 모든 영화
@@ -55,6 +57,7 @@ function MovieTableBody(props) {
             }
         });
 
+        //console.log("newMovies : " + JSON.stringify(newMovies))
         MovieTable(newMovies);
     }
     
@@ -71,104 +74,83 @@ function MovieTableBody(props) {
         axios.post( genreListUrl, {
         })  // 성공시 then 진행
         .then(function (res) {
-            genreIdNameList = res.data.data;
-            // console.log("받은 장르 이름 리스트 : \n" + JSON.stringify(genreIdNameList));
+            // genreIdNameList = res.data.data;
+            setGenreName(res.data.data);
+            //console.log("받은 장르 이름 리스트 : \n" + JSON.stringify(genreName));
         })  // 실패시 catch 진행
         .catch(function (error) {
             alert("error발생 => " + error);
         })
 
         // // server에게 국가 이름 리스트 받아오기
-        // var countryLIstUrl = "/get_country_name";
+        var countryLIstUrl = "/get_country_name";
 
-        // axios.post( countryLIstUrl, {
-        // })  // 성공시 then 진행
-        // .then(function (res) {
-        //     // console.log("받은 결과 : \n" + JSON.stringify(res.data.data));
-        //     setCountrysList(res.data);
-        // })  // 실패시 catch 진행
-        // .catch(function (error) {
-        //     alert("error발생 => " + error);
-        //     setCountrysList("error");
-        // })
+        axios.post( countryLIstUrl, {
+        })  // 성공시 then 진행
+        .then(function (res) {
+            // console.log("받은 결과 : \n" + JSON.stringify(res.data.data));
+            setCountryName(res.data.data);
+        })  // 실패시 catch 진행
+        .catch(function (error) {
+            alert("error발생 => " + error);
+        })
 
         // // server에게 출연 배우 이름 리스트 받아오기
-        // var actorListUrl = "/get_actor_name";
+        var actorListUrl = "/get_actor_name";
 
-        // axios.post( actorListUrl, {
-        // })  // 성공시 then 진행
-        // .then(function (res) {
-        //     // console.log("받은 결과 : \n" + JSON.stringify(res.data.data));
-        //     setActorsList(res.data);
-        // })  // 실패시 catch 진행
-        // .catch(function (error) {
-        //     alert("error발생 => " + error);
-        //     setActorsList("error");
-        // })
+        axios.post( actorListUrl, {
+        })  // 성공시 then 진행
+        .then(function (res) {
+            // console.log("받은 결과 : \n" + JSON.stringify(res.data.data));
+            setActorName(res.data.data);
+        })  // 실패시 catch 진행
+        .catch(function (error) {
+            alert("error발생 => " + error);
+        })
     
     }, [])  // 대괄호 비워 둠 => 컴포넌트가 처음 나타날때만 실행
 
-    const [countrysList, setCountrysList] = useState({   // 국가 목록
-        content_id: '',
-        country_name: '',
-    });
-
-    const [actorsList, setActorsList] = useState({   // 출연 배우 목록
-        content_id: '',
-        actor_name: '',
-    });
-
     function outputGenre(id) {  // 장르 id코드를 한글로 변환
-        var result = '';
 
-        genreIdNameList && genreIdNameList.map((genre) => {
-            if (genre.content_id === id) {
-                
-                //console.log("해당 ID : " + id + " ,해당 장르 : " + genre.attribute_name);
-                
+        var result = '';
+        
+        genreName && genreName.map((genre) => {
+            if (genre.content_id === id) {        
                 result += genre.attribute_name + ", ";
             }
         })
-        console.log("---")
 
-        console.log("result : " + result)
         return result;
     }
 
     function outputCountry(id) {    // 국가 id코드를 한글로 변환
+
         var result = '';
-
-        if (countrysList) {
-            var size = countrysList.data.length;
-
-            for (let i = 0; i < size; i++) {
-                if (countrysList.data[i].content_id === id) {
-                    result += countrysList.data[i].country_name + ", ";
-                }
+        
+        countryName && countryName.map((country) => {
+            if (country.content_id === id) {           
+                result += country.country_name + ", ";
             }
-
-            return result;
-        }
+        })
+        
+        return result;
     }
 
     function outputActor(id) {  // 배우 id코드를 한글로 변환
+        
         var result = '';
         
-        if (actorsList.data) {
-            var size = actorsList.data.length;
-
-            for (let i = 0; i < size; i++) {
-                if (actorsList.data[i].content_id === id) {
-                    result += actorsList.data[i].Name + ", ";
-                }
+        actorName && actorName.map((actor) => {
+            if (actor.content_id === id) {           
+                result += actor.Name + ", ";
             }
-
-            return result;
-        }
+        })
+        
+        return result;
     }
 
     function MovieTable(getMovie) { // 출력할 영화 목록 셋팅
-        // console.log("셋팅할 Movies : \n" + JSON.stringify(getMovie));
+        //console.log("셋팅할 Movies : \n" + JSON.stringify(getMovie));
         let pushMovie = [];
         
         getMovie && getMovie.map(movie => {
@@ -181,15 +163,15 @@ function MovieTableBody(props) {
                     director: movie.director,
                     age: movie.age_information,
                     genre: outputGenre(movie.content_id),
-                    // country: outputCountry(movie.content_id),
-                    // actor: outputActor(movie.content_id),
+                    country: outputCountry(movie.content_id),
+                    actor: outputActor(movie.content_id),
                     summary: movie.summary,
                 },
             )
         })
 
         setMovieTable(pushMovie);
-        console.log("출력할 Movies : \n" + JSON.stringify(movieTable));
+        // console.log("출력할 Movies : \n" + JSON.stringify(movieTable));
     }
 
     return(
@@ -203,8 +185,8 @@ function MovieTableBody(props) {
                         <td>{movie.director}</td>
                         <td>{movie.age}</td>
                         <td>{movie.genre}</td>
-                        {/* <td>{movie.country}</td> */}
-                        {/* <td>{movie.actor}</td> */}
+                        <td>{movie.country}</td>
+                        <td>{movie.actor}</td>
                         <td>{movie.summary}</td>
                     </tr>
                 )}
